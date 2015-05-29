@@ -94,8 +94,10 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Martin.cpp" />
+    <ClCompile Include="Quest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Base.h" />
     <ClInclude Include="d3d9.h" />
     <ClInclude Include="d3d9dev.h" />
     <ClInclude Include="d3d9int.h" />
@@ -103,6 +105,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Martin.h" />
+    <ClInclude Include="Quest.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Martin.inl" />

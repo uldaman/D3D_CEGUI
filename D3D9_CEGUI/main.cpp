@@ -29,14 +29,13 @@
 #include <windows.h>
 #include <fstream>
 #include <stdio.h>
-using namespace std;
 #pragma warning(disable:4996)
 
 #include "main.h"
 #include "d3d9.h"
+#include "Martin.h"
 
 //Globals
-ofstream ofile;
 char dlldir[320];
 
 bool WINAPI DllMain(HMODULE hDll, DWORD dwReason, PVOID pvReserved) {
@@ -51,26 +50,26 @@ bool WINAPI DllMain(HMODULE hDll, DWORD dwReason, PVOID pvReserved) {
             }
         } // 去掉路径的文件名
 
-        ofile.open(GetDirectoryFile("ttnlog.txt"), ios::app);
+        martin->m_ofile.open(GetDirectoryFile("ttnlog.txt"), std::ios::app);
 
-        add_log("\n---------------------\nTatniumD3D Started...\n---------------------");
+        martin->add_log("\n---------------------\nTatniumD3D Started...\n---------------------");
 
         HMODULE hMod = LoadLibrary("d3d9.dll");
 
-        add_log("\n---------------------\nDirect3DCreate9 --> 0x%X...\n---------------------", GetProcAddress(hMod, "Direct3DCreate9"));
+        martin->add_log("\n---------------------\nDirect3DCreate9 --> 0x%X...\n---------------------", GetProcAddress(hMod, "Direct3DCreate9"));
 
         oDirect3DCreate9 = (tDirect3DCreate9)DetourFunc(
             (BYTE*)GetProcAddress(hMod, "Direct3DCreate9"), // 获取 Direct3DCreate9 地址
             (BYTE*)hkDirect3DCreate9,
             5); // HOOK Direct3DCreate9
 
-        add_log("\n---------------------\nOld Direct3DCreate9 --> 0x%X...\n---------------------", (int)oDirect3DCreate9);
+        martin->add_log("\n---------------------\nOld Direct3DCreate9 --> 0x%X...\n---------------------", (int)oDirect3DCreate9);
         
         return true;
     } else if (dwReason == DLL_PROCESS_DETACH) {
-        add_log("---------------------\nTatniumD3D Exiting...\n---------------------\n");
-        if (ofile) { 
-            ofile.close(); 
+        martin->add_log("---------------------\nTatniumD3D Exiting...\n---------------------\n");
+        if (martin->m_ofile) {
+            martin->m_ofile.close();
         }
     }
 
@@ -118,17 +117,3 @@ bool RetourFunc(BYTE *src, BYTE *restore, const int len) {
     return true;
 }
 
-void __cdecl add_log(const char *fmt, ...) {
-    if (ofile.is_open()) {
-        if (!fmt) { return; }
-
-        va_list va_alist;
-        char logbuf[256] = { 0 };
-
-        va_start(va_alist, fmt);
-        _vsnprintf(logbuf + strlen(logbuf), sizeof(logbuf) - strlen(logbuf), fmt, va_alist);
-        va_end(va_alist);
-
-        ofile << logbuf << endl;
-    }
-}

@@ -1,5 +1,6 @@
 #include "Martin.h"
 
+
 ///////////////////////////////////////////////////////////////
 CMartin* CMartin::m_cInstance = NULL;
 CMartin* martin = CMartin::GetInstance();
@@ -100,4 +101,36 @@ void CMartin::ModuleHide(HMODULE hInjectDll) {
 
     //¶Ï¿ªLDR_MODULE
     this->BreakLdrModuleLink((DWORD)hInjectDll);
+}
+
+void CMartin::Debug(const char* szFormat, ...) {
+    char szBuffer[1024] = { "Debug:" };
+    va_list pArgList;
+
+    va_start(pArgList, szFormat);
+
+    _vsnprintf(szBuffer + strlen(szBuffer), 1024 - strlen(szBuffer) * 2, szFormat, pArgList);
+
+    va_end(pArgList);
+
+    add_log(szBuffer);
+
+#ifdef _DEBUG
+    return OutputDebugString(szBuffer);
+#endif
+}
+
+void CMartin::add_log(const char *fmt, ...) {
+    if (m_ofile.is_open()) {
+        if (!fmt) { return; }
+
+        va_list va_alist;
+        char logbuf[256] = { 0 };
+
+        va_start(va_alist, fmt);
+        _vsnprintf(logbuf + strlen(logbuf), sizeof(logbuf) - strlen(logbuf), fmt, va_alist);
+        va_end(va_alist);
+
+        m_ofile << logbuf << std::endl;
+    }
 }

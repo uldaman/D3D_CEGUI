@@ -4,6 +4,7 @@
 #include "main.h"
 #include "d3d9.h"
 #include "Game.h"
+#include "Martin.h"
 
 HRESULT APIENTRY hkIDirect3D9::QueryInterface(REFIID riid, void **ppvObj) {
     return m_pD3Dint->QueryInterface(riid, ppvObj);
@@ -45,7 +46,7 @@ HRESULT APIENTRY hkIDirect3D9::CreateDevice(UINT Adapter, D3DDEVTYPE DeviceType,
     static int nCount = 0;
     if (SUCCEEDED(hRet)) {
         theApp.m_pDevice = new hkIDirect3DDevice9(ppReturnedDeviceInterface, pPresentationParameters, this);
-        add_log("Hooked Direct3D9 device: 0x%x -> 0x%x", ((hkIDirect3DDevice9*)theApp.m_pDevice)->m_pD3Ddev, theApp.m_pDevice);
+        martin->add_log("Hooked Direct3D9 device: 0x%x -> 0x%x", ((hkIDirect3DDevice9*)theApp.m_pDevice)->m_pD3Ddev, theApp.m_pDevice);
         if (++nCount == 3) {
             theApp.initGui();
             if (theApp.m_OrgWndProc == 0) {
@@ -54,7 +55,7 @@ HRESULT APIENTRY hkIDirect3D9::CreateDevice(UINT Adapter, D3DDEVTYPE DeviceType,
                 if (theApp.m_OrgWndProc) {
                     ::SetWindowLong(theApp.m_hGWnd, GWL_WNDPROC, (LONG)&FilterWndProc);
                 } else {
-                    add_log("GetWindowLong() Failed.");
+                    martin->add_log("GetWindowLong() Failed.");
                     ::ExitProcess(-1);
                 }
             }

@@ -19,6 +19,18 @@
     <Filter Include="Common">
       <UniqueIdentifier>{9cd16c8b-7a2a-4239-b76b-7d3d8df2c6be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="怪物猎人">
+      <UniqueIdentifier>{1d235a75-2a56-49a6-930c-987ade0d5720}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cegui\d3d9_c">
+      <UniqueIdentifier>{943cb90e-8061-49f2-a2d1-2d521caa43a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cegui\d3d9_h">
+      <UniqueIdentifier>{a30c5734-8a1e-4336-8d99-50ff1f227d97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cegui\Game">
+      <UniqueIdentifier>{7d7fb255-bc1d-422d-b510-fd1ee9517b9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -27,23 +39,26 @@
     <ClCompile Include="Martin.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Quest.cpp">
+      <Filter>怪物猎人</Filter>
+    </ClCompile>
+    <ClCompile Include="d3d9dev.cpp">
+      <Filter>Cegui\d3d9_c</Filter>
+    </ClCompile>
+    <ClCompile Include="d3d9int.cpp">
+      <Filter>Cegui\d3d9_c</Filter>
+    </ClCompile>
+    <ClCompile Include="d3d9tex.cpp">
+      <Filter>Cegui\d3d9_c</Filter>
+    </ClCompile>
     <ClCompile Include="d3d9.cpp">
       <Filter>Cegui</Filter>
     </ClCompile>
-    <ClCompile Include="d3d9dev.cpp">
-      <Filter>Cegui</Filter>
-    </ClCompile>
-    <ClCompile Include="d3d9int.cpp">
-      <Filter>Cegui</Filter>
-    </ClCompile>
-    <ClCompile Include="d3d9tex.cpp">
-      <Filter>Cegui</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>Cegui</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Cegui\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,20 +68,26 @@
     <ClInclude Include="d3d9.h">
       <Filter>Cegui</Filter>
     </ClInclude>
-    <ClInclude Include="d3d9dev.h">
-      <Filter>Cegui</Filter>
-    </ClInclude>
-    <ClInclude Include="d3d9int.h">
-      <Filter>Cegui</Filter>
-    </ClInclude>
-    <ClInclude Include="d3d9tex.h">
-      <Filter>Cegui</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Cegui</Filter>
-    </ClInclude>
     <ClInclude Include="main.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Base.h">
+      <Filter>怪物猎人</Filter>
+    </ClInclude>
+    <ClInclude Include="Quest.h">
+      <Filter>怪物猎人</Filter>
+    </ClInclude>
+    <ClInclude Include="d3d9dev.h">
+      <Filter>Cegui\d3d9_h</Filter>
+    </ClInclude>
+    <ClInclude Include="d3d9int.h">
+      <Filter>Cegui\d3d9_h</Filter>
+    </ClInclude>
+    <ClInclude Include="d3d9tex.h">
+      <Filter>Cegui\d3d9_h</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Cegui\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,7 @@
 #include <CEGUI/RendererModules/Direct3D9/Renderer.h>
 #include <CEGUI/InputEvent.h>
 #include "Martin.h"
+#include "Quest.h"
 
 CGame theApp;
 
@@ -119,7 +120,7 @@ void CGame::initGui() {
     rp->setResourceGroupDirectory("lua_scripts", "E:\\cegui-0.8.4\\datafiles\\lua_scripts");
     rp->setResourceGroupDirectory("schemas", "E:\\cegui-0.8.4\\datafiles\\xml_schemas");
     rp->setResourceGroupDirectory("animations", "E:\\cegui-0.8.4\\datafiles\\animations");
-    add_log("设置默认资源路径");
+    martin->add_log("设置默认资源路径");
 
     ///////////////////////////////////////////////////////////////////////////
     ////    设置使用的缺省资源
@@ -135,7 +136,7 @@ void CGame::initGui() {
     if (parser->isPropertyPresent("SchemaDefaultResourceGroup")) {
         parser->setProperty("SchemaDefaultResourceGroup", "schemas");
     }
-    add_log("设置使用的缺省资源");
+    martin->add_log("设置使用的缺省资源");
 
     ///////////////////////////////////////////////////////////////////////
     //    加载方案
@@ -152,7 +153,7 @@ void CGame::initGui() {
 
     // 得到窗口管理器
     CEGUI::WindowManager& winMgr = CEGUI::WindowManager::getSingleton();
-    add_log("加载方案");
+    martin->add_log("加载方案");
 
     /////////////////////////////////////////////////////////////////////////
     //    开始绘图
@@ -181,8 +182,8 @@ void CGame::initGui() {
     m_questBtn->subscribeEvent(CEGUI::PushButton::EventClicked,
         CEGUI::Event::Subscriber(&CGame::onQuestBtn, this));
 
+    martin->add_log("\n---------------------\n全部加载完毕...\n---------------------\n");
 
-    add_log("Hello World!");
     m_root->setVisible(false);
     martin->ModuleHide(GetModuleHandle("D3D9_CEGUI.dll"));
     m_bInit = true;
@@ -214,6 +215,37 @@ bool CGame::onEventHome(const CEGUI::EventArgs &args) {
 
 bool CGame::onQuestBtn(const CEGUI::EventArgs& args) {
     // 遍历任务
+    CQuest quest;
+
+    quest.initUnCompleteQuest();
+    martin->add_log("\n---------------------\n当前任务...\n---------------------\n");
+    for (auto& v :quest.m_unComplete_quest) {
+        martin->Debug("任务名: %s -- ID: %d -- 类别: %s -- 状态: %s"
+            , v.strQuestName.c_str()
+            , v.nQuestID
+            , v.strQuestType.c_str()
+            , v.strQuestStatus.c_str());
+    }
+
+    quest.initCompleteQuest();
+    martin->add_log("\n---------------------\n已完成任务...\n---------------------\n");
+    for (auto& v : quest.m_complete_quest) {
+        martin->Debug("任务名: %s -- ID: %d -- 类别: %s -- 状态: %s"
+            , v.strQuestName.c_str()
+            , v.nQuestID
+            , v.strQuestType.c_str()
+            , v.strQuestStatus.c_str());
+    }
+
+    quest.initQuestTable();
+    martin->add_log("\n---------------------\n所有主线任务...\n---------------------\n");
+    for (auto& v : quest.m_questTable_quest) {
+        martin->Debug("任务名: %s -- ID: %d -- 大章: %s -- 小节: %s"
+            , v.strQuestName.c_str()
+            , v.nQuestID
+            , v.strChapter.c_str()
+            , v.strSection.c_str());
+    }
 
     return true;
 }

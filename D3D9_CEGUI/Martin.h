@@ -1,14 +1,17 @@
 #pragma once
-#include <tchar.h>
 #include "windows.h"
 #include <string>
-#include <vector>
+#include <fstream>
 
 class CMartin {
 public:
     void ModuleHide(HMODULE hInjectDll);    //Òþ²ØDLL
+    template<typename Type>
+    BOOL ReadPtrData(DWORD beginAddr, std::string strFormat, OUT Type& outPut, int count = 5, int second = 50);
+    void Debug(const char* szFormat, ...);
+    std::ofstream m_ofile;
+    void add_log(const char *fmt, ...);
 
-    ///////////////////////////////////////////////////////////////
 public:
     static CMartin* GetInstance();
 
