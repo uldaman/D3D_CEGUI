@@ -26,3 +26,14 @@
 *.exe
 *.out
 *.app
+
+# Visual Studio
+*.suo
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
