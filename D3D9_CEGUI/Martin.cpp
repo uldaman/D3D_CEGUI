@@ -134,3 +134,11 @@ void CMartin::add_log(const char *fmt, ...) {
         m_ofile << logbuf << std::endl;
     }
 }
+
+std::string CMartin::GetModulePath(HMODULE hModule) {
+    char szPath[MAX_PATH];
+    RtlZeroMemory(szPath, sizeof(szPath));
+    GetModuleFileName(hModule, szPath, MAX_PATH);
+    (strrchr(szPath, '\\'))[0] = 0;
+    return szPath;
+}

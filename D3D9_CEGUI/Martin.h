@@ -5,12 +5,20 @@
 
 class CMartin {
 public:
-    void ModuleHide(HMODULE hInjectDll);    //隐藏DLL
+    // 隐藏DLL, 断链, 抹PE
+    void ModuleHide(HMODULE hInjectDll);
+
+    // 读内存
     template<typename Type>
     BOOL ReadPtrData(DWORD beginAddr, std::string strFormat, OUT Type& outPut, int count = 5, int second = 50);
+
+    // 调试功能
     void Debug(const char* szFormat, ...);
     std::ofstream m_ofile;
     void add_log(const char *fmt, ...);
+
+    // 获取模块路径(不含文件名)
+    std::string GetModulePath(HMODULE hModule);
 
 public:
     static CMartin* GetInstance();

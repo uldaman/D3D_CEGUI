@@ -12,6 +12,9 @@ typedef struct GAME_QUEST {
     std::string strQuestStatus; // 进行中 || 失败 || 完成
     std::string strQuestType;   // 主线 || 悬赏
     int nQuestID;
+    bool operator()(GAME_QUEST& p) {
+        return (strQuestName == p.strQuestName);
+    }
 } GameQuest, *pGameQuest;
 
 typedef struct QUEST_TREE {
@@ -33,12 +36,19 @@ public:
     void initUnCompleteQuest(); // 未完成任务初始化
     void initCompleteQuest();   // 已完成任务
     void initQuestTable();      // 初始化所有主线任务列表
+    
 
     std::list<GameQuest> m_unComplete_quest;  // 未完成任务
     std::list<GameQuest> m_complete_quest;    // 已完成任务
     std::list<GameQuest> m_questTable_quest;  // 所有主线任务列表
 
+    void CompleteQuest(int nQuestID); // 交任务
+    void AcceptQuest(int nQuestID); // 接任务
+    std::string GetQuestTable(); // 获取当前可接主线
+    void InteractiveQuest(int nQuestID); // 任务对话
+
 protected:
     void allotQuest(int nQuestInfo, std::list<GameQuest>& QuestList); // 根据传进的任务信息指针分配任务 List
     void TraverTree(int iObject);
+    std::string TransformName(std::string strName); // 转换名字
 };

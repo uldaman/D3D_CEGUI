@@ -11,6 +11,7 @@ const DWORD BASE_CURRENT_MAP_OBJECTS = 0x0208C0F0;   // µ±Ç°µØÍ¼ÖÐµÄËùÓÐ¶ÔÏó±éÀú
 const DWORD BASE_CURRENT_MAP_OBJECTS2 = 0x0257A028;   // µ±Ç°µØÍ¼ÖÐµÄËùÓÐ¶ÔÏó±éÀú2»ùÖ·   µØÖ·: 1C1D134
 const DWORD BASE_AUCTION = 0x02582C34;   // ÅÄÂôÐÐÊý¾Ý»ùÖ·   µØÖ·: 46E960
 const DWORD BASE_SUPPLY_BOX = 0x0208C168;   // ²¹¸øÏä»ùÖ·   µØÖ·: 6AD9D5
+const DWORD BASE_REWARD_TASK = 0x02582D14;   // ÐüÉÍÈÎÎñÐÅÏ¢»ùÖ·   µØÖ·: 559794
 //µ÷ÓÃ
 const DWORD CALL_VALUE_DECRYPT = 0x0560FA0;   // ¼ÓÃÜÖµ½âÃÜº¯Êý   µØÖ·: 55D4E0
 const DWORD CALL_KEYBOARD_EVENT_HANDLE = 0x0172E980;   // °´¼üÏûÏ¢´¦Àí   µØÖ·: 172ED2E
@@ -26,6 +27,7 @@ const DWORD CALL_GET_OBJECT_IDLE_STATE = 0x0169E3B0;   // »ñÈ¡¶ÔÏó¿ÕÏÐ±êÊ¶£¨1£º¿
 const DWORD CALL_ATTACK = 0x0150C2E0;   // ×ó¼ü¹¥»÷CALL£¨È¡×ó±ßµÄÖµ£©   µØÖ·: 150C2E0
 const DWORD CALL_GET_GLOBAL_VARIABLE = 0x076EDB0;   // ¸ù¾ÝÃû³Æ»ñÈ¡ÓÎÏ·ÖÐµÄÈ«¾Ö±äÁ¿   µØÖ·: 441779
 const DWORD CALL_GET_ROLE_LIST_INFO = 0x013FC020;   // »ñÈ¡½ÇÉ«ÁÐ±íÏà¹ØµÄÖ¸Õë   µØÖ·: 51BED2
+const DWORD CALL_GET_REWARD_TASK_STATUS = 0x0559F90;   // »ñÈ¡ÐüÉÍÈÎÎñ×´Ì¬   µØÖ·: 559AF0
 //Æ«ÒÆ
 const DWORD OFFSET_ROLE_INFO_1 = 0x0C8;   // µ±Ç°ÈËÎïÖ¸ÕëÆ«ÒÆ1   µØÖ·: 55D4A6
 const DWORD OFFSET_ROLE_INFO_2 = 0x028;   // µ±Ç°ÈËÎïÖ¸ÕëÆ«ÒÆ2(È¡byte)   µØÖ·: 55D4AC
@@ -78,10 +80,11 @@ const DWORD OFFSET_GET_TIMESTAMP = 0x0228;   // »ñÈ¡Ê±¼ä´Áº¯ÊýÔÚÐé±íÖÐµÄÆ«ÒÆ   µ
 const DWORD OFFSET_GET_COLLECT_ITEM_TYPE = 0x01AC;   // »ñÈ¡²É¼¯ÎïÀà±ð   µØÖ·: 465AD5
 const DWORD OFFSET_GET_SUPPLY_BOX = 0x0164;   // »ñÈ¡²¹¸øÏäµÄº¯ÊýÔÚÐé±íÖÐµÄÆ«ÒÆ   µØÖ·: 63BB54
 const DWORD OFFSET_GET_ROLE_LIST = 0x028;   // »ñÈ¡½ÇÉ«ÁÐ±íµÄº¯ÊýÔÚÐé±íÖÐµÄÆ«ÒÆ£¨È¡byte£©   µØÖ·: 51BEDD
+const DWORD OFFSET_GET_ALL_REWARD_TASK = 0x0D8;   // »ñÈ¡ËùÓÐÐüÉÍÈÎÎñÐÅÏ¢µÄº¯ÊýÔÚÐé±íÖÐµÄÆ«ÒÆ   µØÖ·: 1CB783B
 //³£Á¿
 const DWORD SIZE_SALE_ITEM = 0x068;   // ÉÌµêÎïÆ·ÐÅÏ¢½á¹¹Ìå´óÐ¡£¨È¡byte£©   µØÖ·: 5164D1
 //¹Ò¹³´¦
 const DWORD HOOK_TELESPORT = 0x094D596;   // Ë²ÒÆHook´¦(È¡×ó±ßµÄÖµ)   µØÖ·: 94D596
 const DWORD HOOK_INJURE = 0x01582692;   // ÉËº¦°ü·¢ËÍHOOK(È¡×ó±ßµÄÖµ)   µØÖ·: 1582692
 const DWORD HOOK_INVINCIBLE = 0x013E3C61;   // µ±Ç°ÈËÎïÊÜÉËHOOK(È¡×ó±ßµÄÖµ)£¨Nopµô6¸ö×Ö½Ú¿ÉÊµÏÖÎÞµÐ£©   µØÖ·: 13E3C61
-const DWORD HOOK_SWITCH_REGION = 0x013FB095;   // Ë³Í¼½Å±¾Â¼ÖÆHOOK´¦   µØÖ·: 13FB095
+const DWORD HOOK_SWITCH_REGION = 0x013FB095;   // Ë³Í¼½Å±¾Â¼ÖÆHOOK´¦(È¡×ó±ßµÄÖµ)   µØÖ·: 13FB095

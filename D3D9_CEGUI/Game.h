@@ -18,7 +18,7 @@ public:
     LRESULT CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lparam);
 
     void initGui();
-    void Render();
+    CEGUI::utf8* AToUtf8(const char* pMbcs);
 
     CEGUI::DefaultWindow* m_root;
     CEGUI::FrameWindow* m_mainWnd;

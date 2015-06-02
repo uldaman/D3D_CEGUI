@@ -1,6 +1,10 @@
 #include "Quest.h"
 #include "Martin.h"
 #include "Base.h"
+#include "DataType.h"
+#include "Role.h"
+#include <algorithm>
+#include "NearObject.h"
 
 
 CQuest::CQuest() {
@@ -81,7 +85,7 @@ void CQuest::allotQuest(int nQuestInfo, std::list<GameQuest>& QuestList) {
 
                 int nName;
                 if (martin->ReadPtrData(nTemp + 0x8, TEXT("读取 [任务名]"), nName)) {
-                    quest.strQuestName = (char*)nName;
+                    quest.strQuestName = TransformName((char*)nName);
                 }
 
                 int nID;
@@ -203,7 +207,7 @@ void CQuest::initQuestTable() {
                                                         int nQuestName;
                                                         if (martin->ReadPtrData(QuestInfo + 0x8, TEXT("获取 [任务名]"), nQuestName)) {
                                                             //martin->Debug((char*)nQuestName);
-                                                            quest.strQuestName = (char*)nQuestName;
+                                                            quest.strQuestName = TransformName((char*)nQuestName);
                                                         }
 
                                                         int nID;
@@ -224,4 +228,55 @@ void CQuest::initQuestTable() {
             }
         }
     }
+}
+
+std::string CQuest::TransformName(std::string strName) {
+    std::string::size_type idx = strName.find_first_of("]");
+    if (idx == std::string::npos) {
+        return strName;
+    } else {
+        return strName.substr(idx + 1);
+    }
+}
+
+void CQuest::CompleteQuest(int nQuestID) {
+    pQuestPackage pPackage = new QuestPackage;
+    RtlZeroMemory(pPackage, sizeof(QuestPackage));
+    pPackage->A_Head = 0x00000E04;
+    pPackage->E_FID = nQuestID;
+    CRole::SendPackage((DWORD)pPackage);
+    delete pPackage;
+}
+
+std::string CQuest::GetQuestTable() {
+    initQuestTable(); // 先初始化一次所有主线
+    initCompleteQuest(); // 再初始化一次已完成主线
+    for (auto& v : m_questTable_quest) {
+        std::list<GameQuest>::iterator it = std::find_if(m_complete_quest.begin(), m_complete_quest.end(), v);
+        if (it == m_complete_quest.end()) {
+            return v.strQuestName;
+        } else {
+            martin->Debug(it->strQuestName.c_str());
+        }
+    }
+    return "";
+}
+
+void CQuest::AcceptQuest(int nQuestID) {
+    pQuestPackage pPackage = new QuestPackage;
+    RtlZeroMemory(pPackage, sizeof(QuestPackage));
+    pPackage->A_Head = 0x00000E01;
+    pPackage->E_FID = nQuestID;
+    CRole::SendPackage((DWORD)pPackage);
+    delete pPackage;
+}
+
+void CQuest::InteractiveQuest(int nQuestID) {
+    pQuestInteractivePackage pPackage = new QuestInteractivePackage;
+    RtlZeroMemory(pPackage, sizeof(QuestInteractivePackage));
+    pPackage->A_Head = 0x00002402;
+    pPackage->E_Fixation = 0x00000002;
+    pPackage->F_FID = nQuestID;
+    CRole::SendPackage((DWORD)pPackage);
+    delete pPackage;
 }

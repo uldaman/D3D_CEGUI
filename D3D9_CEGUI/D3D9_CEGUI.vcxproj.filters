@@ -31,6 +31,9 @@
     <Filter Include="Cegui\Game">
       <UniqueIdentifier>{7d7fb255-bc1d-422d-b510-fd1ee9517b9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lua">
+      <UniqueIdentifier>{2e0fb408-fbe0-4c0f-8197-bc2111d9493e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -60,6 +63,18 @@
     <ClCompile Include="Game.cpp">
       <Filter>Cegui\Game</Filter>
     </ClCompile>
+    <ClCompile Include="LuaAPI.cpp">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalVariable.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Role.cpp">
+      <Filter>怪物猎人</Filter>
+    </ClCompile>
+    <ClCompile Include="NearObject.cpp">
+      <Filter>怪物猎人</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Martin.h">
@@ -70,9 +85,6 @@
     </ClInclude>
     <ClInclude Include="main.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Base.h">
-      <Filter>怪物猎人</Filter>
     </ClInclude>
     <ClInclude Include="Quest.h">
       <Filter>怪物猎人</Filter>
@@ -88,6 +100,30 @@
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Cegui\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CLua.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaAPI.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Base.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DataType.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DefMessage.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalVariable.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Role.h">
+      <Filter>怪物猎人</Filter>
+    </ClInclude>
+    <ClInclude Include="NearObject.h">
+      <Filter>怪物猎人</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

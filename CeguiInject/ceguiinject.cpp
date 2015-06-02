@@ -15,7 +15,7 @@
 CeguiInject::CeguiInject(QWidget *parent)
     : QWidget(parent) {
     ui.setupUi(this);
-    QString strOutput = QStringLiteral("说明: 点击 \"启动插件\" 后开始等待游戏启动,\n      等待中按键盘 \"esc\" 键取消等待...");
+    QString strOutput = QStringLiteral("说明: 点击 \"启动插件\" 后开始等待游戏启动,\n      等待中可按键盘 \"esc\" 键取消等待...");
     ui.label_output->setText(strOutput);
     ui.radioButton_d3d9->setChecked(true);
 }
@@ -74,7 +74,8 @@ void CeguiInject::runGame() {
     QString strSplit = "\\";
     int index = qstrDll.lastIndexOf(strSplit);
     qstrDll = qstrDll.left(index);
-    strDll = qstrDll.toStdString();
+    //strDll = qstrDll.toStdString();
+    strDll = std::string((const char*)qstrDll.toLocal8Bit());
     //dllname[lstrlen(dllname) - 3] = 0;
     //lstrcat(dllname, "dll");
 
@@ -103,7 +104,8 @@ void CeguiInject::runGame() {
     strGame = strGame.right(strGame.length() - index - 1);
     //QByteArray ba = strGame.toLatin1();
     //char* szGame = ba.data();
-    std::string szGame = strGame.toStdString();
+    //std::string szGame = strGame.toStdString();
+    std::string szGame = std::string((const char*)strGame.toLocal8Bit());
 
     PROCESSENTRY32 pe32;
     while (!GetProcessOf(szGame.c_str(), &pe32)) {

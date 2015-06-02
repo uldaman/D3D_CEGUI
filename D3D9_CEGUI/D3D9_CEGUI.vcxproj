@@ -92,20 +92,31 @@
     <ClCompile Include="d3d9int.cpp" />
     <ClCompile Include="d3d9tex.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GlobalVariable.cpp" />
+    <ClCompile Include="LuaAPI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Martin.cpp" />
+    <ClCompile Include="NearObject.cpp" />
     <ClCompile Include="Quest.cpp" />
+    <ClCompile Include="Role.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base.h" />
+    <ClInclude Include="CLua.h" />
     <ClInclude Include="d3d9.h" />
     <ClInclude Include="d3d9dev.h" />
     <ClInclude Include="d3d9int.h" />
     <ClInclude Include="d3d9tex.h" />
+    <ClInclude Include="DataType.h" />
+    <ClInclude Include="DefMessage.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GlobalVariable.h" />
+    <ClInclude Include="LuaAPI.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Martin.h" />
+    <ClInclude Include="NearObject.h" />
     <ClInclude Include="Quest.h" />
+    <ClInclude Include="Role.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Martin.inl" />
