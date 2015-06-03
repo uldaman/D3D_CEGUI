@@ -99,6 +99,16 @@ LuaGlue Lua_IsInFB(lua_State *L) {
     return 1;
 }
 
+// MH_加载脚本
+LuaGlue Lua_LoadScript(lua_State *L) {
+    std::string strScript = g_pClua->GetStringArgument(1, "");
+    std::string strPath = martin->GetModulePath(NULL);
+    strScript = strPath + "\\" + strScript;
+    g_pClua->RunScript(strScript.c_str());
+
+    return 0;
+}
+
 luaL_reg ConsoleGlue[] = {
         { "RegisterEvent", _RegisterEvent },
         { "MH_调试", Lua_Trac },
@@ -112,6 +122,7 @@ luaL_reg ConsoleGlue[] = {
         { "MH_获取可接主线", Lua_GetQuestTable },
         { "MH_接任务", Lua_AcceptQuest },
         { "MH_任务对话", Lua_InteractiveQuest },
+        { "MH_加载脚本", Lua_LoadScript },
         { nullptr, NULL },
 };
 

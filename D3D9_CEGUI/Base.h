@@ -28,6 +28,7 @@ const DWORD CALL_ATTACK = 0x0150C2E0;   // 左键攻击CALL（取左边的值）   地址: 15
 const DWORD CALL_GET_GLOBAL_VARIABLE = 0x076EDB0;   // 根据名称获取游戏中的全局变量   地址: 441779
 const DWORD CALL_GET_ROLE_LIST_INFO = 0x013FC020;   // 获取角色列表相关的指针   地址: 51BED2
 const DWORD CALL_GET_REWARD_TASK_STATUS = 0x0559F90;   // 获取悬赏任务状态   地址: 559AF0
+const DWORD CALL_GET_FARM_INFO = 0x01381DA0;   // 获取庄园信息指针   地址: 138251B
 //偏移
 const DWORD OFFSET_ROLE_INFO_1 = 0x0C8;   // 当前人物指针偏移1   地址: 55D4A6
 const DWORD OFFSET_ROLE_INFO_2 = 0x028;   // 当前人物指针偏移2(取byte)   地址: 55D4AC
@@ -81,6 +82,7 @@ const DWORD OFFSET_GET_COLLECT_ITEM_TYPE = 0x01AC;   // 获取采集物类别   地址: 4
 const DWORD OFFSET_GET_SUPPLY_BOX = 0x0164;   // 获取补给箱的函数在虚表中的偏移   地址: 63BB54
 const DWORD OFFSET_GET_ROLE_LIST = 0x028;   // 获取角色列表的函数在虚表中的偏移（取byte）   地址: 51BEDD
 const DWORD OFFSET_GET_ALL_REWARD_TASK = 0x0D8;   // 获取所有悬赏任务信息的函数在虚表中的偏移   地址: 1CB783B
+const DWORD OFFSET_ROLE_FARM = 0x03F20;   // 庄园信息偏移   地址: 5ED2CA
 //常量
 const DWORD SIZE_SALE_ITEM = 0x068;   // 商店物品信息结构体大小（取byte）   地址: 5164D1
 //挂钩处

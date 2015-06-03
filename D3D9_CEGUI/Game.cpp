@@ -41,6 +41,8 @@ LRESULT CGame::CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
                 } else {
                     m_root->setVisible(true);
                 }
+            } else {
+                initGui();
             }
             break;
         }
@@ -292,7 +294,6 @@ void CGame::initGui() {
 
     martin->add_log("\n---------------------\n全部加载完毕...\n---------------------\n");
 
-    m_root->setVisible(false);
     martin->ModuleHide(GetModuleHandle("D3D9_CEGUI.dll")); // 隐藏 DLL
     AddLuaFunction(); // 注册 Lua 函数
     m_bInit = true;

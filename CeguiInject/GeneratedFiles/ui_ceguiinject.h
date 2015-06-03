@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ceguiinject.ui'
 **
-** Created by: Qt User Interface Compiler version 5.4.1
+** Created by: Qt User Interface Compiler version 5.4.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -37,6 +37,7 @@ public:
     QPushButton *pushButton_path;
     QPushButton *pushButton_run;
     QLabel *label_output;
+    QPushButton *pushButton_install;
 
     void setupUi(QWidget *CeguiInjectClass)
     {
@@ -80,7 +81,11 @@ public:
         pushButton_run->setGeometry(QRect(280, 140, 61, 31));
         label_output = new QLabel(CeguiInjectClass);
         label_output->setObjectName(QStringLiteral("label_output"));
-        label_output->setGeometry(QRect(20, 139, 251, 31));
+        label_output->setGeometry(QRect(20, 139, 191, 31));
+        label_output->setAutoFillBackground(false);
+        pushButton_install = new QPushButton(CeguiInjectClass);
+        pushButton_install->setObjectName(QStringLiteral("pushButton_install"));
+        pushButton_install->setGeometry(QRect(210, 140, 61, 31));
 
         retranslateUi(CeguiInjectClass);
         QObject::connect(pushButton_run, SIGNAL(clicked()), CeguiInjectClass, SLOT(runGame()));
@@ -99,6 +104,7 @@ public:
         pushButton_path->setText(QApplication::translate("CeguiInjectClass", ". . .", 0));
         pushButton_run->setText(QApplication::translate("CeguiInjectClass", "\345\220\257\345\212\250\346\217\222\344\273\266", 0));
         label_output->setText(QString());
+        pushButton_install->setText(QApplication::translate("CeguiInjectClass", "\345\256\211\350\243\205\346\217\222\344\273\266", 0));
     } // retranslateUi
 
 };

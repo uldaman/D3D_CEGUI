@@ -15,7 +15,7 @@
 CeguiInject::CeguiInject(QWidget *parent)
     : QWidget(parent) {
     ui.setupUi(this);
-    QString strOutput = QStringLiteral("说明: 点击 \"启动插件\" 后开始等待游戏启动,\n      等待中可按键盘 \"esc\" 键取消等待...");
+    QString strOutput = QStringLiteral("说明: 首次使用请先点击安装插件.");
     ui.label_output->setText(strOutput);
     ui.radioButton_d3d9->setChecked(true);
 }
@@ -70,14 +70,13 @@ void CeguiInject::runGame() {
     char dllname[MAX_PATH];
     GetModuleFileName(NULL, dllname, MAX_PATH);
     std::string strDll = dllname;
-    QString qstrDll = QString::fromStdString(strDll);
+    //QString qstrDll = QString::fromStdString(strDll); // 此用法会造成中文乱码
+    QString qstrDll = QString::fromLocal8Bit(strDll.c_str());
     QString strSplit = "\\";
     int index = qstrDll.lastIndexOf(strSplit);
     qstrDll = qstrDll.left(index);
-    //strDll = qstrDll.toStdString();
+    //strDll = qstrDll.toStdString(); // 此用法会造成程序崩溃
     strDll = std::string((const char*)qstrDll.toLocal8Bit());
-    //dllname[lstrlen(dllname) - 3] = 0;
-    //lstrcat(dllname, "dll");
 
     if (ui.radioButton_d3d9->isChecked()) {
         strDll += "\\D3D9_CEGUI.dll";
@@ -93,18 +92,21 @@ void CeguiInject::runGame() {
     //if (IDCANCEL == ::MessageBox(0, "点击 \"确定\" 后开始等待游戏启动\n\n等待中按键盘 \"esc\" 键取消等待...", "Tatnium Injector", MB_OK)) {
     //    return;
     //}
+
+    QString strOutput = QStringLiteral("点击 \"Yes\" 开始等待游戏启动(手动),\n等待中可按键盘 \"esc\" 键取消等待...");
+    if (QMessageBox::No == QMessageBox::question(this, QStringLiteral("是否开启插件?"), strOutput, QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes)) {
+        return;
+    }
     
     QString strGame = ui.lineEdit_path->text();
     if (strGame.isEmpty()) {
+        QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("没有正确选择游戏路径!"));
         return;
     }
 
     strSplit = "/";
     index = strGame.lastIndexOf(strSplit);
     strGame = strGame.right(strGame.length() - index - 1);
-    //QByteArray ba = strGame.toLatin1();
-    //char* szGame = ba.data();
-    //std::string szGame = strGame.toStdString();
     std::string szGame = std::string((const char*)strGame.toLocal8Bit());
 
     PROCESSENTRY32 pe32;

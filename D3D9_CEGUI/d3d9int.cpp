@@ -43,12 +43,13 @@ LRESULT CALLBACK FilterWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
 
 HRESULT APIENTRY hkIDirect3D9::CreateDevice(UINT Adapter, D3DDEVTYPE DeviceType, HWND hFocusWindow, DWORD BehaviorFlags, D3DPRESENT_PARAMETERS *pPresentationParameters, IDirect3DDevice9 **ppReturnedDeviceInterface) {
     HRESULT hRet = m_pD3Dint->CreateDevice(Adapter, DeviceType, hFocusWindow, BehaviorFlags, pPresentationParameters, ppReturnedDeviceInterface);
-    static int nCount = 0;
+    //static int nCount = 0;
+    martin->add_log("CreateDevice ·µ»ØÖµ 0x%X", hRet);
     if (SUCCEEDED(hRet)) {
         theApp.m_pDevice = new hkIDirect3DDevice9(ppReturnedDeviceInterface, pPresentationParameters, this);
         martin->add_log("Hooked Direct3D9 device: 0x%x -> 0x%x", ((hkIDirect3DDevice9*)theApp.m_pDevice)->m_pD3Ddev, theApp.m_pDevice);
-        if (++nCount == 3) {
-            theApp.initGui();
+        //if (++nCount == 3) {
+            //theApp.initGui();
             if (theApp.m_OrgWndProc == 0) {
                 theApp.m_hGWnd = hFocusWindow;
                 theApp.m_OrgWndProc = ::GetWindowLong(theApp.m_hGWnd, GWL_WNDPROC);
@@ -59,7 +60,7 @@ HRESULT APIENTRY hkIDirect3D9::CreateDevice(UINT Adapter, D3DDEVTYPE DeviceType,
                     ::ExitProcess(-1);
                 }
             }
-        }
+        //}
     }
 
     return hRet;

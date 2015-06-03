@@ -61,10 +61,7 @@ bool WINAPI DllMain(HMODULE hDll, DWORD dwReason, PVOID pvReserved) {
         oDirect3DCreate9 = (tDirect3DCreate9)DetourFunc(
             (BYTE*)GetProcAddress(hMod, "Direct3DCreate9"), // »ñÈ¡ Direct3DCreate9 µØÖ·
             (BYTE*)hkDirect3DCreate9,
-            5); // HOOK Direct3DCreate9
-
-        martin->add_log("\n---------------------\nOld Direct3DCreate9 --> 0x%X...\n---------------------", (int)oDirect3DCreate9);
-        
+            5); // HOOK Direct3DCreate9        
         return true;
     } else if (dwReason == DLL_PROCESS_DETACH) {
         martin->add_log("---------------------\nTatniumD3D Exiting...\n---------------------\n");
@@ -72,7 +69,6 @@ bool WINAPI DllMain(HMODULE hDll, DWORD dwReason, PVOID pvReserved) {
             martin->m_ofile.close();
         }
     }
-
     return false;
 }
 
