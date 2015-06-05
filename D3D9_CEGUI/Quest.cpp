@@ -231,6 +231,10 @@ void CQuest::initQuestTable() {
 }
 
 std::string CQuest::TransformName(std::string strName) {
+    StringReplace(strName, "¡°", "");
+    StringReplace(strName, "¡±", "");
+    StringReplace(strName, "!", "");
+    StringReplace(strName, "£¿", "");
     std::string::size_type idx = strName.find_first_of("]");
     if (idx == std::string::npos) {
         return strName;
@@ -277,6 +281,26 @@ void CQuest::InteractiveQuest(int nQuestID) {
     pPackage->A_Head = 0x00002402;
     pPackage->E_Fixation = 0x00000002;
     pPackage->F_FID = nQuestID;
+    CRole::SendPackage((DWORD)pPackage);
+    delete pPackage;
+}
+
+void CQuest::StringReplace(std::string &strBase, std::string strSrc, std::string strDes) {
+    std::string::size_type pos = 0;
+    std::string::size_type srcLen = strSrc.size();
+    std::string::size_type desLen = strDes.size();
+    pos = strBase.find(strSrc, pos);
+    while ((pos != std::string::npos)) {
+        strBase.replace(pos, srcLen, strDes);
+        pos = strBase.find(strSrc, (pos + desLen));
+    }
+}
+
+void CQuest::¶ÍÔìÏþ·ç¶Ì½£() {
+    pPackage¶ÍÔìÏþ·ç¶Ì½£ pPackage = new Package¶ÍÔìÏþ·ç¶Ì½£;
+    RtlZeroMemory(pPackage, sizeof(Package¶ÍÔìÏþ·ç¶Ì½£));
+    pPackage->A_Head = 0x00000903;
+    pPackage->E_Fixation = 0x00000544;
     CRole::SendPackage((DWORD)pPackage);
     delete pPackage;
 }

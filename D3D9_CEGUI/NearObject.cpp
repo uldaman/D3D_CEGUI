@@ -95,7 +95,7 @@ void CNearObject::allotObject(int nKey) {
                     popad;
                 }
             } catch (...) {
-                martin->Debug(TEXT("allotObject -- 1 --> 异常"));
+                martin->Debug("allotObject -- 1 --> 异常");
                 return;
             }
         }
@@ -157,10 +157,11 @@ std::string CNearObject::GetObjectName(int nAddr) {
         martin->Debug(TEXT("GetObjectName --> 异常"));
     }
     martin->ReadPtrData(nName, "获取 [对象名]", nName);
-    martin->Debug((char*)nName);
+    //martin->Debug((char*)nName);
     return (char*)nName;
 }
 
+// 对话 NPC
 void CNearObject::Interactive(int nID) {
     pInteractivePackage pPackage = new InteractivePackage;
     RtlZeroMemory(pPackage, sizeof(InteractivePackage));

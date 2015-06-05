@@ -46,9 +46,11 @@ public:
     void AcceptQuest(int nQuestID); // 接任务
     std::string GetQuestTable(); // 获取当前可接主线
     void InteractiveQuest(int nQuestID); // 任务对话
+    void 锻造晓风短剑();
 
 protected:
     void allotQuest(int nQuestInfo, std::list<GameQuest>& QuestList); // 根据传进的任务信息指针分配任务 List
     void TraverTree(int iObject);
     std::string TransformName(std::string strName); // 转换名字
+    void StringReplace(std::string &strBase, std::string strSrc, std::string strDes);
 };

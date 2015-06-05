@@ -75,6 +75,9 @@
     <ClCompile Include="NearObject.cpp">
       <Filter>怪物猎人</Filter>
     </ClCompile>
+    <ClCompile Include="BrushZones.cpp">
+      <Filter>怪物猎人</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Martin.h">
@@ -123,6 +126,9 @@
       <Filter>怪物猎人</Filter>
     </ClInclude>
     <ClInclude Include="NearObject.h">
+      <Filter>怪物猎人</Filter>
+    </ClInclude>
+    <ClInclude Include="BrushZones.h">
       <Filter>怪物猎人</Filter>
     </ClInclude>
   </ItemGroup>

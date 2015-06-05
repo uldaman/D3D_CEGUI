@@ -15,6 +15,7 @@
 #include "DefMessage.h"
 #include "Role.h"
 #include "NearObject.h"
+#include "BrushZones.h"
 
 CGame theApp;
 
@@ -28,8 +29,9 @@ CGame::~CGame(void) {
 }
 
 LRESULT CGame::CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
-    CQuest quest;
-    CNearObject nearObj;
+    static CQuest quest;
+    static CNearObject nearObj;
+    static CBrushZones zone;
 
     switch (message) {
     case WM_KEYDOWN:
@@ -134,6 +136,64 @@ LRESULT CGame::CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
                 break;
             }
         }
+        break;
+    case WM_锻造晓风短剑:
+        quest.锻造晓风短剑();
+        break;
+    case WM_CITY_FLY:
+        CRole::CityFly(*(std::string*)wParam);
+        break;
+    case WM_CHOOSE_FB:
+        zone.ChooseFB((int)wParam);
+        break;
+    case WM_START_FB:
+        zone.StartFB((int)wParam);
+        break;
+    case WM_INTO_FB:
+        zone.IntoFB();
+        break;
+    case WM_UPDATA_BOSS:
+        ((CBrushZones*)wParam)->initBoss();
+        break;
+    case WM_ROLE_ROOM:
+        *(int*)wParam = CRole::GetRoleRoom();
+        break;
+    case WM_BOSS_ROOM:
+        zone.initBoss();
+        *(int*)wParam = zone.m_nBossRoom;
+        break;
+    case WM_GET_ZONE:
+        *(std::string*)wParam = CRole::GetRoleZone();
+        break;
+    case WM_GET_MAP:
+        *(std::string*)wParam = CRole::GetRoleMap();
+        break;
+    case WM_GOTO_BOSS:
+        zone.GotoBoss();
+        break;
+    case WM_BY_MAP:
+        CRole::ByMap((char*)wParam);
+        break;
+    case WM_TURN:
+        CRole::Turn();
+        break;
+    case WM_ATTACK_PACK:
+        CRole::Attack_Pack((int)wParam);
+        break;
+    case WM_FORWARD:
+        CRole::GoForward(); // 前进下
+        break;
+    case WM_STOP:
+        CRole::Stop();
+        break;
+    case WM_ATTACK:
+        CRole::Attack();
+        break;
+    case WM_HAVE_WEAPON:
+        *(int*)wParam = CRole::HaveWeapon();
+        break;
+    case WM_WEAPON:
+        CRole::Weapon();
         break;
     }
 
@@ -293,10 +353,13 @@ void CGame::initGui() {
         CEGUI::Event::Subscriber(&CGame::onQuestBtn, this));
 
     martin->add_log("\n---------------------\n全部加载完毕...\n---------------------\n");
+    m_bInit = true;
 
+    // 以下为非 CEGUI 操作
     martin->ModuleHide(GetModuleHandle("D3D9_CEGUI.dll")); // 隐藏 DLL
     AddLuaFunction(); // 注册 Lua 函数
-    m_bInit = true;
+    CBrushZones zone;
+    zone.initZonesInfo();
 }
 
 bool CGame::onSkillBtn(const CEGUI::EventArgs& args) {
