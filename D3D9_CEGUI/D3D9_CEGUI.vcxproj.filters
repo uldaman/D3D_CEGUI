@@ -78,6 +78,12 @@
     <ClCompile Include="BrushZones.cpp">
       <Filter>怪物猎人</Filter>
     </ClCompile>
+    <ClCompile Include="GameHOOK.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>怪物猎人</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Martin.h">
@@ -129,6 +135,12 @@
       <Filter>怪物猎人</Filter>
     </ClInclude>
     <ClInclude Include="BrushZones.h">
+      <Filter>怪物猎人</Filter>
+    </ClInclude>
+    <ClInclude Include="GameHOOK.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
       <Filter>怪物猎人</Filter>
     </ClInclude>
   </ItemGroup>

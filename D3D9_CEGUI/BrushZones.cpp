@@ -63,7 +63,7 @@ void CBrushZones::initZonesInfo() {
                                 if (idx_1 == std::string::npos          // 没找到 "关卡"
                                     && idx_2 == std::string::npos       // 没找到 "测试"
                                     && idx_3 == std::string::npos) {    // 没找到 "map"
-                                    martin->Debug(strNmae.c_str());
+                                    //martin->Debug(strNmae.c_str());
                                     martin->ReadPtrData(dwTmep + 0x10, TEXT("获取 [地图ID]"), nID);
                                     auto it = CBrushZones::s_fbMap.find(strNmae);
                                     if (it == CBrushZones::s_fbMap.end()) {
@@ -471,4 +471,89 @@ BOOL CBrushZones::Teleport(int nKey) {
         }
     }
     return FALSE;
+}
+
+void CBrushZones::GetItemFormCrates(std::string strItem) {
+    DWORD dwRet, dwStart, dwEnd;
+
+    try {
+        _asm {
+            pushad;
+            pushfd;
+
+            mov eax, BASE_SUPPLY_BOX;
+            mov edi, [eax];
+            mov eax, [edi];
+            mov edx, OFFSET_GET_SUPPLY_BOX;
+            mov edx, [eax + edx]; //0x164:OFFSET_GET_SUPPLY_BOX 
+            mov ecx, edi;
+            call edx;
+            mov dwRet, eax;
+
+            popfd;
+            popad;
+        }
+    } catch (...) {
+        martin->Debug("GetItemFormCrates --> 异常");
+        return;
+    }
+
+    if (IsBadReadPtr((CONST VOID*)dwRet, sizeof(DWORD)) == 0) {
+        DWORD dwTemp;
+        if (martin->ReadPtrData(dwRet + 0x8, "获取 [物品遍历链表] -- 1", dwTemp)) {
+            if (martin->ReadPtrData(dwTemp, "获取 [物品遍历链表] -- 2", dwTemp)) {
+                martin->ReadPtrData(dwTemp + 0x10, "获取 [物品遍历链表首]", dwStart);
+                martin->ReadPtrData(dwTemp + 0x14, "获取 [物品遍历链表尾]", dwEnd);
+                std::multimap<std::string, IdIndex> CratesMap;
+                TraverList(dwStart, dwEnd, CratesMap);
+                for (auto itMap = CratesMap.begin(); itMap != CratesMap.end(); itMap++) {
+                    martin->Debug("补给箱物品: %s -- 序号: %d -- ID: 0x%X", (itMap->first).c_str(), (itMap->second).dwIndex, (itMap->second).dwID);
+                }
+
+                auto it = CratesMap.find(strItem);
+                if (it != CratesMap.end()) { // 说明匹配到ID了
+                    // 取物品
+                    GetItemPack(it->second.dwIndex, it->second.dwID);
+                }
+            }
+        }
+    }
+}
+
+void CBrushZones::TraverList(int nStart, int nEnd, std::multimap<std::string, IdIndex>& CratesMap) {
+    pCratesList pList;
+    pList = (pCratesList)nStart;
+    allotItem(pList->dwBase, CratesMap);
+
+    if (nStart == nEnd) {
+        return;
+    } else {
+        TraverList(pList->dwNext, nEnd, CratesMap);
+    }
+}
+
+void CBrushZones::allotItem(int nObject, std::multimap<std::string, IdIndex>& CratesMap) {
+    int nIndex, nID;
+    std::string strName;
+    martin->ReadPtrData(nObject, "获取 [补给箱物品序号]", nIndex);
+    martin->ReadPtrData(nObject + 0x4, "获取 [补给箱物品ID]", nID);
+    //martin->Debug("ID: 0x%X", nID);
+
+    auto it = CRole::s_allItems.find(nID);
+    if (it != CRole::s_allItems.end()) { // 说明匹配到ID了
+        strName = it->second;
+        IdIndex idindex{ nID, nIndex };
+        CratesMap.insert(std::map<std::string, IdIndex>::value_type(strName, idindex));
+    }
+}
+
+void CBrushZones::GetItemPack(int nIndex, int nID) {
+    pGET_ITEM_PACKAGE pGip = new GET_ITEM_PACKAGE;
+    RtlZeroMemory(pGip, sizeof(GET_ITEM_PACKAGE));
+    pGip->A_Head = 0xD01;
+    pGip->E_Index = nIndex;
+    pGip->F_ID = nID;
+    pGip->G_Num = 1;
+    CRole::SendPackage((DWORD)pGip);
+    delete pGip;
 }

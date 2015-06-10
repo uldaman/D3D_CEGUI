@@ -10,6 +10,7 @@
 #include <tlhelp32.h>
 #include <QMessageBox>
 #include "forcelib\ForceLib.h"
+#include "My_Ini.h"
 
 
 CeguiInject::CeguiInject(QWidget *parent)
@@ -18,6 +19,23 @@ CeguiInject::CeguiInject(QWidget *parent)
     QString strOutput = QStringLiteral("说明: 首次使用请先点击安装插件.");
     ui.label_output->setText(strOutput);
     ui.radioButton_d3d9->setChecked(true);
+
+    ///////////////////////////////////////////////////////////////////////////////
+
+    char dllname[MAX_PATH];
+    GetModuleFileName(NULL, dllname, MAX_PATH);
+    std::string strDll = dllname;
+    //QString qstrDll = QString::fromStdString(strDll); // 此用法会造成中文乱码
+    QString qstrDll = QString::fromLocal8Bit(strDll.c_str());
+    QString strSplit = "\\";
+    int index = qstrDll.lastIndexOf(strSplit);
+    qstrDll = qstrDll.left(index);
+    //strDll = qstrDll.toStdString(); // 此用法会造成程序崩溃
+    strDll = std::string((const char*)qstrDll.toLocal8Bit());
+    strDll += "\\Config.ini";
+    CMy_Ini obj_ini(strDll.c_str());
+    QString fileName = QString::fromLocal8Bit(obj_ini.GetString("Path", "Game").c_str());
+    ui.lineEdit_path->setText(fileName);
 }
 
 CeguiInject::~CeguiInject() {
@@ -140,6 +158,20 @@ void CeguiInject::runGame() {
 void CeguiInject::selectPath() {
     QString fileName = QFileDialog::getOpenFileName(this, "Open File", NULL, "file (*.exe)");
     if (!fileName.isEmpty()) {
+        char dllname[MAX_PATH];
+        GetModuleFileName(NULL, dllname, MAX_PATH);
+        std::string strDll = dllname;
+        //QString qstrDll = QString::fromStdString(strDll); // 此用法会造成中文乱码
+        QString qstrDll = QString::fromLocal8Bit(strDll.c_str());
+        QString strSplit = "\\";
+        int index = qstrDll.lastIndexOf(strSplit);
+        qstrDll = qstrDll.left(index);
+        //strDll = qstrDll.toStdString(); // 此用法会造成程序崩溃
+        strDll = std::string((const char*)qstrDll.toLocal8Bit());
+        strDll += "\\Config.ini";
+        CMy_Ini obj_ini(strDll.c_str());
+        obj_ini.DeleteSection(TEXT("Path"));
+        obj_ini.WriteString("Path", "Game", (const char*)fileName.toLocal8Bit());
         ui.lineEdit_path->setText(fileName);
     }
 }

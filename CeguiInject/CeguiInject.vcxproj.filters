@@ -36,6 +36,9 @@
     <Filter Include="Source Files\forcelib">
       <UniqueIdentifier>{724fcb70-bf40-4e96-b195-80661a0401c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="INI">
+      <UniqueIdentifier>{5efe73ef-0b9f-421f-9024-dc403b97af90}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -59,6 +62,9 @@
     <ClCompile Include="forcelib\TH32.cpp">
       <Filter>Source Files\forcelib</Filter>
     </ClCompile>
+    <ClCompile Include="My_Ini.cpp">
+      <Filter>INI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ceguiinject.h">
@@ -80,6 +86,9 @@
     </ClInclude>
     <ClInclude Include="forcelib\TH32.h">
       <Filter>Source Files\forcelib</Filter>
+    </ClInclude>
+    <ClInclude Include="My_Ini.h">
+      <Filter>INI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

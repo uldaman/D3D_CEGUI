@@ -115,7 +115,9 @@ void CQuest::initCompleteQuest() {
     DWORD dwObject;
     if (martin->ReadPtrData(BASE_TASK, "获取 [已经完成任务二叉树] -- 1", dwObject)) {
         if (martin->ReadPtrData(dwObject + 0x28 + 0x4, "获取 [已经完成任务二叉树] -- 2", dwObject)) {
-            TraverTree(dwObject);
+            if (IsBadReadPtr((CONST VOID*)dwObject, sizeof(DWORD)) == 0) {
+                TraverTree(dwObject);
+            }
         }
     }
 }

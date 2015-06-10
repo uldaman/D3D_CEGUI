@@ -26,3 +26,16 @@
 #define WM_ATTACK                       WM_USER + 2324  // 攻击
 #define WM_HAVE_WEAPON                  WM_USER + 2325  // 判断是否装备了武器
 #define WM_WEAPON                       WM_USER + 2326  // 装备武器
+#define WM_GET_HP_PER                   WM_USER + 2327  // 获取当前血比
+#define WM_INVINCIBLE                   WM_USER + 2328  // 开启无敌
+#define WM_UN_INVINCIBLE                WM_USER + 2329  // 关闭无敌
+#define WM_TELEPORT                     WM_USER + 2330  // 瞬移到坐标
+#define WM_GET_POINT                    WM_USER + 2331  // 获取当前坐标
+#define WM_GO_LEFT                      WM_USER + 2332  // 左
+#define WM_GO_RIGHT                     WM_USER + 2333  // 右
+#define WM_GO_BACK                      WM_USER + 2334  // 后
+#define WM_HAVE_MODE                    WM_USER + 2335  // 是否在菜单模式
+#define WM_CHANGE_MODE                  WM_USER + 2336  // 是否在菜单模式
+#define WM_ROLL                         WM_USER + 2337  // 翻滚
+#define WM_GET_ITEM_FORM_CRATES         WM_USER + 2338  // 补给箱取物
+#define WM_COLLECT_ALL                  WM_USER + 2339  // 采集所有物品

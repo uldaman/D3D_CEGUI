@@ -16,6 +16,7 @@
 #include "Role.h"
 #include "NearObject.h"
 #include "BrushZones.h"
+#include "DataType.h"
 
 CGame theApp;
 
@@ -32,6 +33,7 @@ LRESULT CGame::CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
     static CQuest quest;
     static CNearObject nearObj;
     static CBrushZones zone;
+    static pPOINT_TARGET s_p_Point = nullptr;
 
     switch (message) {
     case WM_KEYDOWN:
@@ -101,18 +103,18 @@ LRESULT CGame::CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
         quest.initQuestTable();
         for (auto& v : quest.m_questTable_quest) {
             if (*(std::string*)wParam == v.strQuestName) {
-                    // 接任务
-                    // 1. 打开 NPC
-                    nearObj.initNear();
-                    for (auto& w : nearObj.m_near_object) {
-                        if (w.strNpcName == *(std::string*)lParam) { // 找到 NPC
-                            nearObj.Interactive(w.nNpcID);
-                            Sleep(50);
-                            break;
-                        }
+                // 接任务
+                // 1. 打开 NPC
+                nearObj.initNear();
+                for (auto& w : nearObj.m_near_object) {
+                    if (w.strNpcName == *(std::string*)lParam) { // 找到 NPC
+                        nearObj.Interactive(w.nNpcID);
+                        Sleep(50);
+                        break;
                     }
-                    // 2. 接任务
-                    quest.AcceptQuest(v.nQuestID);
+                }
+                // 2. 接任务
+                quest.AcceptQuest(v.nQuestID);
                 break;
             }
         }
@@ -184,7 +186,7 @@ LRESULT CGame::CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
         CRole::GoForward(); // 前进下
         break;
     case WM_STOP:
-        CRole::Stop();
+        CRole::Stop(*(std::string*)wParam);
         break;
     case WM_ATTACK:
         CRole::Attack();
@@ -194,6 +196,47 @@ LRESULT CGame::CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
         break;
     case WM_WEAPON:
         CRole::Weapon();
+        break;
+    case WM_GET_HP_PER:
+        *(float*)wParam = CRole::GetHpPer();
+        break;
+    case WM_INVINCIBLE:
+        CRole::Invincible();
+        break;
+    case WM_UN_INVINCIBLE:
+        CRole::UnInvincible();
+        break;
+    case WM_TELEPORT:
+        s_p_Point = (pPOINT_TARGET)wParam;
+        CRole::TeleportToPoint(s_p_Point->fPontX, s_p_Point->fPontY, s_p_Point->fPontZ);
+        break;
+    case WM_GET_POINT:
+        s_p_Point = (pPOINT_TARGET)wParam;
+        CRole::GetPoint(s_p_Point->fPontX, s_p_Point->fPontY, s_p_Point->fPontZ);
+        break;
+    case WM_GO_LEFT:
+        CRole::GoLeft();
+        break;
+    case WM_GO_RIGHT:
+        CRole::GoRight();
+        break;
+    case WM_GO_BACK:
+        CRole::GoBack();
+        break;
+    case WM_HAVE_MODE:
+        *(int*)wParam = CRole::HaveMode();
+        break;
+    case WM_CHANGE_MODE:
+        CRole::ChangeMode();
+        break;
+    case WM_ROLL:
+        CRole::Roll();
+        break;
+    case WM_GET_ITEM_FORM_CRATES:
+        zone.GetItemFormCrates(*(std::string*)wParam);
+        break;
+    case WM_COLLECT_ALL:
+
         break;
     }
 
@@ -360,6 +403,8 @@ void CGame::initGui() {
     AddLuaFunction(); // 注册 Lua 函数
     CBrushZones zone;
     zone.initZonesInfo();
+    CRole::CatInvincible();
+    CRole::initAllItems();
 }
 
 bool CGame::onSkillBtn(const CEGUI::EventArgs& args) {

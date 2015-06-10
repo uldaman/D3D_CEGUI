@@ -29,6 +29,8 @@ const DWORD CALL_GET_GLOBAL_VARIABLE = 0x076EDB0;   // ¸ù¾ÝÃû³Æ»ñÈ¡ÓÎÏ·ÖÐµÄÈ«¾Ö±
 const DWORD CALL_GET_ROLE_LIST_INFO = 0x013FC020;   // »ñÈ¡½ÇÉ«ÁÐ±íÏà¹ØµÄÖ¸Õë   µØÖ·: 51BED2
 const DWORD CALL_GET_REWARD_TASK_STATUS = 0x0559F90;   // »ñÈ¡ÐüÉÍÈÎÎñ×´Ì¬   µØÖ·: 559AF0
 const DWORD CALL_GET_FARM_INFO = 0x01381DA0;   // »ñÈ¡×¯Ô°ÐÅÏ¢Ö¸Õë   µØÖ·: 138251B
+const DWORD CALL_GET_UI_MODE = 0x15981E0;
+const DWORD CALL_DO_ACTION = 0x01501E9B;   // Ö´ÐÐ¹¥»÷£¬ÉÁ±ÜµÈ¶¯×÷   µØÖ·: 155E356
 //Æ«ÒÆ
 const DWORD OFFSET_ROLE_INFO_1 = 0x0C8;   // µ±Ç°ÈËÎïÖ¸ÕëÆ«ÒÆ1   µØÖ·: 55D4A6
 const DWORD OFFSET_ROLE_INFO_2 = 0x028;   // µ±Ç°ÈËÎïÖ¸ÕëÆ«ÒÆ2(È¡byte)   µØÖ·: 55D4AC
@@ -83,6 +85,7 @@ const DWORD OFFSET_GET_SUPPLY_BOX = 0x0164;   // »ñÈ¡²¹¸øÏäµÄº¯ÊýÔÚÐé±íÖÐµÄÆ«ÒÆ 
 const DWORD OFFSET_GET_ROLE_LIST = 0x028;   // »ñÈ¡½ÇÉ«ÁÐ±íµÄº¯ÊýÔÚÐé±íÖÐµÄÆ«ÒÆ£¨È¡byte£©   µØÖ·: 51BEDD
 const DWORD OFFSET_GET_ALL_REWARD_TASK = 0x0D8;   // »ñÈ¡ËùÓÐÐüÉÍÈÎÎñÐÅÏ¢µÄº¯ÊýÔÚÐé±íÖÐµÄÆ«ÒÆ   µØÖ·: 1CB783B
 const DWORD OFFSET_ROLE_FARM = 0x03F20;   // ×¯Ô°ÐÅÏ¢Æ«ÒÆ   µØÖ·: 5ED2CA
+const DWORD OFFSET_DODGE_ACTION = 0x334;
 //³£Á¿
 const DWORD SIZE_SALE_ITEM = 0x068;   // ÉÌµêÎïÆ·ÐÅÏ¢½á¹¹Ìå´óÐ¡£¨È¡byte£©   µØÖ·: 5164D1
 //¹Ò¹³´¦

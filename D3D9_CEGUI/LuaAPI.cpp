@@ -6,6 +6,7 @@
 #include <CEGUI\widgets\PushButton.h>
 #include "Role.h"
 #include "BrushZones.h"
+#include "DataType.h"
 
 //Lua调试
 LuaGlue Lua_Trac(lua_State *L) {
@@ -233,7 +234,143 @@ LuaGlue Lua_Forward(lua_State *L) {
 
 //MH_停止
 LuaGlue Lua_Stop(lua_State *L) {
-    ::SendMessage(theApp.m_hGWnd, WM_STOP, NULL, NULL);
+    std::string strPos = g_pClua->GetStringArgument(1, "");
+    ::SendMessage(theApp.m_hGWnd, WM_STOP, (WPARAM)&strPos, NULL);
+    return 0;
+}
+
+//MH_获取当前血比
+LuaGlue Lua_GetHpPer(lua_State *L) {
+    float fHpPer = 1.0f;
+    ::SendMessage(theApp.m_hGWnd, WM_GET_HP_PER, (WPARAM)&fHpPer, NULL);
+    g_pClua->PushNumber(static_cast<double>(fHpPer));
+    return 1;
+}
+
+//MH_开启无敌
+LuaGlue Lua_Invincible(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_INVINCIBLE, NULL, NULL);
+    return 0;
+}
+
+//MH_关闭无敌
+LuaGlue Lua_UnInvincible(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_UN_INVINCIBLE, NULL, NULL);
+    return 0;
+}
+
+//MH_瞬移到坐标
+LuaGlue Lua_TeleportToPoint(lua_State *L) {
+    float fx = static_cast<float>(g_pClua->GetNumberArgument(1));
+    float fy = static_cast<float>(g_pClua->GetNumberArgument(2));
+    float fz = static_cast<float>(g_pClua->GetNumberArgument(3));
+    POINT_TARGET target;
+    target.fPontX = fx;
+    target.fPontY = fy;
+    target.fPontZ = fz;
+    ::SendMessage(theApp.m_hGWnd, WM_TELEPORT, (WPARAM)&target, NULL);
+    return 0;
+}
+
+//MH_获取当前坐标", Lua_GetPoint
+LuaGlue Lua_GetPoint(lua_State *L) {
+    POINT_TARGET target;
+    ::SendMessage(theApp.m_hGWnd, WM_GET_POINT, (WPARAM)&target, NULL);
+    g_pClua->PushNumber(target.fPontX);
+    g_pClua->PushNumber(target.fPontY);
+    g_pClua->PushNumber(target.fPontZ);
+    return 3;
+}
+
+//MH_左移
+LuaGlue Lua_GoLeft(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_GO_LEFT, NULL, NULL);
+    return 0;
+}
+
+//MH_右移
+LuaGlue Lua_GoRight(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_GO_RIGHT, NULL, NULL);
+    return 0;
+}
+
+//MH_后退
+LuaGlue Lua_GoBack(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_GO_BACK, NULL, NULL);
+    return 0;
+}
+
+//MH_拿起武器
+LuaGlue Lua_TakeUpWeapons(lua_State *L) {
+    // 先判断是否已经拿起了武器, 如果没有拿起, 则拿起武器
+    int nWeapon;
+    ::SendMessage(theApp.m_hGWnd, WM_HAVE_WEAPON, (WPARAM)&nWeapon, NULL);
+
+    while (nWeapon == 0) {
+        // 判断是否在开关状态
+        int nMode;
+        ::SendMessage(theApp.m_hGWnd, WM_HAVE_MODE, (WPARAM)&nMode, NULL);
+
+        if (nMode == 1) {
+            ::SendMessage(theApp.m_hGWnd, WM_CHANGE_MODE, NULL, NULL);
+        }
+
+        ::SendMessage(theApp.m_hGWnd, WM_WEAPON, NULL, NULL);
+        Sleep(500);
+        ::SendMessage(theApp.m_hGWnd, WM_HAVE_WEAPON, (WPARAM)&nWeapon, NULL);
+    }
+
+    return 0;
+}
+
+//MH_收起武器
+LuaGlue Lua_CollectWeapons(lua_State *L) {
+    // 先判断是否已经拿起了武器, 如果拿起, 则收起
+    int nWeapon;
+    ::SendMessage(theApp.m_hGWnd, WM_HAVE_WEAPON, (WPARAM)&nWeapon, NULL);
+
+    while (nWeapon != 0) {
+        // 判断是否在开关状态
+        int nMode;
+        ::SendMessage(theApp.m_hGWnd, WM_HAVE_MODE, (WPARAM)&nMode, NULL);
+
+        if (nMode == 1) {
+            ::SendMessage(theApp.m_hGWnd, WM_CHANGE_MODE, NULL, NULL);
+        }
+
+        ::SendMessage(theApp.m_hGWnd, WM_WEAPON, NULL, NULL);
+        Sleep(500);
+        ::SendMessage(theApp.m_hGWnd, WM_HAVE_WEAPON, (WPARAM)&nWeapon, NULL);
+    }
+
+    return 0;
+}
+
+//MH_翻滚
+LuaGlue Lua_Roll(lua_State *L) {
+    // 先收起武器
+    Lua_CollectWeapons(L);
+    Sleep(500);
+    ::SendMessage(theApp.m_hGWnd, WM_ROLL, NULL, NULL);
+    return 0;
+}
+
+// MH_补给箱取物
+LuaGlue Lua_GetItemFormCrates(lua_State *L) {
+    std::string strItems = g_pClua->GetStringArgument(1, "");
+    std::vector<std::string> vctItems = martin->split(strItems, "|");
+    for (auto& v : vctItems) {
+        //std::string strItem = v.c_str();
+        ::SendMessage(theApp.m_hGWnd, WM_GET_ITEM_FORM_CRATES, (WPARAM)&v, NULL);
+        Sleep(500);
+    }
+    
+    return 0;
+}
+
+//MH_采集所有物品
+LuaGlue Lua_CollectAll(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_COLLECT_ALL, NULL, NULL);
     return 0;
 }
 
@@ -265,6 +402,19 @@ luaL_reg ConsoleGlue[] = {
         { "MH_攻击", Lua_Attack },
         { "MH_前进", Lua_Forward },
         { "MH_停止", Lua_Stop },
+        { "MH_获取当前血比", Lua_GetHpPer },
+        { "MH_开启无敌", Lua_Invincible },
+        { "MH_关闭无敌", Lua_UnInvincible },
+        { "MH_瞬移到坐标", Lua_TeleportToPoint },
+        { "MH_获取当前坐标", Lua_GetPoint },
+        { "MH_左移", Lua_GoLeft },
+        { "MH_右移", Lua_GoRight },
+        { "MH_后退", Lua_GoBack },
+        { "MH_拿起武器", Lua_TakeUpWeapons },
+        { "MH_收起武器", Lua_CollectWeapons },
+        { "MH_翻滚", Lua_Roll },
+        { "MH_补给箱取物", Lua_GetItemFormCrates },
+        { "MH_采集所有物品", Lua_CollectAll },
         { nullptr, NULL },
 };
 

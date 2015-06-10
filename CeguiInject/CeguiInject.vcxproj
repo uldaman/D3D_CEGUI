@@ -96,6 +96,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="My_Ini.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ceguiinject.h">
@@ -125,6 +126,7 @@
     <ClInclude Include="forcelib\ForceLib.h" />
     <ClInclude Include="forcelib\TH32.h" />
     <ClInclude Include="GeneratedFiles\ui_ceguiinject.h" />
+    <ClInclude Include="My_Ini.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ceguiinject.qrc">

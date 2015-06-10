@@ -9,6 +9,21 @@
 #include <map>
 #include <windows.h>
 
+#pragma pack (push,1)
+
+typedef struct CRATES_LIST {
+    DWORD dwNext;   // +0x0	    下一节点
+    DWORD dwRoot;  // +0x4	    上一节点
+    DWORD dwBase;	// +0x8	    详情指针
+} CratesList, *pCratesList;
+
+typedef struct ID_INDEX {
+    DWORD dwID;   // +0x0	    下一节点
+    DWORD dwIndex;  // +0x4	    上一节点
+} IdIndex, *pIdIndex;
+
+#pragma pack(pop)
+
 class CBrushZones {
 public:
     CBrushZones();
@@ -26,6 +41,12 @@ public:
     BOOL Teleport(int nKey);
     int m_nBossRoom; // BOSS房间
     std::string m_strBossName; // BOSS 名
+
+
+    void GetItemFormCrates(std::string strItems); // 补给箱取物
+    void TraverList(int nStart, int nEnd, std::multimap<std::string, IdIndex>& CratesMap);
+    void allotItem(int nObject, std::multimap<std::string, IdIndex>& CratesMap);
+    void GetItemPack(int nIndex, int nID);
 
 protected:
     BOOL GetBoss(int nKey);

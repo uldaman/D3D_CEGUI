@@ -2,6 +2,7 @@
 #include "windows.h"
 #include <string>
 #include <fstream>
+#include <vector>
 
 class CMartin {
 public:
@@ -19,6 +20,9 @@ public:
 
     // 获取模块路径(不含文件名)
     std::string GetModulePath(HMODULE hModule);
+
+    // 分割字符串
+    std::vector<std::string> split(std::string str, std::string pattern);
 
 public:
     static CMartin* GetInstance();
