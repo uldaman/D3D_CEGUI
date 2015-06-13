@@ -35,7 +35,9 @@
 #define WM_GO_RIGHT                     WM_USER + 2333  // 右
 #define WM_GO_BACK                      WM_USER + 2334  // 后
 #define WM_HAVE_MODE                    WM_USER + 2335  // 是否在菜单模式
-#define WM_CHANGE_MODE                  WM_USER + 2336  // 是否在菜单模式
+#define WM_CHANGE_MODE                  WM_USER + 2336  // 切换菜单模式
 #define WM_ROLL                         WM_USER + 2337  // 翻滚
 #define WM_GET_ITEM_FORM_CRATES         WM_USER + 2338  // 补给箱取物
-#define WM_COLLECT_ALL                  WM_USER + 2339  // 采集所有物品
+#define WM_GETCOLLECT                   WM_USER + 2339  // 获取采集标志位
+#define WM_COLLECT                      WM_USER + 2340  // 采集
+#define WM_GET_COLLECTS                 WM_USER + 2341  // 初始化采集信息

@@ -95,6 +95,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameHOOK.cpp" />
     <ClCompile Include="GlobalVariable.cpp" />
+    <ClCompile Include="Interface.cpp" />
     <ClCompile Include="LuaAPI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Martin.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameHOOK.h" />
     <ClInclude Include="GlobalVariable.h" />
+    <ClInclude Include="Interface.h" />
     <ClInclude Include="LuaAPI.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Martin.h" />

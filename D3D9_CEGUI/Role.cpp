@@ -760,12 +760,13 @@ void CRole::Attack() {
             mov eax, [eax + 0x10];
             mov nArg_1, eax;
 
-            mov eax, [eax + 0x8];
+            mov eax, [eax + 0x10];
             mov ecx, OFFSET_ATTACK_PARAM2_1;
             mov eax, [eax + ecx]; //0d8:OFFSET_ATTACK_PARAM2_1
             mov ecx, OFFSET_ATTACK_PARAM2_2;
             mov eax, [eax + ecx];//031c:OFFSET_ATTACK_PARAM2_2
-            lea eax, [eax + 0xA * 0x8];
+            //lea eax, [eax + 0xA * 0x8]; // 左键
+            lea eax, [eax + 0x5 * 0x8]; // 右键
             mov nArg_2, eax;
 
             popfd;
@@ -1400,5 +1401,77 @@ void CRole::initAllItems() {
                 }
             }
         }
+    }
+}
+
+BOOL CRole::WhetherOrBusy() {
+    int nAddr = CRole::GetRoleAddr();
+    int nRet = 1;
+    try {
+        _asm {
+            pushad;
+            pushfd;
+
+            mov ecx, nAddr; //人物指针
+            mov eax, [ecx];
+            mov edx, OFFSET_GET_SWITCH_REGION_ECX;
+            mov edx, [eax + edx]; //0x178:
+            call edx;
+            mov ecx, OFFSET_ROLE_IDLE_STATE_1;
+            mov eax, [eax + ecx]; //1b80:
+            mov ecx, OFFSET_ROLE_IDLE_STATE_2;
+            mov eax, [eax + ecx];   //24:
+            mov ecx, OFFSET_ROLE_IDLE_STATE_3;
+            mov eax, [eax + ecx]; //135c:
+            mov eax, [eax + 8];
+            mov ecx, eax;
+            mov eax, CALL_GET_OBJECT_IDLE_STATE; //
+            call eax;
+            movzx ecx, al;
+            mov nRet, ecx;
+
+            popfd;
+            popad;
+        }
+    } catch (...) {
+        martin->Debug(TEXT("WhetherOrBusy --> 异常"));
+        return TRUE;
+    }
+
+    if (nRet == 0) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
+void CRole::Collect(int nID) {
+    int nAddr = CRole::GetRoleAddr();
+
+    try {
+        _asm {
+            pushad;
+            pushfd;
+
+            mov eax, 0;       //固定值
+            push eax;
+            mov eax, 0;       //固定值
+            push eax;
+            mov eax, 5;        //固定值
+            push eax;
+            mov eax, nID; //采集物ID
+            push eax;
+            mov ecx, nAddr;
+            mov edx, OFFSET_COLLECTING_ACTION;
+            mov ecx, [ecx + edx];
+            mov ecx, [ecx + 0x8]; //[[人物指针+204c]+8]  //[[人物指针+OFFSET_COLLECTING_ACTION]+8]
+            mov edx, CALL_COLLECTING2; //
+            call edx;
+
+            popfd;
+            popad;
+        }
+    } catch (...) {
+        martin->Debug(TEXT("Collect --> 异常"));
     }
 }

@@ -17,6 +17,7 @@
 #include "NearObject.h"
 #include "BrushZones.h"
 #include "DataType.h"
+#include "Interface.h"
 
 CGame theApp;
 
@@ -30,11 +31,6 @@ CGame::~CGame(void) {
 }
 
 LRESULT CGame::CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
-    static CQuest quest;
-    static CNearObject nearObj;
-    static CBrushZones zone;
-    static pPOINT_TARGET s_p_Point = nullptr;
-
     switch (message) {
     case WM_KEYDOWN:
         switch (wParam) {
@@ -51,201 +47,37 @@ LRESULT CGame::CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
             break;
         }
         break;
-    case WM_GET_CURRENT_QUEST:
-        quest.initUnCompleteQuest();
-        for (auto& v : quest.m_unComplete_quest) {
-            if (v.strQuestType == "主线") {
-                *(std::string*)wParam = v.strQuestName;
-                break;
-            }
-        }
-        break;
-    case WM_GET_QUEST_TABLE:
-        *(std::string*)wParam = quest.GetQuestTable();
-        break;
-    case WM_IS_QUEST_COMPLETE:
-        quest.initUnCompleteQuest();
-        for (auto& v : quest.m_unComplete_quest) {
-            if (v.strQuestType == "主线" && *(std::string*)wParam == v.strQuestName) {
-                if (v.strQuestStatus == "完成") {
-                    *(int*)lParam = 1;
-                }
-                break;
-            }
-        }
-        break;
-    case WM_WHERE_ROLE:
-        *(int*)wParam = CRole::WhereIsRole();
-        break;
-    case WM_COMPLETE_QUEST:
-        quest.initUnCompleteQuest();
-        for (auto& v : quest.m_unComplete_quest) {
-            if (v.strQuestType == "主线" && *(std::string*)wParam == v.strQuestName) {
-                if (v.strQuestStatus == "完成") {
-                    // 交任务
-                    // 1. 打开 NPC
-                    nearObj.initNear();
-                    for (auto& w : nearObj.m_near_object) {
-                        if (w.strNpcName == *(std::string*)lParam) { // 找到 NPC
-                            nearObj.Interactive(w.nNpcID);
-                            Sleep(50);
-                            break;
-                        }
-                    }
-                    // 2. 交任务
-                    quest.CompleteQuest(v.nQuestID);
-                }
-                break;
-            }
-        }
-        break;
-    case WM_ACCEPT_QUEST:
-        quest.initQuestTable();
-        for (auto& v : quest.m_questTable_quest) {
-            if (*(std::string*)wParam == v.strQuestName) {
-                // 接任务
-                // 1. 打开 NPC
-                nearObj.initNear();
-                for (auto& w : nearObj.m_near_object) {
-                    if (w.strNpcName == *(std::string*)lParam) { // 找到 NPC
-                        nearObj.Interactive(w.nNpcID);
-                        Sleep(50);
-                        break;
-                    }
-                }
-                // 2. 接任务
-                quest.AcceptQuest(v.nQuestID);
-                break;
-            }
-        }
-        break;
-    case WM_INTERACTIVE_QUEST:
-        quest.initUnCompleteQuest();
-        for (auto& v : quest.m_unComplete_quest) {
-            if (v.strQuestType == "主线" && *(std::string*)wParam == v.strQuestName) {
-                // 任务对话
-                // 1. 打开 NPC
-                nearObj.initNear();
-                for (auto& w : nearObj.m_near_object) {
-                    if (w.strNpcName == *(std::string*)lParam) { // 找到 NPC
-                        nearObj.Interactive(w.nNpcID);
-                        Sleep(50);
-                        break;
-                    }
-                }
-                // 2. 任务对话
-                quest.InteractiveQuest(v.nQuestID);
-                break;
-            }
-        }
-        break;
-    case WM_锻造晓风短剑:
-        quest.锻造晓风短剑();
-        break;
-    case WM_CITY_FLY:
-        CRole::CityFly(*(std::string*)wParam);
-        break;
-    case WM_CHOOSE_FB:
-        zone.ChooseFB((int)wParam);
-        break;
-    case WM_START_FB:
-        zone.StartFB((int)wParam);
-        break;
-    case WM_INTO_FB:
-        zone.IntoFB();
-        break;
-    case WM_UPDATA_BOSS:
-        ((CBrushZones*)wParam)->initBoss();
-        break;
-    case WM_ROLE_ROOM:
-        *(int*)wParam = CRole::GetRoleRoom();
-        break;
-    case WM_BOSS_ROOM:
-        zone.initBoss();
-        *(int*)wParam = zone.m_nBossRoom;
-        break;
-    case WM_GET_ZONE:
-        *(std::string*)wParam = CRole::GetRoleZone();
-        break;
-    case WM_GET_MAP:
-        *(std::string*)wParam = CRole::GetRoleMap();
-        break;
-    case WM_GOTO_BOSS:
-        zone.GotoBoss();
-        break;
-    case WM_BY_MAP:
-        CRole::ByMap((char*)wParam);
-        break;
-    case WM_TURN:
-        CRole::Turn();
-        break;
-    case WM_ATTACK_PACK:
-        CRole::Attack_Pack((int)wParam);
-        break;
-    case WM_FORWARD:
-        CRole::GoForward(); // 前进下
-        break;
-    case WM_STOP:
-        CRole::Stop(*(std::string*)wParam);
-        break;
-    case WM_ATTACK:
-        CRole::Attack();
-        break;
-    case WM_HAVE_WEAPON:
-        *(int*)wParam = CRole::HaveWeapon();
-        break;
-    case WM_WEAPON:
-        CRole::Weapon();
-        break;
-    case WM_GET_HP_PER:
-        *(float*)wParam = CRole::GetHpPer();
-        break;
-    case WM_INVINCIBLE:
-        CRole::Invincible();
-        break;
-    case WM_UN_INVINCIBLE:
-        CRole::UnInvincible();
-        break;
-    case WM_TELEPORT:
-        s_p_Point = (pPOINT_TARGET)wParam;
-        CRole::TeleportToPoint(s_p_Point->fPontX, s_p_Point->fPontY, s_p_Point->fPontZ);
-        break;
-    case WM_GET_POINT:
-        s_p_Point = (pPOINT_TARGET)wParam;
-        CRole::GetPoint(s_p_Point->fPontX, s_p_Point->fPontY, s_p_Point->fPontZ);
-        break;
-    case WM_GO_LEFT:
-        CRole::GoLeft();
-        break;
-    case WM_GO_RIGHT:
-        CRole::GoRight();
-        break;
-    case WM_GO_BACK:
-        CRole::GoBack();
-        break;
-    case WM_HAVE_MODE:
-        *(int*)wParam = CRole::HaveMode();
-        break;
-    case WM_CHANGE_MODE:
-        CRole::ChangeMode();
-        break;
-    case WM_ROLL:
-        CRole::Roll();
-        break;
-    case WM_GET_ITEM_FORM_CRATES:
-        zone.GetItemFormCrates(*(std::string*)wParam);
-        break;
-    case WM_COLLECT_ALL:
-
-        break;
     }
+
+    MesageMapping(hwnd, message, wParam, lParam); // 处理自定义消息
+
+    static bool s_mouseInWindow = false;
 
     if (m_bInit) {
         switch (message) {
         case WM_MOUSEMOVE:
             //ShowCursor(true);
+            if (!s_mouseInWindow) {
+                s_mouseInWindow = true;
+                ShowCursor(false);
+            }
+
             if (CEGUI::System::getSingleton().getDefaultGUIContext().injectMousePosition((float)(LOWORD(lParam)), (float)(HIWORD(lParam)))) {
                 return 0;
+            }
+            break;
+
+        case WM_MOUSELEAVE:
+            if (s_mouseInWindow) {
+                s_mouseInWindow = false;
+                ShowCursor(true);
+            }
+            break;
+
+        case WM_NCMOUSEMOVE:
+            if (s_mouseInWindow) {
+                s_mouseInWindow = false;
+                ShowCursor(true);
             }
             break;
 

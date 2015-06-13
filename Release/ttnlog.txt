@@ -4,26 +4,26 @@ TatniumD3D Started...
 ---------------------
 
 ---------------------
-Direct3DCreate9 --> 0x6F3D0A62...
+Direct3DCreate9 --> 0x685B0A62...
 ---------------------
 ---------------------
 Start hkDirect3DCreate9
 Direct3DCreate9(32) succeeded...
-Hooked Direct3D9 interface: 0x4da07e0 -> 0x736b028
+Hooked Direct3D9 interface: 0x4e307e0 -> 0x5854cb8
 ---------------------
 
 ---------------------
 Start hkDirect3DCreate9
 Direct3DCreate9(32) succeeded...
-Hooked Direct3D9 interface: 0x4da07e0 -> 0x736b1c8
+Hooked Direct3D9 interface: 0x4e307e0 -> 0x1433fc40
 ---------------------
 
 CreateDevice 返回值 0x0
-Hooked Direct3D9 device: 0x1444db40 -> 0x7414128
+Hooked Direct3D9 device: 0x144fdb40 -> 0x14365038
 CreateDevice 返回值 0x0
-Hooked Direct3D9 device: 0x1444db40 -> 0x7414180
+Hooked Direct3D9 device: 0x144fdb40 -> 0x14365090
 CreateDevice 返回值 0x0
-Hooked Direct3D9 device: 0x1444db40 -> 0x74141d8
+Hooked Direct3D9 device: 0x144fdb40 -> 0x143650e8
 设置默认资源路径
 设置使用的缺省资源
 加载方案
@@ -32,34 +32,34 @@ Hooked Direct3D9 device: 0x1444db40 -> 0x74141d8
 全部加载完毕...
 ---------------------
 
-Debug:
-Debug:asdf
+asfsadfasf 0x0
+asfsadfasf 0x0
 
 ---------------------
 TatniumD3D Started...
 ---------------------
 
 ---------------------
-Direct3DCreate9 --> 0x6F3D0A62...
+Direct3DCreate9 --> 0x685B0A62...
 ---------------------
 ---------------------
 Start hkDirect3DCreate9
 Direct3DCreate9(32) succeeded...
-Hooked Direct3D9 interface: 0x4cd07e0 -> 0x745a220
+Hooked Direct3D9 interface: 0x42907e0 -> 0x5822af0
 ---------------------
 
 ---------------------
 Start hkDirect3DCreate9
 Direct3DCreate9(32) succeeded...
-Hooked Direct3D9 interface: 0x4cd07e0 -> 0x745a3c0
+Hooked Direct3D9 interface: 0x42907e0 -> 0x586b2e0
 ---------------------
 
 CreateDevice 返回值 0x0
-Hooked Direct3D9 device: 0x1413db40 -> 0x7506008
+Hooked Direct3D9 device: 0xebcdb40 -> 0x58701e0
 CreateDevice 返回值 0x0
-Hooked Direct3D9 device: 0x1413db40 -> 0x7506060
+Hooked Direct3D9 device: 0xebcdb40 -> 0x5870238
 CreateDevice 返回值 0x0
-Hooked Direct3D9 device: 0x1413db40 -> 0x75060b8
+Hooked Direct3D9 device: 0xebcdb40 -> 0x5870290
 设置默认资源路径
 设置使用的缺省资源
 加载方案
@@ -68,119 +68,3 @@ Hooked Direct3D9 device: 0x1413db40 -> 0x75060b8
 全部加载完毕...
 ---------------------
 
-Debug:asdf
-
----------------------
-TatniumD3D Started...
----------------------
-
----------------------
-Direct3DCreate9 --> 0x6F3D0A62...
----------------------
----------------------
-Start hkDirect3DCreate9
-Direct3DCreate9(32) succeeded...
-Hooked Direct3D9 interface: 0x4d507e0 -> 0x74ab660
----------------------
-
----------------------
-Start hkDirect3DCreate9
-Direct3DCreate9(32) succeeded...
-Hooked Direct3D9 interface: 0x4d507e0 -> 0x74ab800
----------------------
-
-CreateDevice 返回值 0x0
-Hooked Direct3D9 device: 0x1292db40 -> 0x7547f78
-CreateDevice 返回值 0x0
-Hooked Direct3D9 device: 0x1292db40 -> 0x7547fd0
-CreateDevice 返回值 0x0
-Hooked Direct3D9 device: 0x1292db40 -> 0x7548028
-设置默认资源路径
-设置使用的缺省资源
-加载方案
-
----------------------
-全部加载完毕...
----------------------
-
-Debug:补给箱物品: 携带食料 -- 序号: 9 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 10 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 11 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 12 -- ID: 0x3C
-Debug:补给箱物品: 支给用回复药 -- 序号: 1 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 2 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 3 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 4 -- ID: 0x3B
-Debug:补给箱物品: 支给用砥石 -- 序号: 5 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 6 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 7 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 8 -- ID: 0x40
-Debug:补给箱物品: 携带食料 -- 序号: 9 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 10 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 11 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 12 -- ID: 0x3C
-Debug:补给箱物品: 支给用回复药 -- 序号: 1 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 2 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 3 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 4 -- ID: 0x3B
-Debug:补给箱物品: 支给用砥石 -- 序号: 5 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 6 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 7 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 8 -- ID: 0x40
-Debug:补给箱物品: 携带食料 -- 序号: 9 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 10 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 11 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 12 -- ID: 0x3C
-Debug:补给箱物品: 支给用回复药 -- 序号: 1 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 2 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 3 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 4 -- ID: 0x3B
-Debug:补给箱物品: 支给用砥石 -- 序号: 5 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 6 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 7 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 8 -- ID: 0x40
-Debug:补给箱物品: 携带食料 -- 序号: 9 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 10 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 11 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 12 -- ID: 0x3C
-Debug:补给箱物品: 支给用回复药 -- 序号: 1 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 2 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 3 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 4 -- ID: 0x3B
-Debug:补给箱物品: 支给用砥石 -- 序号: 5 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 6 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 7 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 8 -- ID: 0x40
-Debug:补给箱物品: 携带食料 -- 序号: 10 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 11 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 12 -- ID: 0x3C
-Debug:补给箱物品: 支给用回复药 -- 序号: 1 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 2 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 3 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 4 -- ID: 0x3B
-Debug:补给箱物品: 支给用砥石 -- 序号: 5 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 6 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 7 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 8 -- ID: 0x40
-Debug:补给箱物品: 携带食料 -- 序号: 10 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 11 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 12 -- ID: 0x3C
-Debug:补给箱物品: 支给用回复药 -- 序号: 1 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 2 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 3 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 4 -- ID: 0x3B
-Debug:补给箱物品: 支给用砥石 -- 序号: 5 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 6 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 7 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 8 -- ID: 0x40
-Debug:补给箱物品: 携带食料 -- 序号: 10 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 11 -- ID: 0x3C
-Debug:补给箱物品: 携带食料 -- 序号: 12 -- ID: 0x3C
-Debug:补给箱物品: 支给用回复药 -- 序号: 1 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 2 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 3 -- ID: 0x3B
-Debug:补给箱物品: 支给用回复药 -- 序号: 4 -- ID: 0x3B
-Debug:补给箱物品: 支给用砥石 -- 序号: 5 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 6 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 7 -- ID: 0x40
-Debug:补给箱物品: 支给用砥石 -- 序号: 8 -- ID: 0x40

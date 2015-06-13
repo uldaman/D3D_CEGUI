@@ -7,6 +7,7 @@
 #include "Role.h"
 #include "BrushZones.h"
 #include "DataType.h"
+#include "Material.h"
 
 //Lua调试
 LuaGlue Lua_Trac(lua_State *L) {
@@ -364,13 +365,127 @@ LuaGlue Lua_GetItemFormCrates(lua_State *L) {
         ::SendMessage(theApp.m_hGWnd, WM_GET_ITEM_FORM_CRATES, (WPARAM)&v, NULL);
         Sleep(500);
     }
-    
+
     return 0;
 }
 
 //MH_采集所有物品
 LuaGlue Lua_CollectAll(lua_State *L) {
-    ::SendMessage(theApp.m_hGWnd, WM_COLLECT_ALL, NULL, NULL);
+    // 记录下当前坐标, 用于采集完返回
+    POINT_TARGET Current_Point;
+    ::SendMessage(theApp.m_hGWnd, WM_GET_POINT, (WPARAM)&Current_Point, NULL);
+
+    ::SendMessage(theApp.m_hGWnd, WM_GET_COLLECTS, NULL, NULL); // 初始化采集信息
+
+    for (auto& v : CMaterial::m_material_list) {
+        // 先判断下是不是在FB里
+        int nWhere;
+        ::SendMessage(theApp.m_hGWnd, WM_WHERE_ROLE, (WPARAM)&nWhere, NULL);
+        if (nWhere != 2 || g_isWork == false) {
+            goto MaterialEnd; // 如果不在FB 则跳出
+        }
+
+        //martin->Debug("%s -- ID: 0x%X -- Key: 0x%X -- %f : %f : %f",
+        //    v.strName.c_str(), v.nID, v.nKey, v.fPointX, v.fPointY, v.fPointZ);
+
+        POINT_TARGET _Point = { v.fPointX, v.fPointY, v.fPointZ };
+        int nID = v.nID;
+
+        // 瞬移
+        ::SendMessage(theApp.m_hGWnd, WM_TELEPORT, (WPARAM)&_Point, NULL);
+        Sleep(1000);
+
+        // 采集
+        for (int i = 0; i < 3; i++) {
+            ::SendMessage(theApp.m_hGWnd, WM_WHERE_ROLE, (WPARAM)&nWhere, NULL);
+            if (nWhere != 2 || g_isWork == false) {
+                goto MaterialEnd; // 如果不在FB 则跳出
+            }
+
+            ::SendMessage(theApp.m_hGWnd, WM_COLLECT, (WPARAM)&nID, NULL);
+            Sleep(500);
+
+            // 判断是否在采集中, 是的话, 接着采集, 否则开始下一个
+            BOOL bCollect = FALSE;
+            ::SendMessage(theApp.m_hGWnd, WM_GETCOLLECT, (WPARAM)&bCollect, NULL);
+            //martin->Debug(TEXT("采集标识: %d"), bCollect);
+
+            while (bCollect) { // 说明在采集中
+                Sleep(1000);
+                ::SendMessage(theApp.m_hGWnd, WM_GETCOLLECT, (WPARAM)&bCollect, NULL);
+            }
+
+            Sleep(500);
+        }
+
+        Sleep(500);
+    }
+
+MaterialEnd:
+    // 返回开始处
+    ::SendMessage(theApp.m_hGWnd, WM_TELEPORT, (WPARAM)&Current_Point, NULL);
+    return 0;
+}
+
+// MH_采集目标点
+LuaGlue Lua_CollectTar(lua_State *L) {
+    float dPointX = static_cast<float>(g_pClua->GetNumberArgument(1));
+    float dPointY = static_cast<float>(g_pClua->GetNumberArgument(2));
+
+    // 记录下当前坐标, 用于采集完返回
+    POINT_TARGET Current_Point;
+    ::SendMessage(theApp.m_hGWnd, WM_GET_POINT, (WPARAM)&Current_Point, NULL);
+
+    ::SendMessage(theApp.m_hGWnd, WM_GET_COLLECTS, NULL, NULL); // 初始化采集信息
+
+    for (auto& v : CMaterial::m_material_list) {
+        // 先判断下是不是在FB里
+        int nWhere;
+        ::SendMessage(theApp.m_hGWnd, WM_WHERE_ROLE, (WPARAM)&nWhere, NULL);
+        if (nWhere != 2 || g_isWork == false) {
+            goto MaterialEnd; // 如果不在FB 则跳出
+        }
+
+        //martin->Debug("%s -- ID: 0x%X -- Key: 0x%X -- %f : %f : %f",
+        //    v.strName.c_str(), v.nID, v.nKey, v.fPointX, v.fPointY, v.fPointZ);
+
+        if (martin->Compare_Coord(dPointX, dPointY, v.fPointX, v.fPointY) < 5.0f) {
+            POINT_TARGET _Point = { v.fPointX, v.fPointY, v.fPointZ };
+            int nID = v.nID;
+
+            // 瞬移
+            ::SendMessage(theApp.m_hGWnd, WM_TELEPORT, (WPARAM)&_Point, NULL);
+            Sleep(1000);
+
+            // 采集
+            for (int i = 0; i < 3; i++) {
+                ::SendMessage(theApp.m_hGWnd, WM_WHERE_ROLE, (WPARAM)&nWhere, NULL);
+                if (nWhere != 2 || g_isWork == false) {
+                    goto MaterialEnd; // 如果不在FB 则跳出
+                }
+
+                ::SendMessage(theApp.m_hGWnd, WM_COLLECT, (WPARAM)&nID, NULL);
+                Sleep(500);
+
+                // 判断是否在采集中, 是的话, 接着采集, 否则开始下一个
+                BOOL bCollect = FALSE;
+                ::SendMessage(theApp.m_hGWnd, WM_GETCOLLECT, (WPARAM)&bCollect, NULL);
+                //martin->Debug(TEXT("采集标识: %d"), bCollect);
+
+                while (bCollect) { // 说明在采集中
+                    Sleep(1000);
+                    ::SendMessage(theApp.m_hGWnd, WM_GETCOLLECT, (WPARAM)&bCollect, NULL);
+                }
+
+                Sleep(500);
+            }
+            goto MaterialEnd;
+        }
+    }
+
+MaterialEnd:
+    // 返回开始处
+    ::SendMessage(theApp.m_hGWnd, WM_TELEPORT, (WPARAM)&Current_Point, NULL);
     return 0;
 }
 
@@ -382,7 +497,7 @@ luaL_reg ConsoleGlue[] = {
         { "MH_获取当前主线", Lua_GetCurrentQuest },
         { "MH_执行命令文本", Lua_DoScriptStr },
         { "MH_是否已完成任务", Lua_IsCompleteQuest },
-        { "MH_是否在副本", Lua_IsInFB }, 
+        { "MH_是否在副本", Lua_IsInFB },
         { "MH_交任务", Lua_CompleteQuest },
         { "MH_获取可接主线", Lua_GetQuestTable },
         { "MH_接任务", Lua_AcceptQuest },
@@ -415,6 +530,7 @@ luaL_reg ConsoleGlue[] = {
         { "MH_翻滚", Lua_Roll },
         { "MH_补给箱取物", Lua_GetItemFormCrates },
         { "MH_采集所有物品", Lua_CollectAll },
+        { "MH_采集目标点", Lua_CollectTar },
         { nullptr, NULL },
 };
 

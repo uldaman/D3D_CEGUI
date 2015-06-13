@@ -159,3 +159,16 @@ std::vector<std::string> CMartin::split(std::string str, std::string pattern) {
     }
     return result;
 }
+
+// 两坐标点间距离
+float CMartin::Compare_Coord(float x1, float y1, float x2, float y2) {
+    if (x1 == x2) {
+        return abs(y1 - y2);	//上 下
+    } else if (y1 == y2) {
+        return abs(x1 - x2);	//左 右
+    } else {
+        float subX = abs(x1 - x2);
+        float subY = abs(y1 - y2);
+        return (sqrt(pow(subX, 2) + pow(subY, 2))); //三角函数 求边长
+    }
+}

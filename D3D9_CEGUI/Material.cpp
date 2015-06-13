@@ -11,7 +11,6 @@
 #include "Game.h"
 
 std::list<material> CMaterial::m_material_list;
-bool CMaterial::m_bStart = false;
 
 void CMaterial::initMaterial() {
     //USES_CONVERSION;
@@ -45,6 +44,8 @@ void CMaterial::initMaterial() {
         vct.erase(unique(vct.begin(), vct.end()), vct.end()); //去重
 
         for (auto& v : vct) {
+            //martin->Debug("====================== 0x%X ===================", v);
+
             if (martin->ReadPtrData(v + 0x8, TEXT("遍历 [采集物品数组] --2"), nAddr)) {
                 material item;
                 if (martin->ReadPtrData(nAddr + 0x4, TEXT("遍历 [采集物品数组] --3"), item.nID)
@@ -103,33 +104,34 @@ void CMaterial::initMaterial() {
                                     continue;
                                 }
 
-                                int nType = 0;
-                                try {
-                                	_asm {
-                                		pushad;
-                                		pushfd;
-                                		
-                                        mov ecx, nAddr; //对象详情指针
-                                        mov eax, [ecx];
-                                        add eax, OFFSET_GET_COLLECT_ITEM_TYPE;
-                                        mov edx, [eax];
-                                        call edx;
-                                        mov nType, eax;
-                                		
-                                		popfd;
-                                		popad;
-                                	}
-                                } catch (...) {
-                                	martin->Debug("获取 [对象类别] --> 异常");
-                                }
-                                item.nType = nType;
                                 item.strName = (char*)nRet;
-                                
-                                martin->Debug("%s -- ID: 0x%X -- Key: 0x%X -- 类别: %d -- %f : %f : %f", \
-                                   item.strName.c_str(), item.nID, item.nKey, item.nType, item.fPointX, item.fPointY, item.fPointZ);
-                                
+                                //
+                                //martin->Debug("%s -- ID: 0x%X -- Key: 0x%X -- 类别: 0x%X -- %f : %f : %f", \
+                                //   item.strName.c_str(), item.nID, item.nKey, item.nType, item.fPointX, item.fPointY, item.fPointZ);
+
                                 std::string::size_type idx = item.strName.find("CGameCollectPoint");
                                 if (idx != std::string::npos) { // 找到名称
+                                    int nType = 0;
+                                    try {
+                                        _asm {
+                                            pushad;
+                                            pushfd;
+
+                                            mov ecx, nAddr; //对象详情指针
+                                            mov eax, [ecx];
+                                            add eax, OFFSET_GET_COLLECT_ITEM_TYPE;
+                                            mov edx, [eax];
+                                            call edx;
+                                            mov nType, eax;
+
+                                            popfd;
+                                            popad;
+                                        }
+                                    } catch (...) {
+                                        martin->Debug("获取 [对象类别] --> 异常");
+                                    }
+                                    item.nType = nType;
+
                                     CMaterial::m_material_list.push_back(item);
                                 }
                             }
@@ -139,65 +141,4 @@ void CMaterial::initMaterial() {
             }
         }
     }
-}
-
-void CMaterial::Collect() {
-    ::CloseHandle((HANDLE)_beginthreadex(NULL, 0, Thread_Collect, NULL, 0, NULL));
-}
-
-unsigned int __stdcall CMaterial::Thread_Collect(PVOID pM) {
-    //// 记录下当前坐标, 用于采集完返回
-    //POINT_TARGET Current_Point;
-    //::SendMessage(theApp.m_hGWnd, WM_GETROLEPOINT, (WPARAM)&Current_Point, NULL);
-
-    //for (auto& v : CMaterial::m_material_list) {
-    //    // 先判断下是不是在FB里
-    //    int nWhere;
-    //    ::SendMessage(theApp.m_hGWnd, WM_WHERE, (WPARAM)&nWhere, /*(LPARAM)&nKey*/NULL);
-    //    if (nWhere != 2 || CMaterial::m_bStart == false) {
-    //        goto MaterialEnd; // 如果不在FB 则跳出
-    //    }
-    //    
-    //    //martin->Debug("%s -- ID: 0x%X -- Key: 0x%X -- %f : %f : %f",
-    //    //    v.strName.c_str(), v.nID, v.nKey, v.fPointX, v.fPointY, v.fPointZ);
-
-    //    POINT_TARGET _Point = { v.fPointX, v.fPointY, v.fPointZ };
-    //    int nID = v.nID;
-    //    int nKey = v.nKey;
-
-    //    // 瞬移
-    //    ::SendMessage(theApp.m_hGWnd, WM_FINDWAY, (WPARAM)&_Point, /*(LPARAM)&nKey*/NULL);
-    //    Sleep(1000);
-
-    //    // 采集
-    //    for (int i = 0; i < 3; i++) {
-    //        ::SendMessage(theApp.m_hGWnd, WM_WHERE, (WPARAM)&nWhere, /*(LPARAM)&nKey*/NULL);
-    //        if (nWhere != 2 || CMaterial::m_bStart == false) {
-    //            goto MaterialEnd; // 如果不在FB 则跳出
-    //        }
-
-    //        ::SendMessage(theApp.m_hGWnd, WM_COLLECT, (WPARAM)&nID, NULL);
-    //        Sleep(500);
-
-    //        // 判断是否在采集中, 是的话, 接着采集, 否则开始下一个
-    //        BOOL bCollect = FALSE;
-    //        ::SendMessage(theApp.m_hGWnd, WM_GETCOLLECT, (WPARAM)&bCollect, NULL);
-    //        //martin->Debug(TEXT("采集标识: %d"), bCollect);
-
-    //        while (bCollect) { // 说明在采集中
-    //            Sleep(1000);
-    //            ::SendMessage(theApp.m_hGWnd, WM_GETCOLLECT, (WPARAM)&bCollect, NULL);
-    //        }
-
-    //        Sleep(500);
-    //    }
-
-    //    Sleep(500);
-    //}
-
-    //MaterialEnd:
-    //// 返回开始处
-    //::SendMessage(theApp.m_hGWnd, WM_FINDWAY, (WPARAM)&Current_Point, NULL);
-    //CMaterial::m_bStart = false;
-    return 0;
 }

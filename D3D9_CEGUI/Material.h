@@ -22,12 +22,6 @@ typedef struct MATERIAL {
 class CMaterial {
 public:
     void initMaterial(); // 遍历当前房间的地面物品, 初始化 m_material_list 列表
-    void Collect(); // 采集
-
-    static unsigned int __stdcall Thread_Collect(PVOID pM);
-    static bool m_bStart;
-
-protected:
     static std::list<material> m_material_list;
 };
 

@@ -7,6 +7,8 @@
 #include <CEGUI\GUIContext.h>
 #include "Game.h"
 #include <CEGUI\WindowManager.h>
+#include <CEGUI\RendererModules\Direct3D9\Renderer.h>
+#include "Martin.h"
 
 #define D3DHOOK_TEXTURES //comment this to disable texture hooking
 
@@ -386,14 +388,54 @@ ULONG APIENTRY hkIDirect3DDevice9::Release() {
     return m_pD3Ddev->Release();
 }
 
+void DeviceReset_Direct3D9(HWND window, CEGUI::Renderer* renderer) {
+    CEGUI::Direct3D9Renderer* d3d_renderer =
+        static_cast<CEGUI::Direct3D9Renderer*>(renderer);
+
+    LPDIRECT3DDEVICE9 d3d_device = d3d_renderer->getDevice();
+
+    LPDIRECT3D9 d3d;
+    d3d_device->GetDirect3D(&d3d);
+
+    D3DDISPLAYMODE d3ddm;
+    d3d->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &d3ddm);
+
+    D3DPRESENT_PARAMETERS ppars;
+    ZeroMemory(&ppars, sizeof(ppars));
+    ppars.BackBufferFormat = d3ddm.Format;
+    ppars.hDeviceWindow = window;
+    ppars.SwapEffect = D3DSWAPEFFECT_DISCARD;
+    ppars.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+    ppars.Windowed = true;
+
+    d3d_renderer->preD3DReset();
+    d3d_device->Reset(&ppars);
+    d3d_renderer->postD3DReset();
+}
+
 HRESULT APIENTRY hkIDirect3DDevice9::Reset(D3DPRESENT_PARAMETERS *pPresentationParameters) {
-    m_pManager->PreReset();
+    CEGUI::Direct3D9Renderer* d3d_renderer = nullptr;
+    if (theApp.m_bInit) {
+        CEGUI::System* cegui_system = CEGUI::System::getSingletonPtr();
+        d3d_renderer = static_cast<CEGUI::Direct3D9Renderer*>(cegui_system->getRenderer());
+    }
+
+    if (theApp.m_bInit) {
+        d3d_renderer->preD3DReset();
+    } else {
+        m_pManager->PreReset();
+    }
 
     HRESULT hRet = m_pD3Ddev->Reset(pPresentationParameters);
 
     if (SUCCEEDED(hRet)) {
         m_PresentParam = *pPresentationParameters;
-        m_pManager->PostReset();
+
+        if (theApp.m_bInit) {
+            d3d_renderer->postD3DReset();
+        } else {
+            m_pManager->PostReset();
+        }
     }
 
     return hRet;

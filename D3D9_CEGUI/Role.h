@@ -37,6 +37,8 @@ public:
     static void Invincible(); // 开无敌
     static void UnInvincible(); // 关无敌
     static void CatInvincible(); // 猫无敌
+    static BOOL WhetherOrBusy(); // TRUE 表示在繁忙
+    static void Collect(int nID);
 
     static std::map<int, std::string> s_allItems; // 游戏内所有物品
     static void initAllItems();

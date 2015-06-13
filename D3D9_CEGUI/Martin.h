@@ -24,6 +24,9 @@ public:
     // 分割字符串
     std::vector<std::string> split(std::string str, std::string pattern);
 
+    // 两点间距离
+    float Compare_Coord(float x1, float y1, float x2, float y2);
+
 public:
     static CMartin* GetInstance();
 
