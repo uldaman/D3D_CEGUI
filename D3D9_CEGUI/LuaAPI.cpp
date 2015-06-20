@@ -489,6 +489,34 @@ MaterialEnd:
     return 0;
 }
 
+// MH_烤肉
+LuaGlue Lua_Barbecue(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_BARBECUES, NULL, NULL);
+    return 0;
+}
+
+// MH_背包物品數量
+LuaGlue Lua_GetBagItemNum(lua_State *L) {
+    std::string strItem = g_pClua->GetStringArgument(1, "");
+    int nNum = 0;
+    ::SendMessage(theApp.m_hGWnd, WM_GET_BAG_ITEM_NUM, (WPARAM)&nNum, (LPARAM)&strItem);
+    g_pClua->PushInt(nNum);
+    return 1;
+}
+
+// MH_吃烤肉
+LuaGlue Lua_EatMeat(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_EAT_MEAT, NULL, NULL);
+    return 0;
+}
+
+// MH_通用使用物品
+LuaGlue Lua_CommonUseItems(lua_State *L) {
+    std::string strItem = g_pClua->GetStringArgument(1, "");
+    ::SendMessage(theApp.m_hGWnd, WM_USE_ITEM, (WPARAM)&strItem, NULL);
+    return 0;
+}
+
 luaL_reg ConsoleGlue[] = {
         { "RegisterEvent", _RegisterEvent },
         { "MH_调试", Lua_Trac },
@@ -531,6 +559,10 @@ luaL_reg ConsoleGlue[] = {
         { "MH_补给箱取物", Lua_GetItemFormCrates },
         { "MH_采集所有物品", Lua_CollectAll },
         { "MH_采集目标点", Lua_CollectTar },
+        { "MH_烤肉", Lua_Barbecue },
+        { "MH_背包物品数量", Lua_GetBagItemNum },
+        { "MH_吃烤肉", Lua_EatMeat },
+        { "MH_通用使用物品", Lua_CommonUseItems },
         { nullptr, NULL },
 };
 

@@ -22,6 +22,7 @@ typedef struct MATERIAL {
 class CMaterial {
 public:
     void initMaterial(); // 遍历当前房间的地面物品, 初始化 m_material_list 列表
+    void initMaterial_2(); // 遍历当前房间的地面物品, 初始化 m_material_list 列表. 第二种方法
     static std::list<material> m_material_list;
 };
 

@@ -8,7 +8,7 @@
 CRole* CRole::m_cInstance = NULL;
 CGameHOOK CRole::m_hook;
 CGameHOOK CRole::m_CatHook;
-std::map<int, std::string> CRole::s_allItems;
+std::map<int, NAME_OID> CRole::s_allItems;
 
 CRole* CRole::GetInstance() {
     if (m_cInstance == NULL) {
@@ -362,6 +362,39 @@ BOOL CRole::TurntoBoss(int nKey) {
         }
 
         if (nRet_2) {
+            // 先判断是否死亡
+            int nDead = 0;
+            try {
+                _asm {
+                    pushad;
+                    pushfd;
+
+                    mov ecx, nRet_2; //对象指针
+                    mov eax, [ecx];
+                    add eax, OFFSET_GET_SWITCH_REGION_ECX;
+                    mov edx, [eax]; //0x178:OFFSET_GET_SWITCH_REGION_ECX
+                    call edx;
+                    mov ebx, eax;
+                    mov edx, [ebx];
+                    add edx, OFFSET_IS_DEAD;
+                    mov eax, [edx]; //OFFSET_IS_DEAD
+                    mov ecx, ebx;
+                    call eax;
+                    movzx ecx, al;
+                    mov nDead, ecx;
+
+                    popfd;
+                    popad;
+                }
+            } catch (...) {
+                martin->Debug("TurntoBoss -- 3 --> 异常");
+                return FALSE;
+            }
+
+            if (nDead == 1) {
+                return FALSE;
+            }
+
             int nName = 0;
             std::string strName = CNearObject::GetObjectName(nRet_2);
             for (int i = 0; BossName[i] != ""; i++) {
@@ -371,7 +404,7 @@ BOOL CRole::TurntoBoss(int nKey) {
                     martin->ReadPtrData(nRet_2 + OFFSET_COOR, TEXT("获取 [BOSS x 坐标]"), fx);
                     martin->ReadPtrData(nRet_2 + OFFSET_COOR + 0x4, TEXT("获取 [BOSS y 坐标]"), fy);
                     martin->ReadPtrData(nRet_2 + OFFSET_COOR + 0x8, TEXT("获取 [BOSS z 坐标]"), fz);
-                    martin->Debug(TEXT("BOSS 坐标: %f, %f, %f"), fx, fy, fz);
+                    // martin->Debug(TEXT("BOSS 坐标: %f, %f, %f"), fx, fy, fz);
 
                     // 转向
                     float role_fx = 0.0f;
@@ -564,7 +597,7 @@ BOOL CRole::Attack_Pack_Boss(int nBossKey, int nPart) {
                     martin->ReadPtrData(nRet_2 + OFFSET_COOR, TEXT("获取 BOSS 坐标"), fx);
                     martin->ReadPtrData(nRet_2 + OFFSET_COOR + 0x4, TEXT("获取 BOSS 坐标"), fy);
                     martin->ReadPtrData(nRet_2 + OFFSET_COOR + 0x8, TEXT("获取 BOSS 坐标"), fz);
-                    martin->Debug(TEXT("BOSS 坐标: %f, %f, %f"), fx, fy, fz);
+                    //martin->Debug(TEXT("BOSS 坐标: %f, %f, %f"), fx, fy, fz);
 
                     int nRoleAddr = 0, nRoleKey = 0;
                     if (martin->ReadPtrData(BASE_GAME, TEXT("获取当前人物指针 -- 1"), nRoleAddr)) {
@@ -978,13 +1011,15 @@ _declspec(naked) void Invincible() {
 void CRole::Invincible() {
     m_hook.bSwitch = FALSE;
     if (m_hook.IsHook == FALSE) {
-        m_hook.StartHookByByte(HOOK_INVINCIBLE, (DWORD)Invincible, 6);
+        //m_hook.StartHookByByte(HOOK_INVINCIBLE, (DWORD)Invincible, 6);
+        m_hook.StartInvincible(HOOK_INVINCIBLE);
     }
 }
 
 void CRole::UnInvincible() {
     if (m_hook.IsHook == TRUE) {
-        m_hook.UnHookByByte();
+        //m_hook.UnHookByByte();
+        m_hook.UnInvincible(HOOK_INVINCIBLE);
     }
 }
 
@@ -1382,11 +1417,13 @@ void CRole::initAllItems() {
                     if (martin->ReadPtrData(dwTmep + 0x14, TEXT("获取 [物品名]"), dwName)) {
                         try {
                             if (dwName != 0x0) {
-                                int nID;
+                                int nID, nOID;
                                 std::string strNmae = (CHAR*)dwName;
                                 //martin->Debug("全部物品: %s -- ID: 0x%X", strNmae.c_str(), nID);
                                 martin->ReadPtrData(dwTmep + 0x10, TEXT("获取 [物品ID]"), nID);
-                                CRole::s_allItems.insert(std::map<int, std::string>::value_type(nID, strNmae));
+                                martin->ReadPtrData(dwTmep + OFFSET_NO_DELAY_USE_ITEM_PACKET3_PARAM1, TEXT("获取 [物品OID]"), nOID);
+                                NAME_OID name_oid = { strNmae, nOID };
+                                CRole::s_allItems.insert(std::map<int, NAME_OID>::value_type(nID, name_oid));
                                 //auto it = CRole::s_allItems.find(strNmae);
                                 //if (it == CRole::s_allItems.end()) { // 没找到则添加
                                 //    CRole::s_allItems.insert(std::map<std::string, int>::value_type(strNmae, nID));

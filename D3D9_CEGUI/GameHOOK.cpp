@@ -482,3 +482,62 @@ void CGameHOOK::UnHook() {
     }*/
     IsHook = FALSE;
 }
+
+void CGameHOOK::StartInvincible(DWORD dwAdress) {
+    _try {
+        // 修改内存属性为可写
+        DWORD dwOld = NULL;
+        VirtualProtectEx(::GetCurrentProcess(), (LPVOID)dwAdress, 6, PAGE_EXECUTE_READWRITE, &dwOld);
+
+        //-----------------------------------------------------------
+        //    修改成無敵
+        //-----------------------------------------------------------
+        // 先保存原始字節
+        PBYTE bAddr = (PBYTE)dwAdress;
+        bOriginal[0] = *bAddr;
+        bOriginal[1] = *(bAddr + 1);
+        bOriginal[2] = *(bAddr + 2);
+        bOriginal[3] = *(bAddr + 3);
+        bOriginal[4] = *(bAddr + 4);
+        bOriginal[5] = *(bAddr + 5);
+
+        // 修改成無敵字節
+        *bAddr = 0x33;
+        *(bAddr + 1) = 0xC0;
+        *(bAddr + 2) = 0xEB;
+        *(bAddr + 3) = 0x1A;
+        *(bAddr + 4) = 0x90;
+        *(bAddr + 5) = 0x90;
+
+        IsHook = TRUE;
+ 
+        // 回覆內存讀寫屬性
+        VirtualProtectEx(::GetCurrentProcess(), (LPVOID)dwAdress, 6, dwOld, &dwOld);
+    } _except(1) {
+
+    }
+}
+
+void CGameHOOK::UnInvincible(DWORD dwAdress) {
+    _try{
+        // 修改内存属性为可写
+        DWORD dwOld = NULL;
+        VirtualProtectEx(::GetCurrentProcess(), (LPVOID)dwAdress, 6, PAGE_EXECUTE_READWRITE, &dwOld);
+
+        // 修改成原始字節
+        PBYTE bAddr = (PBYTE)dwAdress;
+        *bAddr = bOriginal[0];
+        *(bAddr + 1) = bOriginal[1];
+        *(bAddr + 2) = bOriginal[2];
+        *(bAddr + 3) = bOriginal[3];
+        *(bAddr + 4) = bOriginal[4];
+        *(bAddr + 5) = bOriginal[5];
+
+        IsHook = FALSE;
+
+        // 回覆內存讀寫屬性
+        VirtualProtectEx(::GetCurrentProcess(), (LPVOID)dwAdress, 6, dwOld, &dwOld);
+    } _except(1) {
+
+    }
+}

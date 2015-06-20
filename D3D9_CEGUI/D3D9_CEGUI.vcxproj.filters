@@ -87,6 +87,9 @@
     <ClCompile Include="Interface.cpp">
       <Filter>Cegui\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Bag.cpp">
+      <Filter>怪物猎人</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Martin.h">
@@ -148,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="Interface.h">
       <Filter>Cegui\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Bag.h">
+      <Filter>怪物猎人</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

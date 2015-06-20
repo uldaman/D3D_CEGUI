@@ -3,6 +3,18 @@
 #include <windows.h>
 #include "GameHOOK.h"
 #include <map>
+#include "DataType.h"
+
+class map_finder_name {
+public:
+    map_finder_name(std::string cmp_string) : m_string(cmp_string) {}
+
+    bool operator () (const std::map<int, NAME_OID>::value_type pair) {
+        return pair.second.strName == m_string;
+    }
+private:
+    std::string m_string;
+};
 
 class CRole {
 public:
@@ -40,7 +52,7 @@ public:
     static BOOL WhetherOrBusy(); // TRUE 表示在繁忙
     static void Collect(int nID);
 
-    static std::map<int, std::string> s_allItems; // 游戏内所有物品
+    static std::map<int, NAME_OID> s_allItems; // 游戏内所有物品
     static void initAllItems();
 
 protected:

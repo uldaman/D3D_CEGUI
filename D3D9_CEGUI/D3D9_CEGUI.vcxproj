@@ -87,6 +87,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bag.cpp" />
     <ClCompile Include="BrushZones.cpp" />
     <ClCompile Include="d3d9.cpp" />
     <ClCompile Include="d3d9dev.cpp" />
@@ -105,6 +106,7 @@
     <ClCompile Include="Role.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bag.h" />
     <ClInclude Include="Base.h" />
     <ClInclude Include="BrushZones.h" />
     <ClInclude Include="CLua.h" />

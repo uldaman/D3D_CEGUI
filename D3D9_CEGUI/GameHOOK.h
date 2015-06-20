@@ -19,5 +19,10 @@ public:
     void UnHook();
     void StartHookByByte(DWORD dwAdress, DWORD dwFun, byte Numberbytes);
     void UnHookByByte();
+
+    // 下面这个 HOOK 是专门为了实现無敵而寫的
+    byte bOriginal[6];
+    void StartInvincible(DWORD dwAdress);
+    void UnInvincible(DWORD dwAdress);
 };
 

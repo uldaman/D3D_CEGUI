@@ -236,7 +236,10 @@ std::string CQuest::TransformName(std::string strName) {
     StringReplace(strName, "¡°", "");
     StringReplace(strName, "¡±", "");
     StringReplace(strName, "!", "");
+    StringReplace(strName, "£¡", "");
     StringReplace(strName, "£¿", "");
+    StringReplace(strName, "?", "");
+    StringReplace(strName, "-", "");
     std::string::size_type idx = strName.find_first_of("]");
     if (idx == std::string::npos) {
         return strName;

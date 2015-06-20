@@ -18,8 +18,8 @@ typedef struct CRATES_LIST {
 } CratesList, *pCratesList;
 
 typedef struct ID_INDEX {
-    DWORD dwID;   // +0x0	    下一节点
-    DWORD dwIndex;  // +0x4	    上一节点
+    DWORD dwID;   
+    DWORD dwIndex;
 } IdIndex, *pIdIndex;
 
 #pragma pack(pop)
@@ -47,6 +47,7 @@ public:
     void TraverList(int nStart, int nEnd, std::multimap<std::string, IdIndex>& CratesMap);
     void allotItem(int nObject, std::multimap<std::string, IdIndex>& CratesMap);
     void GetItemPack(int nIndex, int nID);
+    static int 获取时间戳();
 
 protected:
     BOOL GetBoss(int nKey);

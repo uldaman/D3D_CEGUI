@@ -262,7 +262,7 @@ BOOL CBrushZones::GetBoss(int nKey) {
                 }
             } catch (...) {
                 martin->Debug("GetBoss -- 3 --> 异常");
-                return TRUE;
+                return FALSE;
             }
 
             if (nDead == 1) {
@@ -434,7 +434,7 @@ BOOL CBrushZones::Teleport(int nKey) {
                 }
             } catch (...) {
                 martin->Debug("Teleport -- 3 --> 异常");
-                return TRUE;
+                return FALSE;
             }
 
             if (nDead == 1) {
@@ -450,7 +450,7 @@ BOOL CBrushZones::Teleport(int nKey) {
                     martin->ReadPtrData(nRet_2 + OFFSET_COOR, TEXT("获取 [BOSS 坐标]"), fx);
                     martin->ReadPtrData(nRet_2 + OFFSET_COOR + 0x4, TEXT("获取 [BOSS 坐标]"), fy);
                     martin->ReadPtrData(nRet_2 + OFFSET_COOR + 0x8, TEXT("获取 pBOSS 坐标]"), fz);
-                    martin->Debug("BOSS 坐标: %f, %f, %f", fx, fy, fz);
+                    // martin->Debug("BOSS 坐标: %f, %f, %f", fx, fy, fz);
 
                     int nRoleAddr = 0, nRoleKey = 0;
                     if (martin->ReadPtrData(BASE_GAME, TEXT("获取 [当前人物指针] -- 1"), nRoleAddr)) {
@@ -541,7 +541,7 @@ void CBrushZones::allotItem(int nObject, std::multimap<std::string, IdIndex>& Cr
 
     auto it = CRole::s_allItems.find(nID);
     if (it != CRole::s_allItems.end()) { // 说明匹配到ID了
-        strName = it->second;
+        strName = it->second.strName;
         IdIndex idindex{ nID, nIndex };
         CratesMap.insert(std::map<std::string, IdIndex>::value_type(strName, idindex));
     }
@@ -556,4 +556,30 @@ void CBrushZones::GetItemPack(int nIndex, int nID) {
     pGip->G_Num = 1;
     CRole::SendPackage((DWORD)pGip);
     delete pGip;
+}
+
+int CBrushZones::获取时间戳() {
+    int nRet = 0;
+    try {
+    	_asm {
+    		pushad;
+    		pushfd;
+    		
+            mov ecx, BASE_GAME;
+            mov ecx, [ecx];
+            mov ecx, [ecx + 0x4];
+            mov ecx, [ecx + 0xC]; //[[[BASE_GAME]+4]+0c]
+            mov edx, [ecx];
+            add edx, OFFSET_GET_TIMESTAMP;
+            mov eax, [edx];
+            call eax;
+            mov nRet, eax;
+    		
+    		popfd;
+    		popad;
+    	}
+    } catch (...) {
+    	martin->Debug("获取时间戳 --> 异常");
+    }
+    return nRet;
 }

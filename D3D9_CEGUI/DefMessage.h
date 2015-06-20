@@ -41,3 +41,7 @@
 #define WM_GETCOLLECT                   WM_USER + 2339  // 获取采集标志位
 #define WM_COLLECT                      WM_USER + 2340  // 采集
 #define WM_GET_COLLECTS                 WM_USER + 2341  // 初始化采集信息
+#define WM_BARBECUES                    WM_USER + 2342  // 烤肉
+#define WM_GET_BAG_ITEM_NUM             WM_USER + 2343  // 獲取背包物品數量
+#define WM_EAT_MEAT                     WM_USER + 2344  // 吃烤肉
+#define WM_USE_ITEM                     WM_USER + 2345  // 通用使用物品

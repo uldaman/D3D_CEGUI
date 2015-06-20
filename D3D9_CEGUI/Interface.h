@@ -51,3 +51,7 @@ void On_GetItemFormCrates(HWND hDlg, WPARAM wParam, LPARAM lParam); // ≤π∏¯œ‰»°Œ
 void On_GetCollect(HWND hDlg, WPARAM wParam, LPARAM lParam); // ªÒ»°≤…ºØ±Í÷æŒª
 void On_Collect(HWND hDlg, WPARAM wParam, LPARAM lParam); // ≤…ºØ
 void On_GetCollects(HWND hDlg, WPARAM wParam, LPARAM lParam); // ªÒ»°≤…ºØŒÔ–≈œ¢
+void On_Barbecues(HWND hDlg, WPARAM wParam, LPARAM lParam); // øæ»‚
+void On_GetBagItemNum(HWND hDlg, WPARAM wParam, LPARAM lParam); // ´@»°±≥∞¸ŒÔ∆∑îµ¡ø
+void On_EatMeat(HWND hDlg, WPARAM wParam, LPARAM lParam); // ≥‘øæ»‚
+void On_CommonUseItems(HWND hDlg, WPARAM wParam, LPARAM lParam); // Õ®”√ π”√ŒÔ∆∑
