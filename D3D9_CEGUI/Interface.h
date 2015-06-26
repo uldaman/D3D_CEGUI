@@ -18,6 +18,7 @@ void On_CompleteQuest(HWND hDlg, WPARAM wParam, LPARAM lParam); // 交任务
 void On_AcceptQuest(HWND hDlg, WPARAM wParam, LPARAM lParam); // 接任务
 void On_InteractiveQuest(HWND hDlg, WPARAM wParam, LPARAM lParam); // 任务对话
 void On_锻造晓风短剑(HWND hDlg, WPARAM wParam, LPARAM lParam); // 锻造晓风短剑
+void On_MadeHpMedicine(HWND hDlg, WPARAM wParam, LPARAM lParam); // 制造回复药
 void On_CityFly(HWND hDlg, WPARAM wParam, LPARAM lParam); // 城镇传送
 void On_ChooseFB(HWND hDlg, WPARAM wParam, LPARAM lParam); // 选择副本
 void On_StartFB(HWND hDlg, WPARAM wParam, LPARAM lParam); // 开始副本
@@ -55,3 +56,10 @@ void On_Barbecues(HWND hDlg, WPARAM wParam, LPARAM lParam); // 烤肉
 void On_GetBagItemNum(HWND hDlg, WPARAM wParam, LPARAM lParam); // 獲取背包物品數量
 void On_EatMeat(HWND hDlg, WPARAM wParam, LPARAM lParam); // 吃烤肉
 void On_CommonUseItems(HWND hDlg, WPARAM wParam, LPARAM lParam); // 通用使用物品
+void On_PrecisionAcceptQuest(HWND hDlg, WPARAM wParam, LPARAM lParam); // 精准交任务, 通过比对 NPC 的坐标
+void On_BuySupply(HWND hDlg, WPARAM wParam, LPARAM lParam); // 补给物品
+void On_KillMonster(HWND hDlg, WPARAM wParam, LPARAM lParam); // 击杀物品
+void On_GetMonsterRoom(HWND hDlg, WPARAM wParam, LPARAM lParam); // 击杀物品
+void On_GotoMonster(HWND hDlg, WPARAM wParam, LPARAM lParam); // 瞬移到标记怪
+void On_TurnToMonster(HWND hDlg, WPARAM wParam, LPARAM lParam); // 转向到标记怪
+void On_TurnToPoint(HWND hDlg, WPARAM wParam, LPARAM lParam); // 转向到标记怪

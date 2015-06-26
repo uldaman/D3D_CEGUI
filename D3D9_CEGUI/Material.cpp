@@ -131,7 +131,40 @@ void CMaterial::initMaterial() {
                                         } catch (...) {
                                             martin->Debug("获取 [对象类别] --> 异常");
                                         }
-                                        item.nType = nType;
+                                        item.strType = "Unknown";
+                                        // 类别 1:矿（挖矿工具）,2:药草,3:昆虫（捕虫工具）,5:蘑菇,6:蜂蜜,7:地面小石头,8:粪便,0xA:怪物尸体,0xC:骨头,0x11:网
+                                        switch (nType) {
+                                        case 1:
+                                            item.strType = "矿";
+                                            break;
+                                        case 2:
+                                            item.strType = "药草";
+                                            break;
+                                        case 3:
+                                            item.strType = "昆虫";
+                                            break;
+                                        case 5:
+                                            item.strType = "蘑菇";
+                                            break;
+                                        case 6:
+                                            item.strType = "蜂蜜";
+                                            break;
+                                        case 7:
+                                            item.strType = "小石头";
+                                            break;
+                                        case 8:
+                                            item.strType = "粪便";
+                                            break;
+                                        case 0xA:
+                                            item.strType = "尸体";
+                                            break;
+                                        case 0xC:
+                                            item.strType = "骨头";
+                                            break;
+                                        case 0x11:
+                                            item.strType = "网";
+                                            break;
+                                        }
 
                                         CMaterial::m_material_list.push_back(item);
                                     }
@@ -264,7 +297,40 @@ void CMaterial::initMaterial_2() {
                             } catch (...) {
                                 martin->Debug("获取 [对象类别] --> 异常");
                             }
-                            item.nType = nType;
+                            item.strType = "Unknown";
+                            // 类别 1:矿（挖矿工具）,2:药草,3:昆虫（捕虫工具）,5:蘑菇,6:蜂蜜,7:地面小石头,8:粪便,0xA:怪物尸体,0xC:骨头,0x11:网
+                            switch (nType) {
+                            case 1:
+                                item.strType = "矿";
+                                break;
+                            case 2:
+                                item.strType = "药草";
+                                break;
+                            case 3:
+                                item.strType = "昆虫";
+                                break;
+                            case 5:
+                                item.strType = "蘑菇";
+                                break;
+                            case 6:
+                                item.strType = "蜂蜜";
+                                break;
+                            case 7:
+                                item.strType = "小石头";
+                                break;
+                            case 8:
+                                item.strType = "粪便";
+                                break;
+                            case 0xA:
+                                item.strType = "尸体";
+                                break;
+                            case 0xC:
+                                item.strType = "骨头";
+                                break;
+                            case 0x11:
+                                item.strType = "网";
+                                break;
+                            }
 
                             if (martin->ReadPtrData(nRet + 0x4, TEXT("遍历 [采集物品数组] --3"), item.nID)
                                 && martin->ReadPtrData(nRet + 0x60, TEXT("遍历 [采集物品数组] --5"), item.fPointX)

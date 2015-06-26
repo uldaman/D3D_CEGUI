@@ -10,6 +10,7 @@
 #include "Bag.h"
 #include "Base.h"
 #include <algorithm>
+#include "Supply.h"
 
 #define COMMAND_MSG(hwnd, uMsg, wParam, lParam, fn) \
     case (uMsg): return (void)(fn)((hwnd), (wParam), (lParam))
@@ -66,6 +67,14 @@ void MesageMapping(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
         COMMAND_MSG(hDlg, WM_GET_BAG_ITEM_NUM, wParam, lParam, On_GetBagItemNum); // 獲取背包物品數量
         COMMAND_MSG(hDlg, WM_EAT_MEAT, wParam, lParam, On_EatMeat); // 吃烤肉
         COMMAND_MSG(hDlg, WM_USE_ITEM, wParam, lParam, On_CommonUseItems); // 通用使用物品
+        COMMAND_MSG(hDlg, WM_PRECISION_ACCEPT_QUEST, wParam, lParam, On_PrecisionAcceptQuest); // 精准交任务, 通过比对 NPC 的坐标
+        COMMAND_MSG(hDlg, WM_MADE_HP_MEDICINE, wParam, lParam, On_MadeHpMedicine); // 制造回复药
+        COMMAND_MSG(hDlg, WM_BUY_SUPPLY, wParam, lParam, On_BuySupply); // 补给物品
+        COMMAND_MSG(hDlg, WM_KILL_MONSTER, wParam, lParam, On_KillMonster); // 击杀怪物
+        COMMAND_MSG(hDlg, WM_GET_MONSTER_ROOM, wParam, lParam, On_GetMonsterRoom); // 获取标记怪物房间
+        COMMAND_MSG(hDlg, WM_GOTO_MONSTER, wParam, lParam, On_GotoMonster); // 瞬移到标记怪
+        COMMAND_MSG(hDlg, WM_TURN_TO_MONSTER, wParam, lParam, On_TurnToMonster); // 转向到标记怪
+        COMMAND_MSG(hDlg, WM_TURN_TO_POINT, wParam, lParam, On_TurnToPoint); // 转向到目标点
     }
 }
 
@@ -492,6 +501,7 @@ void On_CommonUseItems(HWND hDlg, WPARAM wParam, LPARAM lParam) {
             dwArg_1[0] = (*p).nID_1;
             dwArg_1[1] = (*p).nID_2;
             dwArg_1[2] = (*p).nIndex * 0x100;
+            DWORD pDwArg_1 = (DWORD)&dwArg_1;
 
             int nRoleAddr = CRole::GetRoleAddr();
             DWORD dwArg_2;
@@ -502,7 +512,7 @@ void On_CommonUseItems(HWND hDlg, WPARAM wParam, LPARAM lParam) {
                         pushad;
                         pushfd;
 
-                        mov ecx, dwArg_1; //见【子CALL_1参数1】
+                        mov ecx, pDwArg_1; //见【子CALL_1参数1】
                         push ecx;
                         mov edx, dwArg_2; //见【子CALL_1参数2】
                         push edx;
@@ -513,10 +523,236 @@ void On_CommonUseItems(HWND hDlg, WPARAM wParam, LPARAM lParam) {
                         popad;
                     }
                 } catch (...) {
-                    martin->Debug("使用 %s --> 异常", (*p).strName);
+                    martin->Debug("使用 %s --> 异常", (*p).strName.c_str());
                 }
             }
             break;
+        }
+    }
+}
+
+void On_PrecisionAcceptQuest(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    pQuestInfo questInfo = (pQuestInfo)wParam;
+    pPOINT_TARGET pointTarget = (pPOINT_TARGET)lParam;
+
+
+    quest.initUnCompleteQuest();
+    for (auto& v : quest.m_unComplete_quest) {
+        if (v.strQuestType == "主线" && questInfo->strQuestName == v.strQuestName) {
+            if (v.strQuestStatus == "完成") {
+                // 交任务
+                // 1. 打开 NPC
+                nearObj.initNear();
+                for (auto& w : nearObj.m_near_object) {
+                    if (w.strNpcName == questInfo->strNpcName) { // 找到 NPC
+                        // 比对 npc 坐标
+                        if (martin->Compare_Coord(pointTarget->fPontX, pointTarget->fPontY, w.fNpcPointX, w.fNpcPointY) < 5) {
+                            nearObj.Interactive(w.nNpcID);
+                            Sleep(50);
+                            break;
+                        } // 与目标坐标距离小于 5 则表示找到该 npc 
+
+
+                    }
+                }
+                // 2. 交任务
+                quest.CompleteQuest(v.nQuestID);
+            }
+            break;
+        }
+    }
+}
+
+void On_MadeHpMedicine(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    quest.MadeHpMedicine();
+}
+
+void On_BuySupply(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    CSupply supply;
+    supply.initSupply();
+
+    pSupplyInfo supplyInfo = (pSupplyInfo)wParam; // 因为补给物品也需要两个 string 参数, 所以直接用 t_questInfo
+    int nNumOfSupply = *(PINT)lParam;
+
+    for (auto& v : supply.m_supply_list) {
+        //martin->Debug("%s -- 商品ID: 0x%X -- 分类ID: 0x%X", v.strItemName.c_str(), v.nSupplyID, v.nTypeID);
+        if (supplyInfo->strSupplyName == v.strItemName
+            && supplyInfo->strTypeName == v.strTypeName) {
+            // 1. 打开 NPC
+            nearObj.initNear();
+            for (auto& w : nearObj.m_near_object) {
+                if (w.strNpcName == supplyInfo->strNpcName) { // 找到 NPC
+                    nearObj.Interactive(w.nNpcID);
+                    Sleep(50);
+                    break;
+                }
+            }
+            // 2. 买东西
+            DWORD Package[17];
+            RtlZeroMemory(Package, sizeof(Package));
+            Package[0] = 0x00000F01;
+            Package[4] = v.nTypeID;
+            Package[5] = v.nSupplyID;
+            Package[6] = nNumOfSupply;
+            Package[7] = 0xFFFFFFFF;
+            Package[8] = 0xFFFFFFFF;
+            CRole::SendPackage((DWORD)&Package);
+            break;
+        }
+    }
+}
+
+void On_KillMonster(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    zone.initMonster(*(std::string*)wParam);
+
+    CBrushZones::m_monster = new Monster;
+    CBrushZones::m_monster->fDistance = 9999999.0f;
+    pMonster monsterTemp = CBrushZones::m_monster; // 因为 monster 后面要换地址, 所以这里保存一下, 程序退出时释放该地址
+
+    for (auto& v : zone.m_monster_list) {
+        if (v.bIsDead == FALSE && CBrushZones::m_monster->fDistance > v.fDistance) {
+            CBrushZones::m_monster = &v;
+        }
+    }
+
+    //for (auto& v : zone.m_monster_list) {
+    //    martin->Debug("%s -- 坐标: %f : %f : %f -- 是否被攻击: %d -- 死亡状态: %d -- 房间: %d -- 距离: %f"
+    //        , v.strMonsterName.c_str(), v.fMonsterPointX, v.fMonsterPointY, v.fMonsterPointZ
+    //        , v.bIsDead, v.nMonsterRoom, v.fDistance);
+    //}
+
+    delete monsterTemp;
+}
+
+void On_GetMonsterRoom(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    //martin->Debug("%s -- 坐标: %f : %f : %f -- 是否被攻击: %d -- 死亡状态: %d -- 房间: %d -- 距离: %f"
+    //    , CBrushZones::m_monster->strMonsterName.c_str(), CBrushZones::m_monster->fMonsterPointX, CBrushZones::m_monster->fMonsterPointY, CBrushZones::m_monster->fMonsterPointZ
+    //    , CBrushZones::m_monster->bIsDead, CBrushZones::m_monster->nMonsterRoom, CBrushZones::m_monster->fDistance);
+
+    if (IsBadReadPtr((CONST VOID*)CBrushZones::m_monster, sizeof(Monster)) == 0) {
+        // 判断是否死亡
+        int nDead = 0;
+        int nMonsterAddr = CBrushZones::m_monster->nMonsterAddr;
+        try {
+            _asm {
+                pushad;
+                pushfd;
+
+                mov ecx, nMonsterAddr; //对象指针
+                mov eax, [ecx];
+                add eax, OFFSET_GET_SWITCH_REGION_ECX;
+                mov edx, [eax]; //0x178:OFFSET_GET_SWITCH_REGION_ECX
+                call edx;
+                mov ebx, eax;
+                mov edx, [ebx];
+                add edx, OFFSET_IS_DEAD;
+                mov eax, [edx]; //OFFSET_IS_DEAD
+                mov ecx, ebx;
+                call eax;
+                movzx ecx, al;
+                mov nDead, ecx;
+
+                popfd;
+                popad;
+            }
+        } catch (...) {
+            martin->Debug("GetMonster -- 3 --> 异常");
+            return;
+        }
+
+        if (nDead == 1) {
+            CBrushZones::m_monster->bIsDead = TRUE;
+            return;
+        }
+
+        martin->ReadPtrData(CBrushZones::m_monster->nMonsterAddr + 0x2C, TEXT("获取 [怪物 房间号]"), CBrushZones::m_monster->nMonsterRoom);
+        *(PINT)wParam = CBrushZones::m_monster->nMonsterRoom;
+    }
+}
+
+void On_GotoMonster(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    //martin->Debug("%s -- 坐标: %f : %f : %f -- 是否被攻击: %d -- 死亡状态: %d -- 房间: %d -- 距离: %f"
+    //    , CBrushZones::m_monster->strMonsterName.c_str(), CBrushZones::m_monster->fMonsterPointX, CBrushZones::m_monster->fMonsterPointY, CBrushZones::m_monster->fMonsterPointZ
+    //    , CBrushZones::m_monster->bIsDead, CBrushZones::m_monster->nMonsterRoom, CBrushZones::m_monster->fDistance);
+
+    if (IsBadReadPtr((CONST VOID*)CBrushZones::m_monster, sizeof(Monster)) == 0) {
+        int nRoleAddr = 0, nRoleKey = 0;
+        if (martin->ReadPtrData(BASE_GAME, TEXT("获取 [当前人物指针] -- 1"), nRoleAddr)) {
+            if (martin->ReadPtrData(nRoleAddr + OFFSET_ROLE_INFO_1, TEXT("获取 [当前人物指针] -- 2"), nRoleAddr)) {
+                if (martin->ReadPtrData(nRoleAddr + OFFSET_ROLE_INFO_2, TEXT("获取 [当前人物指针] -- 3"), nRoleAddr)) {
+                    if (martin->ReadPtrData(nRoleAddr + OFFSET_ROLE_INFO_4, TEXT("获取 [当前人物指针] -- 4"), nRoleAddr)) {
+                        if (martin->ReadPtrData(nRoleAddr + 0x8, TEXT("获取 [当前人物 KEY]"), nRoleKey)) {
+                            // 瞬移
+                            martin->ReadPtrData(CBrushZones::m_monster->nMonsterAddr + OFFSET_COOR, TEXT("获取 [标记怪 坐标]"), CBrushZones::m_monster->fMonsterPointX);
+                            martin->ReadPtrData(CBrushZones::m_monster->nMonsterAddr + OFFSET_COOR + 0x4, TEXT("获取 [标记怪 坐标]"), CBrushZones::m_monster->fMonsterPointY);
+                            martin->ReadPtrData(CBrushZones::m_monster->nMonsterAddr + OFFSET_COOR + 0x8, TEXT("获取 [标记怪 坐标]"), CBrushZones::m_monster->fMonsterPointZ);
+                            CRole::RoleTeleport(nRoleKey, CBrushZones::m_monster->fMonsterPointX, CBrushZones::m_monster->fMonsterPointY, CBrushZones::m_monster->fMonsterPointZ);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void On_TurnToMonster(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    if (IsBadReadPtr((CONST VOID*)CBrushZones::m_monster, sizeof(Monster)) == 0) {
+        // 获取 标记怪 坐标
+        martin->ReadPtrData(CBrushZones::m_monster->nMonsterAddr + OFFSET_COOR, TEXT("获取 [标记怪 x 坐标]"), CBrushZones::m_monster->fMonsterPointX);
+        martin->ReadPtrData(CBrushZones::m_monster->nMonsterAddr + OFFSET_COOR + 0x4, TEXT("获取 [标记怪 y 坐标]"), CBrushZones::m_monster->fMonsterPointY);
+        martin->ReadPtrData(CBrushZones::m_monster->nMonsterAddr + OFFSET_COOR + 0x8, TEXT("获取 [标记怪 z 坐标]"), CBrushZones::m_monster->fMonsterPointZ);
+        // martin->Debug(TEXT("BOSS 坐标: %f, %f, %f"), fx, fy, fz);
+
+        // 转向
+        float role_fx = 0.0f;
+        float role_fy = 0.0f;
+        int nRoleAddr = CRole::GetRoleAddr();
+        martin->ReadPtrData(nRoleAddr + OFFSET_COOR, TEXT("获取 [当前人物 x 坐标]"), role_fx);
+        martin->ReadPtrData(nRoleAddr + OFFSET_COOR + 0x4, TEXT("获取 [当前人物 y 坐标]"), role_fy);
+
+        float fTurn = static_cast<float>(atan2(CBrushZones::m_monster->fMonsterPointY - role_fy, CBrushZones::m_monster->fMonsterPointX - role_fx));
+#define PI 3.1415926535898
+        if (fTurn >= PI / 2) {
+            fTurn = fTurn - static_cast<float>(PI / 2);
+        } else {
+            fTurn = static_cast<float>(PI * 1.5) + fTurn;
+        }
+
+        int nTmep;
+        if (martin->ReadPtrData(BASE_CAMERA, TEXT("获取当前人物面向 -- 1"), nTmep)) {
+            if (martin->ReadPtrData(nTmep + OFFSET_CAREMA_1, TEXT("获取当前人物面向 -- 2"), nTmep)) {
+                if (martin->ReadPtrData(nTmep + OFFSET_CAREMA_2, TEXT("获取当前人物面向 -- 3"), nTmep)) {
+                    *(float*)(nTmep + OFFSET_CAREMA_ANGLE) = fTurn;
+                    return;
+                }
+            }
+        }
+    }
+}
+
+void On_TurnToPoint(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    // 转向
+    float role_fx = 0.0f;
+    float role_fy = 0.0f;
+    int nRoleAddr = CRole::GetRoleAddr();
+    martin->ReadPtrData(nRoleAddr + OFFSET_COOR, TEXT("获取 [当前人物 x 坐标]"), role_fx);
+    martin->ReadPtrData(nRoleAddr + OFFSET_COOR + 0x4, TEXT("获取 [当前人物 y 坐标]"), role_fy);
+
+    float fTurn = static_cast<float>(atan2(*(PFLOAT)lParam - role_fy, *(PFLOAT)wParam - role_fx));
+#define PI 3.1415926535898
+    if (fTurn >= PI / 2) {
+        fTurn = fTurn - static_cast<float>(PI / 2);
+    } else {
+        fTurn = static_cast<float>(PI * 1.5) + fTurn;
+    }
+
+    int nTmep;
+    if (martin->ReadPtrData(BASE_CAMERA, TEXT("获取当前人物面向 -- 1"), nTmep)) {
+        if (martin->ReadPtrData(nTmep + OFFSET_CAREMA_1, TEXT("获取当前人物面向 -- 2"), nTmep)) {
+            if (martin->ReadPtrData(nTmep + OFFSET_CAREMA_2, TEXT("获取当前人物面向 -- 3"), nTmep)) {
+                *(float*)(nTmep + OFFSET_CAREMA_ANGLE) = fTurn;
+                return;
+            }
         }
     }
 }

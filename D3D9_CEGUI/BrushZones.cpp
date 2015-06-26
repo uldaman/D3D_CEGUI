@@ -5,7 +5,10 @@
 #include "Role.h"
 #include "NearObject.h"
 #include "GlobalVariable.h"
+
 std::map<std::string, int> CBrushZones::s_fbMap;
+std::list<Monster> CBrushZones::m_monster_list;
+pMonster CBrushZones::m_monster = nullptr;
 
 CBrushZones::CBrushZones() {
 }
@@ -449,7 +452,7 @@ BOOL CBrushZones::Teleport(int nKey) {
                     float fx, fy, fz;
                     martin->ReadPtrData(nRet_2 + OFFSET_COOR, TEXT("获取 [BOSS 坐标]"), fx);
                     martin->ReadPtrData(nRet_2 + OFFSET_COOR + 0x4, TEXT("获取 [BOSS 坐标]"), fy);
-                    martin->ReadPtrData(nRet_2 + OFFSET_COOR + 0x8, TEXT("获取 pBOSS 坐标]"), fz);
+                    martin->ReadPtrData(nRet_2 + OFFSET_COOR + 0x8, TEXT("获取 [BOSS 坐标]"), fz);
                     // martin->Debug("BOSS 坐标: %f, %f, %f", fx, fy, fz);
 
                     int nRoleAddr = 0, nRoleKey = 0;
@@ -561,10 +564,10 @@ void CBrushZones::GetItemPack(int nIndex, int nID) {
 int CBrushZones::获取时间戳() {
     int nRet = 0;
     try {
-    	_asm {
-    		pushad;
-    		pushfd;
-    		
+        _asm {
+            pushad;
+            pushfd;
+
             mov ecx, BASE_GAME;
             mov ecx, [ecx];
             mov ecx, [ecx + 0x4];
@@ -574,12 +577,194 @@ int CBrushZones::获取时间戳() {
             mov eax, [edx];
             call eax;
             mov nRet, eax;
-    		
-    		popfd;
-    		popad;
-    	}
+
+            popfd;
+            popad;
+        }
     } catch (...) {
-    	martin->Debug("获取时间戳 --> 异常");
+        martin->Debug("获取时间戳 --> 异常");
     }
     return nRet;
+}
+
+void CBrushZones::initMonster(std::string strMonster) {
+    m_monster_list.clear();
+    int nTemp = 0, nRoot = 0, nEnd = 0;
+    BYTE bEmpty = 0;
+
+    if (martin->ReadPtrData(BASE_GAME, TEXT("读取 [BOSS信息] -- 1"), nTemp)) {
+        if (martin->ReadPtrData(nTemp + OFFSET_NEARBY_OBJECT, TEXT("读取 [BOSS信息] -- 2"), nTemp)) {
+            if (martin->ReadPtrData(nTemp + OFFSET_NEARBY_OBJECT_ROOT + 0x8, TEXT("读取 [BOSS信息] -- 3"), nRoot)) {
+                if (martin->ReadPtrData(nTemp + OFFSET_NEARBY_OBJECT_ROOT + 0x18, TEXT("读取 [BOSS信息] -- 4"), bEmpty)) {
+                    nEnd = nTemp + OFFSET_NEARBY_OBJECT_ROOT;
+                    int nNodeCount = 0;
+                    //martin->Debug(TEXT("bEmpty : %d"), bEmpty);
+                    if (!bEmpty) {
+                        int nTempEsi_Next = nRoot;
+                        while (nTempEsi_Next != nEnd) {
+                            int nTempNode = 0, nCurrentKey = 0;
+                            martin->ReadPtrData(nTempEsi_Next + 0xc, TEXT("读取 [节点C] -- 1"), nTempNode);
+                            martin->ReadPtrData(nTempEsi_Next + 0x10, TEXT("读取 [节点Key]"), nCurrentKey);
+                            //TODO:根据对象Key取出对象详情指针...参见：【根据Key取对象指针】
+                            //martin->Debug(TEXT("Key: 0x%X"), nCurrentKey);
+                            CBrushZones::GetMonster(nCurrentKey, strMonster);
+
+                            if (++nNodeCount > 0x400) {//计数器，防止遍历太多
+                                break;
+                            }
+
+                            if (nTempNode != 0) {
+                                nTempEsi_Next = nTempNode;
+                                int nTemp = 0;
+                                while (true) {
+                                    martin->ReadPtrData(nTempEsi_Next + 0x8, TEXT("读取 [节点8]"), nTemp);
+                                    if (nTemp != 0) {
+                                        nTempEsi_Next = nTemp;
+                                    } else {
+                                        break;
+                                    }
+                                }
+                            } else {
+                                martin->ReadPtrData(nTempEsi_Next + 0x4, TEXT("读取 [节点4] -- 1"), nTempNode);
+                                int nTemp = 0;
+                                martin->ReadPtrData(nTempNode + 0xc, TEXT("读取 [节点C] -- 2"), nTemp);
+
+                                if (nTempEsi_Next == nTemp) {
+                                    do {
+                                        nTempEsi_Next = nTempNode;
+                                        martin->ReadPtrData(nTempNode + 0x4, TEXT("读取 [节点4] -- 2"), nTempNode);
+                                        martin->ReadPtrData(nTempNode + 0xc, TEXT("读取 [节点C] -- 3"), nTemp);
+                                    } while (nTempEsi_Next == nTemp);
+                                }
+
+                                martin->ReadPtrData(nTempEsi_Next + 0xc, TEXT("读取 [节点C] -- 4"), nTemp);
+                                if (nTemp != nTempNode) {
+                                    nTempEsi_Next = nTempNode;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void CBrushZones::GetMonster(int nKey, std::string strMonster) {
+    int nEbx = 0, nRet = 0;
+    if (martin->ReadPtrData(BASE_GAME, TEXT("解密对象 Key -- 1"), nEbx)) {
+        if (martin->ReadPtrData(nEbx + OFFSET_NEARBY_OBJECT, TEXT("解密对象 Key -- 2"), nEbx)) {
+            //::MessageBox(NULL, TEXT("111"), TEXT("111"), 0);
+            try {
+                _asm {
+                    pushad;
+                    pushfd;
+
+                    mov ebx, nEbx; //[[BASE_GAME]+OFFSET_NEARBY_OBJECT]
+                    mov eax, [ebx];
+                    mov edx, nKey; //对象Key
+                    push edx;
+                    mov edx, [eax + 0x2C];
+                    mov ecx, ebx;
+                    call edx;
+                    //mov ecx, OFFSET_OBJECT_DETAIL;
+                    //mov eax, [eax + ecx];
+                    mov nRet, eax;
+
+                    popfd;
+                    popad;
+                }
+            } catch (...) {
+                martin->Debug("GetMonster -- 1 --> 异常");
+                return;
+            }
+        }
+    }
+
+    if (nRet) {
+        int nRet_2 = 0;
+        try {
+            _asm {
+                pushad;
+                pushfd;
+
+                mov ecx, nRet;  //对象指针(来自于 【根据Key取对象指针】的返回值)
+                mov eax, [ecx];
+                add eax, OFFSET_GET_OBJECT_DETAIL;
+                mov edx, [eax];
+                call edx;
+                mov nRet_2, eax;
+
+                popfd;
+                popad;
+            }
+        } catch (...) {
+            martin->Debug("GetMonster -- 2 --> 异常");
+            return;
+        }
+
+        if (nRet_2) {
+            std::string strName = CNearObject::GetObjectName(nRet_2);
+            //martin->Debug(strName.c_str());
+            if (strMonster == strName) { // 找到 怪物
+                Monster monster;
+                monster.strMonsterName = strName;
+                int nIndex = 0;
+                martin->ReadPtrData(nRet_2 + 0x2C, TEXT("获取 [怪物 房间号]"), nIndex);
+
+                martin->ReadPtrData(nRet_2 + OFFSET_COOR, TEXT("获取 [BOSS 坐标]"), monster.fMonsterPointX);
+                martin->ReadPtrData(nRet_2 + OFFSET_COOR + 0x4, TEXT("获取 [BOSS 坐标]"), monster.fMonsterPointY);
+                martin->ReadPtrData(nRet_2 + OFFSET_COOR + 0x8, TEXT("获取 [BOSS 坐标]"), monster.fMonsterPointZ);
+
+                monster.nMonsterRoom = nIndex;
+
+                // 判断是否死亡
+                int nDead = 0;
+                try {
+                    _asm {
+                        pushad;
+                        pushfd;
+
+                        mov ecx, nRet_2; //对象指针
+                        mov eax, [ecx];
+                        add eax, OFFSET_GET_SWITCH_REGION_ECX;
+                        mov edx, [eax]; //0x178:OFFSET_GET_SWITCH_REGION_ECX
+                        call edx;
+                        mov ebx, eax;
+                        mov edx, [ebx];
+                        add edx, OFFSET_IS_DEAD;
+                        mov eax, [edx]; //OFFSET_IS_DEAD
+                        mov ecx, ebx;
+                        call eax;
+                        movzx ecx, al;
+                        mov nDead, ecx;
+
+                        popfd;
+                        popad;
+                    }
+                } catch (...) {
+                    martin->Debug("GetMonster -- 3 --> 异常");
+                    return;
+                }
+
+                if (nDead == 1) {
+                    monster.bIsDead = TRUE;
+                } else {
+                    monster.bIsDead = FALSE;
+                }
+
+                monster.nMonsterAddr = nRet_2;
+
+                float fPointX, fPointY, fPointZ;
+                CRole::GetPoint(fPointX, fPointY, fPointZ);
+                monster.fDistance = martin->Compare_Coord(fPointX, fPointY, monster.fMonsterPointX, monster.fMonsterPointY);
+
+                m_monster_list.push_back(monster);
+
+                return;
+            }
+        }
+    }
+
+    return;
 }

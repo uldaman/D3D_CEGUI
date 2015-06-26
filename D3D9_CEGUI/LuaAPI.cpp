@@ -517,6 +517,172 @@ LuaGlue Lua_CommonUseItems(lua_State *L) {
     return 0;
 }
 
+// MH_精准交任务
+LuaGlue Lua_PrecisionAcceptQuest(lua_State *L) {
+    std::string strQuestName = g_pClua->GetStringArgument(1, "");
+    std::string strNpcName = g_pClua->GetStringArgument(2, "");
+    QuestInfo questInfo;
+    questInfo.strQuestName = strQuestName;
+    questInfo.strNpcName = strNpcName;
+
+    float fNpcPointX = static_cast<float>(g_pClua->GetNumberArgument(3));
+    float fNpcPointY = static_cast<float>(g_pClua->GetNumberArgument(4));
+    POINT_TARGET target;
+    target.fPontX = fNpcPointX;
+    target.fPontY = fNpcPointY;
+    target.fPontZ = 0.0f;
+
+    ::SendMessage(theApp.m_hGWnd, WM_PRECISION_ACCEPT_QUEST, (WPARAM)&questInfo, (LPARAM)&target);
+    return 0;
+}
+
+// MH_过滤式采集
+LuaGlue lua_FilterCollect(lua_State *L) {
+    std::string strFilter = g_pClua->GetStringArgument(1, "");
+
+    // 记录下当前坐标, 用于采集完返回
+    POINT_TARGET Current_Point;
+    ::SendMessage(theApp.m_hGWnd, WM_GET_POINT, (WPARAM)&Current_Point, NULL);
+
+    ::SendMessage(theApp.m_hGWnd, WM_GET_COLLECTS, NULL, NULL); // 初始化采集信息
+
+    for (auto& v : CMaterial::m_material_list) {
+        // 先判断下是不是在FB里
+        int nWhere;
+        ::SendMessage(theApp.m_hGWnd, WM_WHERE_ROLE, (WPARAM)&nWhere, NULL);
+        if (nWhere != 2 || g_isWork == false) {
+            goto MaterialEnd; // 如果不在FB 则跳出
+        }
+
+        //martin->Debug("%s -- ID: 0x%X -- Key: 0x%X -- %f : %f : %f",
+        //    v.strName.c_str(), v.nID, v.nKey, v.fPointX, v.fPointY, v.fPointZ);
+        // 类别 1:矿（挖矿工具）,2:药草,3:昆虫（捕虫工具）,5:蘑菇,6:蜂蜜,7:小石头,8:粪便,0xA:尸体,0xC:骨头,0x11:网
+        std::string::size_type idx = v.strType.find(strFilter);
+        if (idx != std::string::npos) { // 找到名称
+            POINT_TARGET _Point = { v.fPointX, v.fPointY, v.fPointZ };
+            int nID = v.nID;
+
+            // 瞬移
+            ::SendMessage(theApp.m_hGWnd, WM_TELEPORT, (WPARAM)&_Point, NULL);
+            Sleep(1000);
+
+            // 采集
+            for (int i = 0; i < 3; i++) {
+                ::SendMessage(theApp.m_hGWnd, WM_WHERE_ROLE, (WPARAM)&nWhere, NULL);
+                if (nWhere != 2 || g_isWork == false) {
+                    goto MaterialEnd; // 如果不在FB 则跳出
+                }
+
+                ::SendMessage(theApp.m_hGWnd, WM_COLLECT, (WPARAM)&nID, NULL);
+                Sleep(500);
+
+                // 判断是否在采集中, 是的话, 接着采集, 否则开始下一个
+                BOOL bCollect = FALSE;
+                ::SendMessage(theApp.m_hGWnd, WM_GETCOLLECT, (WPARAM)&bCollect, NULL);
+                //martin->Debug(TEXT("采集标识: %d"), bCollect);
+
+                while (bCollect) { // 说明在采集中
+                    Sleep(1000);
+                    ::SendMessage(theApp.m_hGWnd, WM_GETCOLLECT, (WPARAM)&bCollect, NULL);
+                } // 当前人物已空闲
+
+                Sleep(500);
+            } // 同一个目标点已经采集三次
+        } // 一轮采集结束
+        Sleep(500);
+    }
+
+MaterialEnd:
+    // 返回开始处
+    ::SendMessage(theApp.m_hGWnd, WM_TELEPORT, (WPARAM)&Current_Point, NULL);
+    return 0;
+}
+
+// MH_制造回复药
+LuaGlue lua_MadeHpMedicine(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_MADE_HP_MEDICINE, NULL, NULL);
+    return 0;
+}
+
+// MH_补给物品
+LuaGlue lua_BuySupply(lua_State *L) {
+    SupplyInfo supplyInfo;
+    supplyInfo.strSupplyName = g_pClua->GetStringArgument(1, "");
+    supplyInfo.strNpcName = g_pClua->GetStringArgument(2, "");
+    supplyInfo.strTypeName = g_pClua->GetStringArgument(3, "");
+
+    int nNumOfSupply = g_pClua->GetIntArgument(4);
+
+    ::SendMessage(theApp.m_hGWnd, WM_BUY_SUPPLY, (WPARAM)&supplyInfo, (LPARAM)&nNumOfSupply);
+    return 0;
+}
+
+// MH_击杀怪物
+LuaGlue lua_KillMonster(lua_State *L) {
+    std::string strMonster = g_pClua->GetStringArgument(1, "");
+    int nNumKill = g_pClua->GetIntArgument(2);
+    for (int i = 0; i < nNumKill; i++) {
+        ::SendMessage(theApp.m_hGWnd, WM_KILL_MONSTER, (WPARAM)&strMonster, NULL);
+#define EVENT_KILL_MONSTER 1000 //击杀标记怪
+        FireEvent(EVENT_KILL_MONSTER, strMonster.c_str());
+        Sleep(1000);
+    }
+
+    return 0;
+}
+
+// MH_获取标记怪物房间
+LuaGlue lua_GetMonsterRoom(lua_State *L) {
+    int nMonsterRomm = 0;
+    ::SendMessage(theApp.m_hGWnd, WM_GET_MONSTER_ROOM, (WPARAM)&nMonsterRomm, NULL);
+    g_pClua->PushInt(nMonsterRomm);
+    return 1;
+}
+
+// MH_瞬移到标记怪
+LuaGlue Lua_GotoMonster(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_GOTO_MONSTER, NULL, NULL);
+    return 0;
+}
+
+// MH_转向标记怪
+LuaGlue Lua_TrunToMonster(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_TURN_TO_MONSTER, NULL, NULL);
+    return 0;
+}
+
+// MH_走到目标点
+LuaGlue Lua_WalkToPoint(lua_State *L) {
+    POINT_TARGET Current_Point; // 当前坐标
+    ::SendMessage(theApp.m_hGWnd, WM_GET_POINT, (WPARAM)&Current_Point, NULL);
+
+    float fTargetPointX = static_cast<float>(g_pClua->GetNumberArgument(1));
+    float fTargetPointY = static_cast<float>(g_pClua->GetNumberArgument(2));
+
+    BOOL bIsWalk = FALSE;
+    if (martin->Compare_Coord(fTargetPointX, fTargetPointY, Current_Point.fPontX, Current_Point.fPontY) > 3.0f) {
+        // 转向
+        ::SendMessage(theApp.m_hGWnd, WM_TURN_TO_POINT, (WPARAM)&fTargetPointX, (LPARAM)&fTargetPointY);
+        // 前进
+        Lua_Forward(L);
+        bIsWalk = TRUE;
+    }
+
+    while (g_isWork ) {
+        ::SendMessage(theApp.m_hGWnd, WM_GET_POINT, (WPARAM)&Current_Point, NULL);
+        if (martin->Compare_Coord(fTargetPointX, fTargetPointY, Current_Point.fPontX, Current_Point.fPontY) < 3.0f) {
+            if (bIsWalk) {
+                g_pClua->PushString("前进");
+                Lua_Stop(L);
+            }
+            break;
+        }
+        Sleep(100);
+    }
+
+    return 0;
+}
+
 luaL_reg ConsoleGlue[] = {
         { "RegisterEvent", _RegisterEvent },
         { "MH_调试", Lua_Trac },
@@ -563,6 +729,15 @@ luaL_reg ConsoleGlue[] = {
         { "MH_背包物品数量", Lua_GetBagItemNum },
         { "MH_吃烤肉", Lua_EatMeat },
         { "MH_通用使用物品", Lua_CommonUseItems },
+        { "MH_精准交任务", Lua_PrecisionAcceptQuest },
+        { "MH_过滤式采集", lua_FilterCollect },
+        { "MH_制造回复药", lua_MadeHpMedicine },
+        { "MH_补给物品", lua_BuySupply },
+        { "MH_击杀怪物", lua_KillMonster },
+        { "MH_获取标记怪物房间", lua_GetMonsterRoom }, //内部接口
+        { "MH_瞬移到标记怪", Lua_GotoMonster }, //内部接口
+        { "MH_转向标记怪", Lua_TrunToMonster }, //内部接口
+        { "MH_走到目标点", Lua_WalkToPoint },
         { nullptr, NULL },
 };
 
@@ -574,7 +749,7 @@ void AddLuaFunction() {
 }
 
 // Lua 事件触发器
-void FireEvent(int nId, const char* args) {
+void FireEvent(const int nId, const char* args) {
     if (g_strEventHandle != "") {
         char buf[256];
         if (args) {
@@ -604,7 +779,6 @@ unsigned int __stdcall ThreadAutoMatic(PVOID pM) {
         theApp.m_mainWnd->setText(theApp.AToUtf8("执行脚本中 ... "));
         theApp.m_questBtn->setText(theApp.AToUtf8("停止主线"));
         g_pClua->RunScript(strPath.c_str());
-        FireEvent(EVENT_AUTO, nullptr);
     } catch (...) {
         //Interface_Output(TEXT("cLua::RunScript 异常!!"));
     }

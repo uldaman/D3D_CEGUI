@@ -18,3 +18,4 @@ extern luaL_reg ConsoleGlue[];
 
 unsigned int __stdcall ThreadAutoMatic(PVOID pM);
 void AddLuaFunction();
+void FireEvent(const int nId, const char* args);

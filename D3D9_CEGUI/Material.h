@@ -15,7 +15,7 @@ typedef struct MATERIAL {
     float fPointZ;
     int nID;
     int nKey;
-    int nType; // 类别 1:矿（挖矿工具）,2:药草,3:昆虫（捕虫工具）,5:蘑菇,6:蜂蜜,7:地面小石头,8:粪便,0xA:怪物尸体,0xC:骨头,0x11:网
+    std::string strType; // 类别 1:矿（挖矿工具）,2:药草,3:昆虫（捕虫工具）,5:蘑菇,6:蜂蜜,7:地面小石头,8:粪便,0xA:怪物尸体,0xC:骨头,0x11:网
     //int nIndex; //房间号
 } material, *pMaterial;
 

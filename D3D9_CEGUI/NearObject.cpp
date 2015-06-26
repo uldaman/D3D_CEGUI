@@ -130,6 +130,8 @@ void CNearObject::allotObject(int nKey) {
                 NearObject nearObj;
                 nearObj.nNpcID = nID;
                 nearObj.strNpcName = strName;
+                martin->ReadPtrData(nRet_2 + OFFSET_COOR, TEXT("获取 [BOSS 坐标]"), nearObj.fNpcPointX);
+                martin->ReadPtrData(nRet_2 + OFFSET_COOR + 0x4, TEXT("获取 [BOSS 坐标]"), nearObj.fNpcPointY);
                 m_near_object.push_back(nearObj);
             }
         }

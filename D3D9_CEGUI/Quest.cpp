@@ -309,3 +309,12 @@ void CQuest::¶ÍÔìÏþ·ç¶Ì½£() {
     CRole::SendPackage((DWORD)pPackage);
     delete pPackage;
 }
+
+void CQuest::MadeHpMedicine() {
+    DWORD Package[17];
+    RtlZeroMemory(Package, sizeof(Package));
+    Package[0] = 0x00001001;
+    Package[4] = 0x2;
+    Package[5] = 0x1;
+    CRole::SendPackage((DWORD)&Package);
+}

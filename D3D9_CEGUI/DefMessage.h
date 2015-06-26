@@ -45,3 +45,11 @@
 #define WM_GET_BAG_ITEM_NUM             WM_USER + 2343  // 獲取背包物品數量
 #define WM_EAT_MEAT                     WM_USER + 2344  // 吃烤肉
 #define WM_USE_ITEM                     WM_USER + 2345  // 通用使用物品
+#define WM_PRECISION_ACCEPT_QUEST       WM_USER + 2346  // 精准交任务, 通过比对 NPC 的坐标
+#define WM_MADE_HP_MEDICINE             WM_USER + 2347  // 制作回复药
+#define WM_BUY_SUPPLY                   WM_USER + 2348  // 补给物品
+#define WM_KILL_MONSTER                 WM_USER + 2349  // 击杀怪物
+#define WM_GET_MONSTER_ROOM             WM_USER + 2350  // 获取标记怪物房间
+#define WM_GOTO_MONSTER                 WM_USER + 2351  // 瞬移到标记怪
+#define WM_TURN_TO_MONSTER              WM_USER + 2352  // 转向标记怪
+#define WM_TURN_TO_POINT                WM_USER + 2353  // 转向坐标点

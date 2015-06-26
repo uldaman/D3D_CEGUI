@@ -47,6 +47,7 @@ public:
     std::string GetQuestTable(); // 获取当前可接主线
     void InteractiveQuest(int nQuestID); // 任务对话
     void 锻造晓风短剑();
+    void MadeHpMedicine(); // 制作回复药
 
 protected:
     void allotQuest(int nQuestInfo, std::list<GameQuest>& QuestList); // 根据传进的任务信息指针分配任务 List

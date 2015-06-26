@@ -8,6 +8,7 @@
 #pragma once
 #include <map>
 #include <windows.h>
+#include <list>
 
 #pragma pack (push,1)
 
@@ -21,6 +22,17 @@ typedef struct ID_INDEX {
     DWORD dwID;   
     DWORD dwIndex;
 } IdIndex, *pIdIndex;
+
+typedef struct t_monster {
+    float fMonsterPointX;
+    float fMonsterPointY;
+    float fMonsterPointZ;
+    std::string strMonsterName;
+    int nMonsterAddr; // 怪物基址, 用来实时获取死亡状态
+    BOOL bIsDead; // 死亡状态
+    int nMonsterRoom; // 怪物房间
+    float fDistance;
+} Monster, *pMonster;
 
 #pragma pack(pop)
 
@@ -42,6 +54,10 @@ public:
     int m_nBossRoom; // BOSS房间
     std::string m_strBossName; // BOSS 名
 
+    static std::list<Monster> m_monster_list;  // 副本内指定怪物列表
+    static pMonster m_monster;
+    void initMonster(std::string strMonster); // 初始化副本内指定怪物
+
 
     void GetItemFormCrates(std::string strItems); // 补给箱取物
     void TraverList(int nStart, int nEnd, std::multimap<std::string, IdIndex>& CratesMap);
@@ -51,5 +67,6 @@ public:
 
 protected:
     BOOL GetBoss(int nKey);
+    void GetMonster(int nKey, std::string strMonster);
 };
 

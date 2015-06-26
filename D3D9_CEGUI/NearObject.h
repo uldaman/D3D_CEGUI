@@ -6,6 +6,8 @@
 typedef struct NEAR_OBJECT {
     std::string strNpcName;
     int nNpcID;
+    float fNpcPointX;
+    float fNpcPointY;
 } NearObject, *pNearObject;
 
 class CNearObject {
