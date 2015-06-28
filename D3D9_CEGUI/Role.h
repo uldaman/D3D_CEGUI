@@ -46,6 +46,7 @@ public:
     static void Weapon();
     static void ChangeMode();
     static float GetHpPer(); // 获取血量百分比
+    static int GetRoleLevel(); // 获取人物等级
     static void Invincible(); // 开无敌
     static void UnInvincible(); // 关无敌
     static void CatInvincible(); // 猫无敌

@@ -1512,3 +1512,8 @@ void CRole::Collect(int nID) {
         martin->Debug(TEXT("Collect --> “Ï≥£"));
     }
 }
+
+int CRole::GetRoleLevel() {
+    int nRoleAddr = GetRoleAddr();
+    return Decode(nRoleAddr + OFFSET_ROLE_LEVEL);
+}

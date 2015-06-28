@@ -69,4 +69,3 @@ protected:
     BOOL GetBoss(int nKey);
     void GetMonster(int nKey, std::string strMonster);
 };
-

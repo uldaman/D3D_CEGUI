@@ -683,6 +683,62 @@ LuaGlue Lua_WalkToPoint(lua_State *L) {
     return 0;
 }
 
+// MH_接受悬赏任务
+LuaGlue Lua_AcceptOfferARewardQuest(lua_State *L) {
+    std::string strLevel = g_pClua->GetStringArgument(1, "");
+    std::string strType = g_pClua->GetStringArgument(2, "");
+    ::SendMessage(theApp.m_hGWnd, WM_ACCEPT_OFFER_A_REWARD, (WPARAM)&strLevel, (LPARAM)&strType);
+    return 0;
+}
+
+// MH_获取当前悬赏
+LuaGlue Lua_GetCurrentReward(lua_State* L) {
+    std::string strMap = "";
+    ::SendMessage(theApp.m_hGWnd, WM_GET_CURRENT_REWARD, (WPARAM)&strMap, NULL);
+    g_pClua->PushString(strMap.c_str());
+    return 1;
+}
+
+// MH_进入悬赏副本
+LuaGlue Lua_IntoRewardFB(lua_State *L) {
+    std::string strReward = g_pClua->GetStringArgument(1, "");
+    int nZone = 0;
+    ::SendMessage(theApp.m_hGWnd, WM_GET_REWARD_FB, (WPARAM)&strReward, (LPARAM)&nZone);
+
+    if (nZone) { // 找到相关副本信息
+        ::SendMessage(theApp.m_hGWnd, WM_CHOOSE_FB, (WPARAM)nZone, NULL);
+        Sleep(1500);
+        ::SendMessage(theApp.m_hGWnd, WM_START_FB, (WPARAM)nZone, NULL);
+        Sleep(1500);
+        ::SendMessage(theApp.m_hGWnd, WM_INTO_FB, NULL, NULL);
+    }
+
+    return 0;
+}
+
+// MH_获取今日已完成悬赏次数
+LuaGlue Lua_GetRewardCountToday(lua_State* L) {
+    int nCountOfRewardToday = 0;
+    ::SendMessage(theApp.m_hGWnd, WM_GET_COUNT_REWARD_TODAY, (WPARAM)&nCountOfRewardToday, NULL);
+    g_pClua->PushInt(nCountOfRewardToday);
+    return 1;
+}
+
+// MH_获取完成悬赏
+LuaGlue Lua_GetAcceptReward(lua_State* L) {
+    std::string strMap = "";
+    ::SendMessage(theApp.m_hGWnd, WM_GET_ACCEPT_REWARD, (WPARAM)&strMap, NULL);
+    g_pClua->PushString(strMap.c_str());
+    return 1;
+}
+
+// MH_交悬赏任务
+LuaGlue Lua_AcceptReward(lua_State* L) {
+    std::string strReward = g_pClua->GetStringArgument(1, "");
+    ::SendMessage(theApp.m_hGWnd, WM_ACCEPT_REWARD, (WPARAM)&strReward, NULL);
+    return 0;
+}
+
 luaL_reg ConsoleGlue[] = {
         { "RegisterEvent", _RegisterEvent },
         { "MH_调试", Lua_Trac },
@@ -738,6 +794,12 @@ luaL_reg ConsoleGlue[] = {
         { "MH_瞬移到标记怪", Lua_GotoMonster }, //内部接口
         { "MH_转向标记怪", Lua_TrunToMonster }, //内部接口
         { "MH_走到目标点", Lua_WalkToPoint },
+        { "MH_接受悬赏任务", Lua_AcceptOfferARewardQuest },
+        { "MH_获取当前悬赏", Lua_GetCurrentReward },
+        { "MH_进入悬赏副本", Lua_IntoRewardFB },
+        { "MH_获取今日已完成悬赏次数", Lua_GetRewardCountToday },
+        { "MH_获取完成悬赏", Lua_GetAcceptReward },
+        { "MH_交悬赏任务", Lua_AcceptReward },
         { nullptr, NULL },
 };
 

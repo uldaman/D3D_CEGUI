@@ -75,6 +75,12 @@ void MesageMapping(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
         COMMAND_MSG(hDlg, WM_GOTO_MONSTER, wParam, lParam, On_GotoMonster); // 瞬移到标记怪
         COMMAND_MSG(hDlg, WM_TURN_TO_MONSTER, wParam, lParam, On_TurnToMonster); // 转向到标记怪
         COMMAND_MSG(hDlg, WM_TURN_TO_POINT, wParam, lParam, On_TurnToPoint); // 转向到目标点
+        COMMAND_MSG(hDlg, WM_ACCEPT_OFFER_A_REWARD, wParam, lParam, On_AcceptOfferAReward); // 悬赏任务
+        COMMAND_MSG(hDlg, WM_GET_CURRENT_REWARD, wParam, lParam, On_GetCurrentReward); // 获取悬赏任务
+        COMMAND_MSG(hDlg, WM_GET_REWARD_FB, wParam, lParam, On_GetRewardBrushZone); // 获取悬赏副本
+        COMMAND_MSG(hDlg, WM_GET_COUNT_REWARD_TODAY, wParam, lParam, On_GetCountRewardToday); // 获取今日已完成悬赏次数
+        COMMAND_MSG(hDlg, WM_GET_ACCEPT_REWARD, wParam, lParam, On_GetAcceptReward); // 获取可交悬赏
+        COMMAND_MSG(hDlg, WM_ACCEPT_REWARD, wParam, lParam, On_AcceptReward); // 交悬赏
     }
 }
 
@@ -752,6 +758,105 @@ void On_TurnToPoint(HWND hDlg, WPARAM wParam, LPARAM lParam) {
             if (martin->ReadPtrData(nTmep + OFFSET_CAREMA_2, TEXT("获取当前人物面向 -- 3"), nTmep)) {
                 *(float*)(nTmep + OFFSET_CAREMA_ANGLE) = fTurn;
                 return;
+            }
+        }
+    }
+}
+
+void On_AcceptOfferAReward(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    quest.initOfferARewardQuest();
+    int nRoleLevel = CRole::GetRoleLevel();
+    for (auto& v : quest.m_offerAReward_quest) {
+        if (v.nTheTaskMinimumLevel <= nRoleLevel
+            && v.nTheTaskMaximumLevel >= nRoleLevel
+            && v.strQuestStatus != "已交") {
+            std::string::size_type idx = v.strQuestName.find(*(std::string*)wParam);
+            if (idx != std::string::npos) { // 找到名称
+                idx = v.strQuestName.find(*(std::string*)lParam);
+                if (idx != std::string::npos) { // 找到名称
+                    // 1. 打开 NPC
+                    nearObj.initNear();
+                    for (auto& w : nearObj.m_near_object) {
+                        martin->Debug(w.strNpcName.c_str());
+                        if (w.strNpcName == "悬赏看板") { // 找到 NPC
+                            nearObj.Interactive(w.nNpcID);
+                            Sleep(50);
+                            break;
+                        }
+                    }
+
+                    // 接任务
+                    quest.AcceptQuest(v.nQuestID);
+                    return;
+                }
+            }
+        }
+    }
+}
+
+void On_GetCurrentReward(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    quest.initOfferARewardQuest();
+    int nRoleLevel = CRole::GetRoleLevel();
+    for (auto& v : quest.m_offerAReward_quest) {
+        if (v.nTheTaskMinimumLevel <= nRoleLevel
+            && v.nTheTaskMaximumLevel >= nRoleLevel) {
+            if (v.strQuestStatus == "未完成") {
+                *(std::string*)wParam = v.strQuestName;
+            }
+        }
+    }
+}
+
+void On_GetRewardBrushZone(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    quest.initOfferARewardQuest();
+    int nRoleLevel = CRole::GetRoleLevel();
+    for (auto& v : quest.m_offerAReward_quest) {
+        if (v.nTheTaskMinimumLevel <= nRoleLevel
+            && v.nTheTaskMaximumLevel >= nRoleLevel) {
+            if (v.strQuestName == *(std::string*)wParam) {
+                *(PINT)lParam = v.nTargetBrushZonesID;
+            }
+        }
+    }
+}
+
+void On_GetCountRewardToday(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    quest.initOfferARewardQuest();
+    *(PINT)wParam = quest.m_nCountOfTodayOfferAReward;
+}
+
+void On_GetAcceptReward(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    quest.initOfferARewardQuest();
+    int nRoleLevel = CRole::GetRoleLevel();
+    for (auto& v : quest.m_offerAReward_quest) {
+        if (v.nTheTaskMinimumLevel <= nRoleLevel
+            && v.nTheTaskMaximumLevel >= nRoleLevel) {
+            if (v.strQuestStatus == "完成") {
+                *(std::string*)wParam = v.strQuestName;
+            }
+        }
+    }
+}
+
+void On_AcceptReward(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    quest.initOfferARewardQuest();
+    int nRoleLevel = CRole::GetRoleLevel();
+    for (auto& v : quest.m_offerAReward_quest) {
+        if (v.nTheTaskMinimumLevel <= nRoleLevel
+            && v.nTheTaskMaximumLevel >= nRoleLevel) {
+            if (v.strQuestName == *(std::string*)wParam) {
+                // 1. 打开 NPC
+                nearObj.initNear();
+                for (auto& w : nearObj.m_near_object) {
+                    if (w.strNpcName == "悬赏看板") { // 找到 NPC
+                        nearObj.Interactive(w.nNpcID);
+                        Sleep(50);
+                        break;
+                    }
+                }
+
+                // 交任务
+                quest.CompleteQuest(v.nQuestID);
             }
         }
     }

@@ -10,9 +10,13 @@ typedef struct GAME_QUEST {
     std::string strSection;     // 任务所属小节
     std::string strQuestName;   // 任务名
     std::string strQuestStatus; // 进行中 || 失败 || 完成
+    int nQuestStatus;
     std::string strQuestType;   // 主线 || 悬赏
     int nQuestID;
-    bool operator()(GAME_QUEST& p) {
+    int nTheTaskMinimumLevel; // 接任務最小等級
+    int nTheTaskMaximumLevel; // 接任務最大等級
+    int nTargetBrushZonesID;  // 任务需要进入的FB
+    bool operator()(GAME_QUEST& p) { // 為使用 std::find_if 函數
         return (strQuestName == p.strQuestName);
     }
 } GameQuest, *pGameQuest;
@@ -36,11 +40,14 @@ public:
     void initUnCompleteQuest(); // 未完成任务初始化
     void initCompleteQuest();   // 已完成任务
     void initQuestTable();      // 初始化所有主线任务列表
+    void initOfferARewardQuest(); // 初始化懸賞任務列表
     
 
-    std::list<GameQuest> m_unComplete_quest;  // 未完成任务
-    std::list<GameQuest> m_complete_quest;    // 已完成任务
-    std::list<GameQuest> m_questTable_quest;  // 所有主线任务列表
+    std::list<GameQuest> m_unComplete_quest;    // 未完成任务
+    std::list<GameQuest> m_complete_quest;      // 已完成任务
+    std::list<GameQuest> m_questTable_quest;    // 所有主线任务列表
+    std::list<GameQuest> m_offerAReward_quest;  // 所有中懸賞任务列表
+    int m_nCountOfTodayOfferAReward = 0; // 今日懸賞任務完成數量
 
     void CompleteQuest(int nQuestID); // 交任务
     void AcceptQuest(int nQuestID); // 接任务

@@ -53,3 +53,9 @@
 #define WM_GOTO_MONSTER                 WM_USER + 2351  // 瞬移到标记怪
 #define WM_TURN_TO_MONSTER              WM_USER + 2352  // 转向标记怪
 #define WM_TURN_TO_POINT                WM_USER + 2353  // 转向坐标点
+#define WM_ACCEPT_OFFER_A_REWARD        WM_USER + 2354  // 悬赏任务
+#define WM_GET_CURRENT_REWARD           WM_USER + 2355  // 获取当前悬赏任务
+#define WM_GET_REWARD_FB                WM_USER + 2356  // 获取悬赏副本
+#define WM_GET_COUNT_REWARD_TODAY       WM_USER + 2357  // 获取今日已完成悬赏次数
+#define WM_GET_ACCEPT_REWARD            WM_USER + 2358  // 获取可交悬赏
+#define WM_ACCEPT_REWARD                WM_USER + 2359  // 交悬赏

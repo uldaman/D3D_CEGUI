@@ -142,10 +142,10 @@ void CQuest::initQuestTable() {
     int npChapter = 0xFFFFFFFF;
 
     try {
-    	_asm {
-    		pushad;
-    		pushfd;
-    		
+        _asm {
+            pushad;
+            pushfd;
+
             mov ecx, 0;
             push ecx;
             mov edx, CTaskChapterInfo; //ASCII 字符串指针 "CTaskChapterInfo" 
@@ -157,11 +157,11 @@ void CQuest::initQuestTable() {
             add esp, 0xc;
             mov npChapter, eax;
 
-    		popfd;
-    		popad;
-    	}
+            popfd;
+            popad;
+        }
     } catch (...) {
-    	martin->Debug(TEXT("initQuestTable --> 异常"));
+        martin->Debug(TEXT("initQuestTable --> 异常"));
         return;
     }
 
@@ -181,7 +181,7 @@ void CQuest::initQuestTable() {
                             //martin->Debug((char*)nChapterName);
                             quest.strChapter = (char*)nChapterName;
                         }
-                        
+
                         DWORD dwSectionStart, dwSectionEnd;
                         martin->ReadPtrData(dwTemp_1 + 0x1C, TEXT("获取 [小节] 数组头"), dwSectionStart);
                         martin->ReadPtrData(dwTemp_1 + 0x20, TEXT("获取 [小节] 数组尾"), dwSectionEnd);
@@ -317,4 +317,137 @@ void CQuest::MadeHpMedicine() {
     Package[4] = 0x2;
     Package[5] = 0x1;
     CRole::SendPackage((DWORD)&Package);
+}
+
+void CQuest::initOfferARewardQuest() {
+    m_offerAReward_quest.clear();
+    int nOfferARewardArry = 0;
+    try {
+        _asm {
+            pushad;
+            pushfd;
+
+            mov eax, BASE_REWARD_TASK; //BASE_REWARD_TASK
+            mov ecx, [eax];
+            mov eax, [ecx];
+            add eax, OFFSET_GET_ALL_REWARD_TASK;  //0xD8:OFFSET_GET_ALL_REWARD_TASK
+            mov edx, [eax];
+            call edx;
+            mov nOfferARewardArry, eax;
+
+            popfd;
+            popad;
+        }
+    } catch (...) {
+        martin->Debug("initOfferAReawrdQuest --> 异常");
+        return;
+    }
+
+    int nOfferARewardArryStart, nOfferARewardArryEnd;
+    martin->ReadPtrData(nOfferARewardArry + 0x8, "獲取 [懸賞任務 數組頭]", nOfferARewardArryStart);
+    martin->ReadPtrData(nOfferARewardArry + 0xC, "獲取 [懸賞任務 數組尾]", nOfferARewardArryEnd);
+    martin->ReadPtrData(nOfferARewardArry + 0x14, "獲取 [今日完成 懸賞任務 數量]", m_nCountOfTodayOfferAReward);
+
+    // 遍歷懸賞任務數組
+    for (int nOfferARewardAddr = nOfferARewardArryStart; nOfferARewardAddr < nOfferARewardArryEnd; nOfferARewardAddr += 0x4) {
+        int nOfferARewardAddrTemp;
+        if (martin->ReadPtrData(nOfferARewardAddr, "獲取 [懸賞任務 數組成員信息]", nOfferARewardAddrTemp)) {
+            int nOfferARewardAddrInfo;
+            if (martin->ReadPtrData(nOfferARewardAddrTemp + 0x18, "獲取 [懸賞任務 详情指针]", nOfferARewardAddrInfo)) {
+                GameQuest quest;
+                quest.strQuestType = "悬赏";
+
+                int pName;
+                if (martin->ReadPtrData(nOfferARewardAddrInfo + 0x8, "獲取 [任務名]", pName)) {
+                    quest.strQuestName = TransformName((char*)pName);
+                }
+
+                int nID;
+                if (martin->ReadPtrData(nOfferARewardAddrInfo + 0x4, TEXT("獲取 [任務 ID]"), nID)) {
+                    quest.nQuestID = nID;
+                }
+
+                int nTaskLevelTemp;
+                if (martin->ReadPtrData(nOfferARewardAddrInfo + 0x20, TEXT("獲取 [任務接受等級] -- 1"), nTaskLevelTemp)) {
+                    if (martin->ReadPtrData(nTaskLevelTemp, TEXT("獲取 [任務接受等級] -- 2"), nTaskLevelTemp)) {
+                        if (martin->ReadPtrData(nTaskLevelTemp + 0x4, TEXT("獲取 [任務接受等級] -- 3"), nTaskLevelTemp)) {
+                            martin->ReadPtrData(nTaskLevelTemp, TEXT("獲取 [任務接受最低等級]"), quest.nTheTaskMinimumLevel);
+                            martin->ReadPtrData(nTaskLevelTemp + 0x4, TEXT("獲取 [任務接受最高等級]"), quest.nTheTaskMaximumLevel);
+                        }
+                    }
+                }
+
+                int nTargetBrushZonesTemp, nTargetQuest;
+                //martin->Debug("********** 0x%X ***********", nOfferARewardAddrInfo);
+                if (martin->ReadPtrData(nOfferARewardAddrInfo + 0x40, "獲取 [任务需求信息] -- 1", nTargetBrushZonesTemp)) {
+                    if (martin->ReadPtrData(nTargetBrushZonesTemp, "獲取 [任务需求信息] -- 2", nTargetBrushZonesTemp)) {
+                        try {
+                            _asm {
+                                pushad;
+                                pushfd;
+
+                                mov ebx, nTargetBrushZonesTemp;							 //0x323DAB38:任务需求信息
+                                mov edx, [ebx];
+                                mov eax, [edx + 0x10];
+                                mov ecx, ebx;
+                                call eax;
+                                mov nTargetQuest, eax;
+
+                                popfd;
+                                popad;
+                            }
+                        } catch (...) {
+                            martin->Debug("悬赏目标 --> 异常");
+                        }
+
+                        int nTargetBrushZonesTempBranch = nTargetBrushZonesTemp;
+                        if (nTargetQuest == 0xA || nTargetQuest == 0xB || nTargetQuest == 0xD) {
+                            martin->ReadPtrData(nTargetBrushZonesTemp + 0x14, "獲取 [任务需求信息] -- 3", nTargetBrushZonesTemp);
+                            if (martin->ReadPtrData(nTargetBrushZonesTemp, "獲取 [任务需求信息] -- 4", nTargetBrushZonesTemp)) {
+                                martin->ReadPtrData(nTargetBrushZonesTemp + 0xC, "獲取 [任务需求信息] -- 0xC", quest.nTargetBrushZonesID);
+                            }
+                        } else {
+                            martin->ReadPtrData(nTargetBrushZonesTempBranch + 0x20, "獲取 [任务需求信息] -- 0x20", quest.nTargetBrushZonesID);
+                        }
+                    }
+                }
+
+                int nTaskStatus = 0; // 任務狀態
+                try {
+                    _asm {
+                        pushad;
+                        pushfd;
+
+                        mov esi, nID; //悬赏任务ID
+                        mov eax, CALL_GET_REWARD_TASK_STATUS; //CALL_GET_REWARD_TASK_STATUS
+                        call eax;
+                        mov nTaskStatus, eax;
+
+                        popfd;
+                        popad;
+                    }
+                } catch (...) {
+                    martin->Debug("獲取 任務狀態 --> 异常");
+                }
+
+                quest.nQuestStatus = nTaskStatus;
+                switch (nTaskStatus) {
+                case 0:
+                    quest.strQuestStatus = "未接";
+                    break;
+                case 0x4:
+                    quest.strQuestStatus = "完成";
+                    break;
+                case 0xA:
+                    quest.strQuestStatus = "已交";
+                    break;
+                default:
+                    quest.strQuestStatus = "未完成";
+                    break;
+                }
+
+                m_offerAReward_quest.push_back(quest);
+            }
+        }
+    }
 }

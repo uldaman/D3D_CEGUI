@@ -63,3 +63,9 @@ void On_GetMonsterRoom(HWND hDlg, WPARAM wParam, LPARAM lParam); // 击杀物品
 void On_GotoMonster(HWND hDlg, WPARAM wParam, LPARAM lParam); // 瞬移到标记怪
 void On_TurnToMonster(HWND hDlg, WPARAM wParam, LPARAM lParam); // 转向到标记怪
 void On_TurnToPoint(HWND hDlg, WPARAM wParam, LPARAM lParam); // 转向到标记怪
+void On_AcceptOfferAReward(HWND hDlg, WPARAM wParam, LPARAM lParam); // 悬赏任务
+void On_GetCurrentReward(HWND hDlg, WPARAM wParam, LPARAM lParam); // 获取悬赏任务
+void On_GetRewardBrushZone(HWND hDlg, WPARAM wParam, LPARAM lParam); // 获取悬赏副本
+void On_GetCountRewardToday(HWND hDlg, WPARAM wParam, LPARAM lParam); // 获取今日已完成悬赏次数
+void On_GetAcceptReward(HWND hDlg, WPARAM wParam, LPARAM lParam); //获取可交悬赏
+void On_AcceptReward(HWND hDlg, WPARAM wParam, LPARAM lParam); //交悬赏
