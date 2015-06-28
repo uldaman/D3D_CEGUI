@@ -5687,3 +5687,107 @@ Debug:挑战大怪鸟·限时
 Debug:试炼黄速龙王·黄金
 Debug:黑心的肯
 Debug:悬赏看板
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x5CF60A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4d907e0 -> 0x66edc88
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4d907e0 -> 0x66edcf8
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13446260 -> 0x674d6c0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x16660060 -> 0x674d738
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x16678b60 -> 0x674d7b0
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x5CF60A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x47e07e0 -> 0x679a3c0
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x47e07e0 -> 0x679a430
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13396260 -> 0x67a7028
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x16510060 -> 0x67a70a0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x16528b60 -> 0x67a7118
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:黑心的肯
+Debug:悬赏看板
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x5CF60A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x42107e0 -> 0x66d3a00
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x42107e0 -> 0x66d3a70
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0xeca6260 -> 0x6741870
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x16660060 -> 0x67418e8
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x16678b60 -> 0x6741960
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+

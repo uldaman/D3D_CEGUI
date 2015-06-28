@@ -798,11 +798,8 @@ void On_GetCurrentReward(HWND hDlg, WPARAM wParam, LPARAM lParam) {
     quest.initOfferARewardQuest();
     int nRoleLevel = CRole::GetRoleLevel();
     for (auto& v : quest.m_offerAReward_quest) {
-        if (v.nTheTaskMinimumLevel <= nRoleLevel
-            && v.nTheTaskMaximumLevel >= nRoleLevel) {
-            if (v.strQuestStatus == "未完成") {
-                *(std::string*)wParam = v.strQuestName;
-            }
+        if (v.strQuestStatus == "未完成") {
+            *(std::string*)wParam = v.strQuestName;
         }
     }
 }
@@ -811,11 +808,8 @@ void On_GetRewardBrushZone(HWND hDlg, WPARAM wParam, LPARAM lParam) {
     quest.initOfferARewardQuest();
     int nRoleLevel = CRole::GetRoleLevel();
     for (auto& v : quest.m_offerAReward_quest) {
-        if (v.nTheTaskMinimumLevel <= nRoleLevel
-            && v.nTheTaskMaximumLevel >= nRoleLevel) {
-            if (v.strQuestName == *(std::string*)wParam) {
-                *(PINT)lParam = v.nTargetBrushZonesID;
-            }
+        if (v.strQuestName == *(std::string*)wParam) {
+            *(PINT)lParam = v.nTargetBrushZonesID;
         }
     }
 }
@@ -829,11 +823,8 @@ void On_GetAcceptReward(HWND hDlg, WPARAM wParam, LPARAM lParam) {
     quest.initOfferARewardQuest();
     int nRoleLevel = CRole::GetRoleLevel();
     for (auto& v : quest.m_offerAReward_quest) {
-        if (v.nTheTaskMinimumLevel <= nRoleLevel
-            && v.nTheTaskMaximumLevel >= nRoleLevel) {
-            if (v.strQuestStatus == "完成") {
-                *(std::string*)wParam = v.strQuestName;
-            }
+        if (v.strQuestStatus == "完成") {
+            *(std::string*)wParam = v.strQuestName;
         }
     }
 }
@@ -842,22 +833,19 @@ void On_AcceptReward(HWND hDlg, WPARAM wParam, LPARAM lParam) {
     quest.initOfferARewardQuest();
     int nRoleLevel = CRole::GetRoleLevel();
     for (auto& v : quest.m_offerAReward_quest) {
-        if (v.nTheTaskMinimumLevel <= nRoleLevel
-            && v.nTheTaskMaximumLevel >= nRoleLevel) {
-            if (v.strQuestName == *(std::string*)wParam) {
-                // 1. 打开 NPC
-                nearObj.initNear();
-                for (auto& w : nearObj.m_near_object) {
-                    if (w.strNpcName == "悬赏看板") { // 找到 NPC
-                        nearObj.Interactive(w.nNpcID);
-                        Sleep(50);
-                        break;
-                    }
+        if (v.strQuestName == *(std::string*)wParam) {
+            // 1. 打开 NPC
+            nearObj.initNear();
+            for (auto& w : nearObj.m_near_object) {
+                if (w.strNpcName == "悬赏看板") { // 找到 NPC
+                    nearObj.Interactive(w.nNpcID);
+                    Sleep(50);
+                    break;
                 }
-
-                // 交任务
-                quest.CompleteQuest(v.nQuestID);
             }
+
+            // 交任务
+            quest.CompleteQuest(v.nQuestID);
         }
     }
 }
