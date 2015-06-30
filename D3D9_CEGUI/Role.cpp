@@ -4,6 +4,7 @@
 #include "GlobalVariable.h"
 #include "DataType.h"
 #include "NearObject.h"
+#include <random>
 
 CRole* CRole::m_cInstance = NULL;
 CGameHOOK CRole::m_hook;
@@ -156,6 +157,20 @@ void CRole::RoleTeleport(int nKey, float fx, float fy, float fz) {
             } catch (...) {
                 martin->Debug(TEXT("RoleTeleport -- 1 --> 异常"));
                 return;
+            }
+
+            std::mt19937  rng;
+            rng.seed(std::random_device()());
+            std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 314); // distribution in range [1, 6]
+            float fTurn = dist6(rng) / 100.0f;
+            
+            int nTmep;
+            if (martin->ReadPtrData(BASE_CAMERA, TEXT("获取当前人物面向 -- 1"), nTmep)) {
+                if (martin->ReadPtrData(nTmep + OFFSET_CAREMA_1, TEXT("获取当前人物面向 -- 2"), nTmep)) {
+                    if (martin->ReadPtrData(nTmep + OFFSET_CAREMA_2, TEXT("获取当前人物面向 -- 3"), nTmep)) {
+                        *(float*)(nTmep + OFFSET_CAREMA_ANGLE) = fTurn;
+                    }
+                }
             }
 
             *(float*)(nRoleAddr + 0x38) = fx;//目的坐标X
