@@ -45,7 +45,7 @@
 #define WM_GET_BAG_ITEM_NUM             WM_USER + 2343  // 獲取背包物品數量
 #define WM_EAT_MEAT                     WM_USER + 2344  // 吃烤肉
 #define WM_USE_ITEM                     WM_USER + 2345  // 通用使用物品
-#define WM_PRECISION_ACCEPT_QUEST       WM_USER + 2346  // 精准交任务, 通过比对 NPC 的坐标
+#define WM_PRECISION_ACCEPT_QUEST       WM_USER + 2346  // 精准接任务, 通过比对 NPC 的坐标
 #define WM_MADE_HP_MEDICINE             WM_USER + 2347  // 制作回复药
 #define WM_BUY_SUPPLY                   WM_USER + 2348  // 补给物品
 #define WM_KILL_MONSTER                 WM_USER + 2349  // 击杀怪物
@@ -59,3 +59,22 @@
 #define WM_GET_COUNT_REWARD_TODAY       WM_USER + 2357  // 获取今日已完成悬赏次数
 #define WM_GET_ACCEPT_REWARD            WM_USER + 2358  // 获取可交悬赏
 #define WM_ACCEPT_REWARD                WM_USER + 2359  // 交悬赏
+#define WM_升级到荆棘短剑               WM_USER + 2360  // 升级到荆棘短剑
+#define WM_GET_EXP_LIMIT                WM_USER + 2361  // 获取经验上限
+#define WM_GET_WAREHOUSE_ITEM_NUM       WM_USER + 2362  // 仓库物品数量
+#define WM_INTO_MY_MANOR                WM_USER + 2363  // 进入我的庄园
+#define WM_LEAVE_MANOR                  WM_USER + 2364  // 离开庄园
+#define WM_UPGRADE_MUSHROOM             WM_USER + 2365  // 升级育菇木床
+#define WM_MOVE_ITEM_IN_WAREHOUSE       WM_USER + 2366  // 存仓
+#define WM_GETBAG                       WM_USER + 2367  // 初始化背包
+#define WM_锻造村丁斗气锤               WM_USER + 2368
+#define WM_EAT_MEDICINE                 WM_USER + 2369  // 无延迟吃回复药
+#define WM_PAY_ITEMS                    WM_USER + 2370  // 交纳物品
+#define WM_GET_GLOWING_ARTICLE          WM_USER + 2371  // 获取发光物品
+#define WM_设置随行猫                   WM_USER + 2372
+#define WM_装备斗气锤                   WM_USER + 2373
+#define WM_TAKE_MEDICINE                WM_USER + 2374  // 容错式喝药
+#define WM_WEAR_EQUIPMENT               WM_USER + 2375  // 穿装备
+#define WM_GET_ROLE_LEVEL               WM_USER + 2376  // 获取人物等级
+#define WM_PRECISION_COMPLETE_QUEST     WM_USER + 2377  // 精准交任务, 通过比对 NPC 的坐标
+#define WM_FIRST_ATTACK_TRUN            WM_USER + 2378  // 开启第一击面向

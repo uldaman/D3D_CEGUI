@@ -16,6 +16,7 @@ typedef struct BAG_ITEM {
     int nID_2;
     void initBagItem(int nAddr, int _nIndex);
     void MoveInventoryItem(); // ´æÎï
+    std::string strPlace;
 } BagItem, *pBagItem;
 
 class CBag {

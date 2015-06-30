@@ -1,0 +1,34 @@
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x5F3C0A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4b207e0 -> 0x6fbafd0
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4b207e0 -> 0x7045258
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x135b6260 -> 0x6fad7a0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18330060 -> 0x704aed0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18348b60 -> 0x704af28
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+

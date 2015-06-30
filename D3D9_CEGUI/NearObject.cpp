@@ -3,6 +3,7 @@
 #include "Base.h"
 #include "DataType.h"
 #include "Role.h"
+#include "GlobalVariable.h"
 
 
 CNearObject::CNearObject() {
@@ -29,7 +30,7 @@ void CNearObject::initNear() {
                             int nTempNode = 0, nCurrentKey = 0;
                             martin->ReadPtrData(nTempEsi_Next + 0xc, TEXT("读取 [节点C] -- 1"), nTempNode);
                             martin->ReadPtrData(nTempEsi_Next + 0x10, TEXT("读取 [节点Key]"), nCurrentKey);
-                            
+
                             allotObject(nCurrentKey);
 
                             if (++nNodeCount > 0x400) {//计数器，防止遍历太多
@@ -173,4 +174,39 @@ void CNearObject::Interactive(int nID) {
     *((byte*)(&(pPackage->G_NPC_ID)) + 1) = 0x2;
     CRole::SendPackage((DWORD)pPackage);
     delete pPackage;
+}
+
+void CNearObject::GetGlowingArticle(/*float& fPointX, float& fPointY, float& fPointZ*/) {
+    m_glowingArticle_vector.clear();
+    int nObjectArryStart, nObjectArryEnd, nObjectTemp;
+    if (martin->ReadPtrData(BASE_CURRENT_MAP_OBJECTS, "获取 [发光物品数组]", nObjectTemp)) {
+        if (martin->ReadPtrData(nObjectTemp + OFFSET_CURRENT_MAP_ENTITY_ARRAY, "获取 [发光物品数组头]", nObjectArryStart)
+            && martin->ReadPtrData(nObjectTemp + OFFSET_CURRENT_MAP_ENTITY_ARRAY + 0x4, "获取 [发光物品数组尾]", nObjectArryEnd)) {
+            // 遍历发光物品数组
+            for (int nObjectArry = nObjectArryStart; nObjectArry < nObjectArryEnd; nObjectArry += 0x4) {
+                if (martin->ReadPtrData(nObjectArry, "获取 [发光物品 判断条件]", nObjectTemp)) {
+                    if (IsBadReadPtr((CONST VOID*)nObjectTemp, sizeof(DWORD)) == 0) {
+                        int nConditions;
+                        if (martin->ReadPtrData(nObjectTemp + 0x4, "获取 [发光物品 判断条件 1]", nConditions)) {
+                            if (nConditions == 0x00020690) {
+                                int nChar;
+                                if (martin->ReadPtrData(nObjectTemp + OFFSET_OBJECT_ENG_NAME, "获取 [发光物品 判断条件 2]", nChar)) {
+                                    std::string strChar = (char*)nChar;
+                                    std::string::size_type idx = strChar.find("100465_Bug_SFX_Trigger_");
+                                    if (idx != std::string::npos) { // 找到名称
+                                        GlowingArticle glowingArticle;
+                                        martin->ReadPtrData(nObjectTemp + 0x38, "获取 [发光物品 X 坐标]", glowingArticle.fNpcPointX);
+                                        martin->ReadPtrData(nObjectTemp + 0x38 + 0x4, "获取 [发光物品 X 坐标]", glowingArticle.fNpcPointY);
+                                        martin->ReadPtrData(nObjectTemp + 0x38 + 0x8, "获取 [发光物品 Z 坐标]", glowingArticle.fNpcPointZ);
+                                        m_glowingArticle_vector.push_back(glowingArticle);
+                                        /*return;*/
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

@@ -93,18 +93,22 @@
     <ClCompile Include="d3d9dev.cpp" />
     <ClCompile Include="d3d9int.cpp" />
     <ClCompile Include="d3d9tex.cpp" />
+    <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameHOOK.cpp" />
     <ClCompile Include="GlobalVariable.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="LuaAPI.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Manor.cpp" />
     <ClCompile Include="Martin.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="My_Ini.cpp" />
     <ClCompile Include="NearObject.cpp" />
     <ClCompile Include="Quest.cpp" />
     <ClCompile Include="Role.cpp" />
     <ClCompile Include="Supply.cpp" />
+    <ClCompile Include="Warehouse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bag.h" />
@@ -117,18 +121,22 @@
     <ClInclude Include="d3d9tex.h" />
     <ClInclude Include="DataType.h" />
     <ClInclude Include="DefMessage.h" />
+    <ClInclude Include="Equipment.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameHOOK.h" />
     <ClInclude Include="GlobalVariable.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="LuaAPI.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="Manor.h" />
     <ClInclude Include="Martin.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="My_Ini.h" />
     <ClInclude Include="NearObject.h" />
     <ClInclude Include="Quest.h" />
     <ClInclude Include="Role.h" />
     <ClInclude Include="Supply.h" />
+    <ClInclude Include="Warehouse.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Martin.inl" />

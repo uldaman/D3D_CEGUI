@@ -56,7 +56,7 @@ void On_Barbecues(HWND hDlg, WPARAM wParam, LPARAM lParam); // 烤肉
 void On_GetBagItemNum(HWND hDlg, WPARAM wParam, LPARAM lParam); // 獲取背包物品數量
 void On_EatMeat(HWND hDlg, WPARAM wParam, LPARAM lParam); // 吃烤肉
 void On_CommonUseItems(HWND hDlg, WPARAM wParam, LPARAM lParam); // 通用使用物品
-void On_PrecisionAcceptQuest(HWND hDlg, WPARAM wParam, LPARAM lParam); // 精准交任务, 通过比对 NPC 的坐标
+void On_PrecisionAcceptQuest(HWND hDlg, WPARAM wParam, LPARAM lParam); // 精准接任务, 通过比对 NPC 的坐标
 void On_BuySupply(HWND hDlg, WPARAM wParam, LPARAM lParam); // 补给物品
 void On_KillMonster(HWND hDlg, WPARAM wParam, LPARAM lParam); // 击杀物品
 void On_GetMonsterRoom(HWND hDlg, WPARAM wParam, LPARAM lParam); // 击杀物品
@@ -67,5 +67,24 @@ void On_AcceptOfferAReward(HWND hDlg, WPARAM wParam, LPARAM lParam); // 接受悬赏
 void On_GetCurrentReward(HWND hDlg, WPARAM wParam, LPARAM lParam); // 获取当前悬赏任务
 void On_GetRewardBrushZone(HWND hDlg, WPARAM wParam, LPARAM lParam); // 获取悬赏副本
 void On_GetCountRewardToday(HWND hDlg, WPARAM wParam, LPARAM lParam); // 获取今日已完成悬赏次数
-void On_GetAcceptReward(HWND hDlg, WPARAM wParam, LPARAM lParam); //获取可交悬赏
-void On_AcceptReward(HWND hDlg, WPARAM wParam, LPARAM lParam); //交悬赏
+void On_GetAcceptReward(HWND hDlg, WPARAM wParam, LPARAM lParam); // 获取可交悬赏
+void On_AcceptReward(HWND hDlg, WPARAM wParam, LPARAM lParam); // 交悬赏
+void On_升级到荆棘短剑(HWND hDlg, WPARAM wParam, LPARAM lParam); // 升级到荆棘短剑
+void On_GetExperienceLimit(HWND hDlg, WPARAM wParam, LPARAM lParam); // 获取经验上限
+void On_GetWarehouseItemNum(HWND hDlg, WPARAM wParam, LPARAM lParam); // 獲取仓库物品數量
+void On_IntoMyManor(HWND hDlg, WPARAM wParam, LPARAM lParam); // 进入我的庄园
+void On_LeaveManor(HWND hDlg, WPARAM wParam, LPARAM lParam); // 离开庄园
+void On_UpgradeMushroom(HWND hDlg, WPARAM wParam, LPARAM lParam); // 升级育菇木床
+void On_MoveInventoryItem(HWND hDlg, WPARAM wParam, LPARAM lParam); // 存仓
+void On_GetBag(HWND hDlg, WPARAM wParam, LPARAM lParam); // 背包
+void On_锻造村丁斗气锤(HWND hDlg, WPARAM wParam, LPARAM lParam); // 锻造村丁斗气锤
+void On_EatMedicine(HWND hDlg, WPARAM wParam, LPARAM lParam); // 吃回复药
+void On_PayItems(HWND hDlg, WPARAM wParam, LPARAM lParam); // 交纳物品
+void On_GetGlowingArticle(HWND hDlg, WPARAM wParam, LPARAM lParam); // 获取发光物品
+void On_设置随行猫(HWND hDlg, WPARAM wParam, LPARAM lParam);
+void On_装备斗气锤(HWND hDlg, WPARAM wParam, LPARAM lParam);
+void On_TakeMedicine(HWND hDlg, WPARAM wParam, LPARAM lParam);  // 容错式喝药
+void On_WearEquipment(HWND hDlg, WPARAM wParam, LPARAM lParam);  // 穿装备
+void On_GetRoleLevel(HWND hDlg, WPARAM wParam, LPARAM lParam);  // 获取人物等级
+void On_PrecisionCompleteQuest(HWND hDlg, WPARAM wParam, LPARAM lParam);  // 精准交任务, 通过比对 NPC 的坐标
+void On_FirstAttackTrun(HWND hDlg, WPARAM wParam, LPARAM lParam);  // 开启第一击面向

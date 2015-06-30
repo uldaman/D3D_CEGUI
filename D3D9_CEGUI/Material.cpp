@@ -164,6 +164,9 @@ void CMaterial::initMaterial() {
                                         case 0x11:
                                             item.strType = "网";
                                             break;
+                                        case 0x12:
+                                            item.strType = "可疑的香草";
+                                            break;
                                         }
 
                                         CMaterial::m_material_list.push_back(item);
@@ -330,14 +333,17 @@ void CMaterial::initMaterial_2() {
                             case 0x11:
                                 item.strType = "网";
                                 break;
+                            case 0x12:
+                                item.strType = "可疑的香草";
+                                break;
                             }
 
                             if (martin->ReadPtrData(nRet + 0x4, TEXT("遍历 [采集物品数组] --3"), item.nID)
                                 && martin->ReadPtrData(nRet + 0x60, TEXT("遍历 [采集物品数组] --5"), item.fPointX)
                                 && martin->ReadPtrData(nRet + 0x64, TEXT("遍历采 [集物品数组] --6"), item.fPointY)
                                 && martin->ReadPtrData(nRet + 0x68, TEXT("遍历 [采集物品数组] --7"), item.fPointZ)) {
-                                //martin->Debug("%s -- ID: 0x%X -- Key: 0x%X -- 类别: 0x%X -- %f : %f : %f", \
-                                    //item.strName.c_str(), item.nID, item.nKey, item.nType, item.fPointX, item.fPointY, item.fPointZ);
+                                // martin->Debug("%s -- ID: 0x%X -- Key: 0x%X -- 类别: %s -- %f : %f : %f", \
+                                     //item.strName.c_str(), item.nID, item.nKey, item.strType.c_str(), item.fPointX, item.fPointY, item.fPointZ);
                                     CMaterial::m_material_list.push_back(item);
                             }
                         }

@@ -8,6 +8,9 @@
 #include "BrushZones.h"
 #include "DataType.h"
 #include "Material.h"
+#include "My_Ini.h"
+#include "Bag.h"
+#include "NearObject.h"
 
 //Lua调试
 LuaGlue Lua_Trac(lua_State *L) {
@@ -382,7 +385,12 @@ LuaGlue Lua_CollectAll(lua_State *L) {
         int nWhere;
         ::SendMessage(theApp.m_hGWnd, WM_WHERE_ROLE, (WPARAM)&nWhere, NULL);
         if (nWhere != 2 || g_isWork == false) {
-            goto MaterialEnd; // 如果不在FB 则跳出
+            // 判断是否在庄园
+            std::string strMap;
+            ::SendMessage(theApp.m_hGWnd, WM_GET_MAP, (WPARAM)&strMap, NULL);
+            if (strMap != "庄园") {
+                goto MaterialEnd; // 如果不在庄园 则跳出
+            }
         }
 
         //martin->Debug("%s -- ID: 0x%X -- Key: 0x%X -- %f : %f : %f",
@@ -399,7 +407,12 @@ LuaGlue Lua_CollectAll(lua_State *L) {
         for (int i = 0; i < 3; i++) {
             ::SendMessage(theApp.m_hGWnd, WM_WHERE_ROLE, (WPARAM)&nWhere, NULL);
             if (nWhere != 2 || g_isWork == false) {
-                goto MaterialEnd; // 如果不在FB 则跳出
+                // 判断是否在庄园
+                std::string strMap;
+                ::SendMessage(theApp.m_hGWnd, WM_GET_MAP, (WPARAM)&strMap, NULL);
+                if (strMap != "庄园") {
+                    goto MaterialEnd; // 如果不在庄园 则跳出
+                }
             }
 
             ::SendMessage(theApp.m_hGWnd, WM_COLLECT, (WPARAM)&nID, NULL);
@@ -443,7 +456,12 @@ LuaGlue Lua_CollectTar(lua_State *L) {
         int nWhere;
         ::SendMessage(theApp.m_hGWnd, WM_WHERE_ROLE, (WPARAM)&nWhere, NULL);
         if (nWhere != 2 || g_isWork == false) {
-            goto MaterialEnd; // 如果不在FB 则跳出
+            // 再判断是否在庄园
+            std::string strMap;
+            ::SendMessage(theApp.m_hGWnd, WM_GET_MAP, (WPARAM)&strMap, NULL);
+            if (strMap != "庄园") {
+                goto MaterialEnd; // 如果不在庄园 则跳出
+            }
         }
 
         //martin->Debug("%s -- ID: 0x%X -- Key: 0x%X -- %f : %f : %f",
@@ -461,7 +479,12 @@ LuaGlue Lua_CollectTar(lua_State *L) {
             for (int i = 0; i < 3; i++) {
                 ::SendMessage(theApp.m_hGWnd, WM_WHERE_ROLE, (WPARAM)&nWhere, NULL);
                 if (nWhere != 2 || g_isWork == false) {
-                    goto MaterialEnd; // 如果不在FB 则跳出
+                    // 判断是否在庄园
+                    std::string strMap;
+                    ::SendMessage(theApp.m_hGWnd, WM_GET_MAP, (WPARAM)&strMap, NULL);
+                    if (strMap != "庄园") {
+                        goto MaterialEnd; // 如果不在庄园 则跳出
+                    }
                 }
 
                 ::SendMessage(theApp.m_hGWnd, WM_COLLECT, (WPARAM)&nID, NULL);
@@ -517,25 +540,6 @@ LuaGlue Lua_CommonUseItems(lua_State *L) {
     return 0;
 }
 
-// MH_精准交任务
-LuaGlue Lua_PrecisionAcceptQuest(lua_State *L) {
-    std::string strQuestName = g_pClua->GetStringArgument(1, "");
-    std::string strNpcName = g_pClua->GetStringArgument(2, "");
-    QuestInfo questInfo;
-    questInfo.strQuestName = strQuestName;
-    questInfo.strNpcName = strNpcName;
-
-    float fNpcPointX = static_cast<float>(g_pClua->GetNumberArgument(3));
-    float fNpcPointY = static_cast<float>(g_pClua->GetNumberArgument(4));
-    POINT_TARGET target;
-    target.fPontX = fNpcPointX;
-    target.fPontY = fNpcPointY;
-    target.fPontZ = 0.0f;
-
-    ::SendMessage(theApp.m_hGWnd, WM_PRECISION_ACCEPT_QUEST, (WPARAM)&questInfo, (LPARAM)&target);
-    return 0;
-}
-
 // MH_过滤式采集
 LuaGlue lua_FilterCollect(lua_State *L) {
     std::string strFilter = g_pClua->GetStringArgument(1, "");
@@ -551,7 +555,12 @@ LuaGlue lua_FilterCollect(lua_State *L) {
         int nWhere;
         ::SendMessage(theApp.m_hGWnd, WM_WHERE_ROLE, (WPARAM)&nWhere, NULL);
         if (nWhere != 2 || g_isWork == false) {
-            goto MaterialEnd; // 如果不在FB 则跳出
+            // 判断是否在庄园
+            std::string strMap;
+            ::SendMessage(theApp.m_hGWnd, WM_GET_MAP, (WPARAM)&strMap, NULL);
+            if (strMap != "庄园") {
+                goto MaterialEnd; // 如果不在庄园 则跳出
+            }
         }
 
         //martin->Debug("%s -- ID: 0x%X -- Key: 0x%X -- %f : %f : %f",
@@ -570,7 +579,12 @@ LuaGlue lua_FilterCollect(lua_State *L) {
             for (int i = 0; i < 3; i++) {
                 ::SendMessage(theApp.m_hGWnd, WM_WHERE_ROLE, (WPARAM)&nWhere, NULL);
                 if (nWhere != 2 || g_isWork == false) {
-                    goto MaterialEnd; // 如果不在FB 则跳出
+                    // 判断是否在庄园
+                    std::string strMap;
+                    ::SendMessage(theApp.m_hGWnd, WM_GET_MAP, (WPARAM)&strMap, NULL);
+                    if (strMap != "庄园") {
+                        goto MaterialEnd; // 如果不在庄园 则跳出
+                    }
                 }
 
                 ::SendMessage(theApp.m_hGWnd, WM_COLLECT, (WPARAM)&nID, NULL);
@@ -739,6 +753,203 @@ LuaGlue Lua_AcceptReward(lua_State* L) {
     return 0;
 }
 
+// MH_升级到荆棘短剑
+LuaGlue Lua_升级到荆棘短剑(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_升级到荆棘短剑, NULL, NULL);
+    return 0;
+}
+
+// MH_进入挨弟副本
+LuaGlue Lua_IntoIdFB(lua_State *L) {
+    int BrushZones = 0;
+    BrushZones = g_pClua->GetIntArgument(1);
+    if (BrushZones) {
+        ::SendMessage(theApp.m_hGWnd, WM_CHOOSE_FB, (WPARAM)BrushZones, NULL);
+        Sleep(1500);
+        ::SendMessage(theApp.m_hGWnd, WM_START_FB, (WPARAM)BrushZones, NULL);
+        Sleep(1500);
+        ::SendMessage(theApp.m_hGWnd, WM_INTO_FB, NULL, NULL);
+    }
+    return 0;
+}
+
+// MH_获取经验上限
+LuaGlue Lua_GetExperienceLimit(lua_State* L) {
+    int nRet = 0;
+    ::SendMessage(theApp.m_hGWnd, WM_GET_EXP_LIMIT, (WPARAM)&nRet, NULL);
+    g_pClua->PushInt(nRet);
+    return 1;
+}
+
+// MH_仓库物品数量
+LuaGlue Lua_GetWarehouseItemNum(lua_State *L) {
+    std::string strItem = g_pClua->GetStringArgument(1, "");
+    int nNum = 0;
+    ::SendMessage(theApp.m_hGWnd, WM_GET_WAREHOUSE_ITEM_NUM, (WPARAM)&nNum, (LPARAM)&strItem);
+    g_pClua->PushInt(nNum);
+    return 1;
+}
+
+// MH_进入我的庄园
+LuaGlue Lua_IntoMyManor(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_INTO_MY_MANOR, NULL, NULL);
+    return 0;
+}
+
+// MH_离开庄园
+LuaGlue Lua_LeaveManor(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_LEAVE_MANOR, NULL, NULL);
+    return 0;
+}
+
+// MH_升级育菇木床
+LuaGlue Lua_UpgradeMushroom(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_UPGRADE_MUSHROOM, NULL, NULL);
+    return 0;
+}
+
+// MH_存仓
+LuaGlue Lua_MoveInventoryItem(lua_State *L) {
+    std::string strItems = g_strServerExePath + "\\item.ini";
+    CMy_Ini obj_ini(strItems.c_str());
+    strItems = obj_ini.GetString("Item", "存仓");
+    std::vector<std::string> vctItems = martin->split(strItems, "|");
+    for (auto& v : vctItems) {
+        std::list<BagItem> bagItem_list;
+        ::SendMessage(theApp.m_hGWnd, WM_GETBAG, (WPARAM)&bagItem_list, NULL);
+        for (auto p = bagItem_list.begin(); p != bagItem_list.end(); ++p) {
+            std::string::size_type idx = v.find((*p).strName);
+            if (idx != std::string::npos) {
+                ::SendMessage(theApp.m_hGWnd, WM_MOVE_ITEM_IN_WAREHOUSE, (WPARAM)&(*p), NULL);
+                Sleep(1000);
+            }
+        }
+        Sleep(500);
+    }
+    
+    return 0;
+}
+
+// MH_锻造村丁斗气锤
+LuaGlue Lua_锻造村丁斗气锤(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_锻造村丁斗气锤, NULL, NULL);
+    return 0;
+}
+
+// MH_吃回复药
+LuaGlue Lua_EatMedicine(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_EAT_MEDICINE, NULL, NULL);
+    return 0;
+}
+
+// MH_交纳物品
+LuaGlue Lua_PayItems(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_PAY_ITEMS, NULL, NULL);
+    return 0;
+}
+
+// MH_获取发光物品
+LuaGlue Lua_GetGlowingArticle(lua_State *L) {
+    //POINT_TARGET target;
+    CNearObject oNearObject;
+    ::SendMessage(theApp.m_hGWnd, WM_GET_GLOWING_ARTICLE, /*(WPARAM)&target*/(WPARAM)&oNearObject, NULL);
+    std::vector<GlowingArticle> glowingArticle_vector = oNearObject.GetGlowingArticleInfo();
+    if (glowingArticle_vector.empty()) {
+        g_pClua->PushNumber(0.0);
+        g_pClua->PushNumber(0.0);
+        g_pClua->PushNumber(0.0);
+        return 3;
+    }
+
+    int nSize = glowingArticle_vector.size();
+    if (g_nCountOfGlowingArticle >= nSize) {
+        g_nCountOfGlowingArticle = 0;
+    }
+    g_pClua->PushNumber(glowingArticle_vector[g_nCountOfGlowingArticle].fNpcPointX);
+    g_pClua->PushNumber(glowingArticle_vector[g_nCountOfGlowingArticle].fNpcPointY);
+    g_pClua->PushNumber(glowingArticle_vector[g_nCountOfGlowingArticle].fNpcPointZ);
+    g_nCountOfGlowingArticle++;
+    return 3;
+}
+
+// MH_设置随行猫
+LuaGlue Lua_设置随行猫(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_设置随行猫, NULL, NULL);
+    return 0;
+}
+// MH_装备斗气锤
+LuaGlue Lua_装备斗气锤(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_装备斗气锤, NULL, NULL);
+    return 0;
+}
+
+// MH_容错式喝药
+LuaGlue Lua_TakeMedicine(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_TAKE_MEDICINE, NULL, NULL);
+    return 0;
+}
+
+// MH_穿装备
+LuaGlue Lua_WearEquipment(lua_State *L) {
+    std::string strEquipment = g_pClua->GetStringArgument(1, "");
+    std::string strPlace = g_pClua->GetStringArgument(2, "");
+    // 0:武器，1：头部，2：手腕，3：胸部，4：腰部，5：脚部
+    ::SendMessage(theApp.m_hGWnd, WM_WEAR_EQUIPMENT, (WPARAM)&strEquipment, (LPARAM)&strPlace);
+    return 0;
+}
+
+// MH_获取人物等级
+LuaGlue Lua_GetRoleLevel(lua_State *L) {
+    int nNum = 0;
+    ::SendMessage(theApp.m_hGWnd, WM_GET_ROLE_LEVEL, (WPARAM)&nNum, NULL);
+    g_pClua->PushInt(nNum);
+    return 1;
+}
+
+// MH_精准接任务
+LuaGlue Lua_PrecisionAcceptQuest(lua_State *L) {
+    std::string strQuestName = g_pClua->GetStringArgument(1, "");
+    std::string strNpcName = g_pClua->GetStringArgument(2, "");
+    QuestInfo questInfo;
+    questInfo.strQuestName = strQuestName;
+    questInfo.strNpcName = strNpcName;
+
+    float fNpcPointX = static_cast<float>(g_pClua->GetNumberArgument(3));
+    float fNpcPointY = static_cast<float>(g_pClua->GetNumberArgument(4));
+    POINT_TARGET target;
+    target.fPontX = fNpcPointX;
+    target.fPontY = fNpcPointY;
+    target.fPontZ = 0.0f;
+
+    ::SendMessage(theApp.m_hGWnd, WM_PRECISION_ACCEPT_QUEST, (WPARAM)&questInfo, (LPARAM)&target);
+    return 0;
+}
+
+// MH_精准交任务
+LuaGlue Lua_PrecisionCompleteQuest(lua_State *L) {
+    std::string strQuestName = g_pClua->GetStringArgument(1, "");
+    std::string strNpcName = g_pClua->GetStringArgument(2, "");
+    QuestInfo questInfo;
+    questInfo.strQuestName = strQuestName;
+    questInfo.strNpcName = strNpcName;
+
+    float fNpcPointX = static_cast<float>(g_pClua->GetNumberArgument(3));
+    float fNpcPointY = static_cast<float>(g_pClua->GetNumberArgument(4));
+    POINT_TARGET target;
+    target.fPontX = fNpcPointX;
+    target.fPontY = fNpcPointY;
+    target.fPontZ = 0.0f;
+
+    ::SendMessage(theApp.m_hGWnd, WM_PRECISION_COMPLETE_QUEST, (WPARAM)&questInfo, (LPARAM)&target);
+    return 0;
+}
+
+// MH_开启第一击面向
+LuaGlue Lua_FirstAttackTrun(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_FIRST_ATTACK_TRUN, NULL, NULL);
+    return 0;
+}
+
 luaL_reg ConsoleGlue[] = {
         { "RegisterEvent", _RegisterEvent },
         { "MH_调试", Lua_Trac },
@@ -785,7 +996,6 @@ luaL_reg ConsoleGlue[] = {
         { "MH_背包物品数量", Lua_GetBagItemNum },
         { "MH_吃烤肉", Lua_EatMeat },
         { "MH_通用使用物品", Lua_CommonUseItems },
-        { "MH_精准交任务", Lua_PrecisionAcceptQuest },
         { "MH_过滤式采集", lua_FilterCollect },
         { "MH_制造回复药", lua_MadeHpMedicine },
         { "MH_补给物品", lua_BuySupply },
@@ -800,6 +1010,26 @@ luaL_reg ConsoleGlue[] = {
         { "MH_获取今日已完成悬赏次数", Lua_GetRewardCountToday },
         { "MH_获取完成悬赏", Lua_GetAcceptReward },
         { "MH_交悬赏任务", Lua_AcceptReward },
+        { "MH_升级到荆棘短剑", Lua_升级到荆棘短剑 },
+        { "MH_进入挨弟副本", Lua_IntoIdFB },
+        { "MH_获取经验上限", Lua_GetExperienceLimit },
+        { "MH_仓库物品数量", Lua_GetWarehouseItemNum },
+        { "MH_进入我的庄园", Lua_IntoMyManor },
+        { "MH_离开庄园", Lua_LeaveManor },
+        { "MH_升级育菇木床", Lua_UpgradeMushroom },
+        { "MH_存仓", Lua_MoveInventoryItem },
+        { "MH_锻造村丁斗气锤", Lua_锻造村丁斗气锤 },
+        { "MH_吃回复药", Lua_EatMedicine },
+        { "MH_交纳物品", Lua_PayItems },
+        { "MH_获取发光物品", Lua_GetGlowingArticle },
+        { "MH_设置随行猫", Lua_设置随行猫 },
+        { "MH_装备斗气锤", Lua_装备斗气锤 },
+        { "MH_容错式喝药", Lua_TakeMedicine },
+        { "MH_穿装备", Lua_WearEquipment },
+        { "MH_获取人物等级", Lua_GetRoleLevel },
+        { "MH_精准接任务", Lua_PrecisionAcceptQuest },
+        { "MH_精准交任务", Lua_PrecisionCompleteQuest },
+        { "MH_开启第一击面向", Lua_FirstAttackTrun },
         { nullptr, NULL },
 };
 

@@ -310,6 +310,15 @@ void CQuest::¶ÍÔìÏþ·ç¶Ì½£() {
     delete pPackage;
 }
 
+void CQuest::¶ÍÔì´å¶¡¶·Æø´¸() {
+    pPackage¶ÍÔìÏþ·ç¶Ì½£ pPackage = new Package¶ÍÔìÏþ·ç¶Ì½£;
+    RtlZeroMemory(pPackage, sizeof(Package¶ÍÔìÏþ·ç¶Ì½£));
+    pPackage->A_Head = 0x00000903;
+    pPackage->E_Fixation = 0x00002328;
+    CRole::SendPackage((DWORD)pPackage);
+    delete pPackage;
+}
+
 void CQuest::MadeHpMedicine() {
     DWORD Package[17];
     RtlZeroMemory(Package, sizeof(Package));

@@ -93,6 +93,18 @@
     <ClCompile Include="Supply.cpp">
       <Filter>怪物猎人</Filter>
     </ClCompile>
+    <ClCompile Include="Equipment.cpp">
+      <Filter>怪物猎人</Filter>
+    </ClCompile>
+    <ClCompile Include="Warehouse.cpp">
+      <Filter>怪物猎人</Filter>
+    </ClCompile>
+    <ClCompile Include="Manor.cpp">
+      <Filter>怪物猎人</Filter>
+    </ClCompile>
+    <ClCompile Include="My_Ini.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Martin.h">
@@ -160,6 +172,18 @@
     </ClInclude>
     <ClInclude Include="Supply.h">
       <Filter>怪物猎人</Filter>
+    </ClInclude>
+    <ClInclude Include="Equipment.h">
+      <Filter>怪物猎人</Filter>
+    </ClInclude>
+    <ClInclude Include="Warehouse.h">
+      <Filter>怪物猎人</Filter>
+    </ClInclude>
+    <ClInclude Include="Manor.h">
+      <Filter>怪物猎人</Filter>
+    </ClInclude>
+    <ClInclude Include="My_Ini.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

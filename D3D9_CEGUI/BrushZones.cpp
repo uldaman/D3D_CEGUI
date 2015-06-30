@@ -768,3 +768,21 @@ void CBrushZones::GetMonster(int nKey, std::string strMonster) {
 
     return;
 }
+
+void CBrushZones::PayItems() {
+    CNearObject nearObj;
+    nearObj.initNear();
+    for (auto& w : nearObj.m_near_object) {
+        if (w.strNpcName == "½»ÄÉÏä") { // ÕÒµ½ NPC
+            pInteractivePackage pPackage = new InteractivePackage;
+            RtlZeroMemory(pPackage, sizeof(InteractivePackage));
+            pPackage->A_Head = 0x00001401;
+            pPackage->E_Fixation = 0x00000102;
+            *(int*)((byte*)(&(pPackage->F_NPC_ID)) + 1) = w.nNpcID;
+            *((byte*)(&(pPackage->G_NPC_ID)) + 1) = 0xA;
+            CRole::SendPackage((DWORD)pPackage);
+            delete pPackage;
+            break;
+        }
+    }
+}

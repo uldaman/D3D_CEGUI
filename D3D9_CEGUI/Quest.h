@@ -54,6 +54,7 @@ public:
     std::string GetQuestTable(); // 获取当前可接主线
     void InteractiveQuest(int nQuestID); // 任务对话
     void 锻造晓风短剑();
+    void 锻造村丁斗气锤();
     void MadeHpMedicine(); // 制作回复药
 
 protected:

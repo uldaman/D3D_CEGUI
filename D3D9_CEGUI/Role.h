@@ -52,6 +52,9 @@ public:
     static void CatInvincible(); // 猫无敌
     static BOOL WhetherOrBusy(); // TRUE 表示在繁忙
     static void Collect(int nID);
+    static int GetExpLimit(); // 获取经验上限
+    static void SetAccompanyingCat(); // 将猫设为随行
+    static void 装备村丁斗气锤(); // 为猫装备村丁斗气锤
 
     static std::map<int, NAME_OID> s_allItems; // 游戏内所有物品
     static void initAllItems();

@@ -64,6 +64,7 @@ public:
     void allotItem(int nObject, std::multimap<std::string, IdIndex>& CratesMap);
     void GetItemPack(int nIndex, int nID);
     static int 获取时间戳();
+    void PayItems(); // 交纳物品
 
 protected:
     BOOL GetBoss(int nKey);

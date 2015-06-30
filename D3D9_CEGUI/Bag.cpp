@@ -19,7 +19,6 @@ void BAG_ITEM::initBagItem(int nAddr, int _nIndex) {
 }
 
 void BAG_ITEM::MoveInventoryItem() {
-
     int _nIndex = nIndex;
     int nRoleAddr = CRole::GetRoleAddr();
     if (martin->ReadPtrData(nRoleAddr + OFFSET_SEND_PACKET_ECX_1, TEXT("获取当前背包"), nRoleAddr)) {
@@ -31,8 +30,8 @@ void BAG_ITEM::MoveInventoryItem() {
                 push eax;
                 mov eax, 00000000; //固定值
                 push eax;
-                mov eax, nRoleAddr; //[2B391020+42f4]
-                push eax;
+                mov edi, nRoleAddr; //[2B391020+42f4]
+                //push eax;
                 mov eax, CALL_MOVE_INVENTORY_ITEM;  //CALL_MOVE_INVENTORY_ITEM
                 call eax;
             }

@@ -11,6 +11,11 @@
 #include "Base.h"
 #include <algorithm>
 #include "Supply.h"
+#include "Equipment.h"
+#include "Warehouse.h"
+#include "Manor.h"
+#include "My_Ini.h"
+#include "GlobalVariable.h"
 
 #define COMMAND_MSG(hwnd, uMsg, wParam, lParam, fn) \
     case (uMsg): return (void)(fn)((hwnd), (wParam), (lParam))
@@ -67,7 +72,7 @@ void MesageMapping(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
         COMMAND_MSG(hDlg, WM_GET_BAG_ITEM_NUM, wParam, lParam, On_GetBagItemNum); // 獲取背包物品數量
         COMMAND_MSG(hDlg, WM_EAT_MEAT, wParam, lParam, On_EatMeat); // 吃烤肉
         COMMAND_MSG(hDlg, WM_USE_ITEM, wParam, lParam, On_CommonUseItems); // 通用使用物品
-        COMMAND_MSG(hDlg, WM_PRECISION_ACCEPT_QUEST, wParam, lParam, On_PrecisionAcceptQuest); // 精准交任务, 通过比对 NPC 的坐标
+        COMMAND_MSG(hDlg, WM_PRECISION_ACCEPT_QUEST, wParam, lParam, On_PrecisionAcceptQuest); // 精准接任务, 通过比对 NPC 的坐标
         COMMAND_MSG(hDlg, WM_MADE_HP_MEDICINE, wParam, lParam, On_MadeHpMedicine); // 制造回复药
         COMMAND_MSG(hDlg, WM_BUY_SUPPLY, wParam, lParam, On_BuySupply); // 补给物品
         COMMAND_MSG(hDlg, WM_KILL_MONSTER, wParam, lParam, On_KillMonster); // 击杀怪物
@@ -81,6 +86,25 @@ void MesageMapping(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
         COMMAND_MSG(hDlg, WM_GET_COUNT_REWARD_TODAY, wParam, lParam, On_GetCountRewardToday); // 获取今日已完成悬赏次数
         COMMAND_MSG(hDlg, WM_GET_ACCEPT_REWARD, wParam, lParam, On_GetAcceptReward); // 获取可交悬赏
         COMMAND_MSG(hDlg, WM_ACCEPT_REWARD, wParam, lParam, On_AcceptReward); // 交悬赏
+        COMMAND_MSG(hDlg, WM_升级到荆棘短剑, wParam, lParam, On_升级到荆棘短剑); // 升级到荆棘短剑
+        COMMAND_MSG(hDlg, WM_GET_EXP_LIMIT, wParam, lParam, On_GetExperienceLimit); // 获取经验上限
+        COMMAND_MSG(hDlg, WM_GET_WAREHOUSE_ITEM_NUM, wParam, lParam, On_GetWarehouseItemNum); // 仓库物品数量
+        COMMAND_MSG(hDlg, WM_INTO_MY_MANOR, wParam, lParam, On_IntoMyManor); // 仓库物品数量
+        COMMAND_MSG(hDlg, WM_LEAVE_MANOR, wParam, lParam, On_LeaveManor); // 离开庄园
+        COMMAND_MSG(hDlg, WM_UPGRADE_MUSHROOM, wParam, lParam, On_UpgradeMushroom); // 升级育菇木床
+        COMMAND_MSG(hDlg, WM_MOVE_ITEM_IN_WAREHOUSE, wParam, lParam, On_MoveInventoryItem); // 存仓
+        COMMAND_MSG(hDlg, WM_GETBAG, wParam, lParam, On_GetBag); // 初始化背包
+        COMMAND_MSG(hDlg, WM_锻造村丁斗气锤, wParam, lParam, On_锻造村丁斗气锤); // 初始化背包
+        COMMAND_MSG(hDlg, WM_EAT_MEDICINE, wParam, lParam, On_EatMedicine); // 初始化背包
+        COMMAND_MSG(hDlg, WM_PAY_ITEMS, wParam, lParam, On_PayItems); // 交纳物品
+        COMMAND_MSG(hDlg, WM_GET_GLOWING_ARTICLE, wParam, lParam, On_GetGlowingArticle); // 获取发光物品
+        COMMAND_MSG(hDlg, WM_设置随行猫, wParam, lParam, On_设置随行猫);
+        COMMAND_MSG(hDlg, WM_装备斗气锤, wParam, lParam, On_装备斗气锤);
+        COMMAND_MSG(hDlg, WM_TAKE_MEDICINE, wParam, lParam, On_TakeMedicine); // 容错式喝药
+        COMMAND_MSG(hDlg, WM_WEAR_EQUIPMENT, wParam, lParam, On_WearEquipment); // 穿装备
+        COMMAND_MSG(hDlg, WM_GET_ROLE_LEVEL, wParam, lParam, On_GetRoleLevel); // 获取人物等级
+        COMMAND_MSG(hDlg, WM_PRECISION_COMPLETE_QUEST, wParam, lParam, On_PrecisionCompleteQuest); // 精准交任务, 通过比对 NPC 的坐标
+        COMMAND_MSG(hDlg, WM_FIRST_ATTACK_TRUN, wParam, lParam, On_FirstAttackTrun); // 开启第一击面向
     }
 }
 
@@ -541,31 +565,26 @@ void On_PrecisionAcceptQuest(HWND hDlg, WPARAM wParam, LPARAM lParam) {
     pQuestInfo questInfo = (pQuestInfo)wParam;
     pPOINT_TARGET pointTarget = (pPOINT_TARGET)lParam;
 
-
-    quest.initUnCompleteQuest();
-    for (auto& v : quest.m_unComplete_quest) {
-        if (v.strQuestType == "主线" && questInfo->strQuestName == v.strQuestName) {
-            if (v.strQuestStatus == "完成") {
-                // 交任务
-                // 1. 打开 NPC
-                nearObj.initNear();
-                for (auto& w : nearObj.m_near_object) {
-                    if (w.strNpcName == questInfo->strNpcName) { // 找到 NPC
-                        // 比对 npc 坐标
-                        if (martin->Compare_Coord(pointTarget->fPontX, pointTarget->fPontY, w.fNpcPointX, w.fNpcPointY) < 5) {
-                            nearObj.Interactive(w.nNpcID);
-                            Sleep(50);
-                            break;
-                        } // 与目标坐标距离小于 5 则表示找到该 npc 
-
-
-                    }
+    quest.initQuestTable();
+    for (auto& v : quest.m_questTable_quest) {
+        if (*(std::string*)wParam == v.strQuestName) {
+            // 接任务
+            // 1. 打开 NPC
+            nearObj.initNear();
+            for (auto& w : nearObj.m_near_object) {
+                if (w.strNpcName == questInfo->strNpcName) { // 找到 NPC
+                    // 比对 npc 坐标
+                    if (martin->Compare_Coord(pointTarget->fPontX, pointTarget->fPontY, w.fNpcPointX, w.fNpcPointY) < 5) {
+                        nearObj.Interactive(w.nNpcID);
+                        Sleep(50);
+                        break;
+                    } // 与目标坐标距离小于 5 则表示找到该 npc 
                 }
-                // 2. 交任务
-                quest.CompleteQuest(v.nQuestID);
             }
-            break;
+            // 2. 接任务
+            quest.AcceptQuest(v.nQuestID);
         }
+        break;
     }
 }
 
@@ -603,7 +622,7 @@ void On_BuySupply(HWND hDlg, WPARAM wParam, LPARAM lParam) {
             Package[7] = 0xFFFFFFFF;
             Package[8] = 0xFFFFFFFF;
             CRole::SendPackage((DWORD)&Package);
-            break;
+            return;
         }
     }
 }
@@ -800,6 +819,7 @@ void On_GetCurrentReward(HWND hDlg, WPARAM wParam, LPARAM lParam) {
     for (auto& v : quest.m_offerAReward_quest) {
         if (v.strQuestStatus == "未完成") {
             *(std::string*)wParam = v.strQuestName;
+            return;
         }
     }
 }
@@ -810,6 +830,7 @@ void On_GetRewardBrushZone(HWND hDlg, WPARAM wParam, LPARAM lParam) {
     for (auto& v : quest.m_offerAReward_quest) {
         if (v.strQuestName == *(std::string*)wParam) {
             *(PINT)lParam = v.nTargetBrushZonesID;
+            return;
         }
     }
 }
@@ -825,6 +846,7 @@ void On_GetAcceptReward(HWND hDlg, WPARAM wParam, LPARAM lParam) {
     for (auto& v : quest.m_offerAReward_quest) {
         if (v.strQuestStatus == "完成") {
             *(std::string*)wParam = v.strQuestName;
+            return;
         }
     }
 }
@@ -846,6 +868,596 @@ void On_AcceptReward(HWND hDlg, WPARAM wParam, LPARAM lParam) {
 
             // 交任务
             quest.CompleteQuest(v.nQuestID);
+            return;
+        }
+    }
+}
+
+void On_升级到荆棘短剑(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    BOOL bSendPackage = FALSE;
+    int nItemId;
+    auto it = std::find_if(CRole::s_allItems.begin(), CRole::s_allItems.end(), map_finder_name("荆棘短剑"));
+    nItemId = (*it).first;
+
+    int nPlace = 0xFFFFFFFF;
+    CBag bag;
+    bag.initBagInfo();
+    std::list<BagItem> bagItem_list = bag.GetBagInfo();
+
+    int nID_1, nID_2, nIndex;
+
+    for (auto p = bagItem_list.begin(); p != bagItem_list.end(); ++p) {
+        if ((*p).strName == "晓风短剑") {
+            nID_1 = (*p).nID_1;
+            nID_2 = (*p).nID_2;
+            nIndex = (*p).nIndex;
+            nPlace = 0;
+            bSendPackage = TRUE;
+            break;
+        }
+    }
+
+    // 如果在上面的操作到找到了"晓风短剑", 则不会执行下面的
+    if (bSendPackage == FALSE) {
+        CEquipment equipment;
+        equipment.initEquipmentInfo();
+        std::list<BagItem> equipment_list = equipment.GetEquipmentInfo();
+
+        for (auto p = equipment_list.begin(); p != equipment_list.end(); ++p) {
+            if ((*p).strName == "晓风短剑") {
+                nID_1 = (*p).nID_1;
+                nID_2 = (*p).nID_2;
+                nIndex = (*p).nIndex;
+                nPlace = 0x3;
+                bSendPackage = TRUE;
+                break;
+            }
+        }
+    }
+
+    if (bSendPackage) {
+        DWORD package_1[7 + 10];
+        RtlZeroMemory(package_1, sizeof(package_1));
+        package_1[0] = 0x0000310D;
+        package_1[4] = nID_1;
+        package_1[5] = nID_2;
+        *(PBYTE)&package_1[6] = nPlace; // 03: 表示升级身上装备，0: 表示升级背包中的装备
+        *(PWORD)((PBYTE)&package_1[6] + 1) = nIndex;
+        *(PWORD)((PBYTE)&package_1[6] + 3) = nItemId;
+        CRole::SendPackage((DWORD)&package_1[0]);
+    }
+}
+
+void On_GetExperienceLimit(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    *(PINT)wParam = CRole::GetExpLimit();
+}
+
+void On_GetWarehouseItemNum(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    CWarehouse warehouse;
+    warehouse.initWarehouseInfo();
+    std::list<BagItem> warehouse_list = warehouse.GetWarehouseInfo();
+
+    for (auto p = warehouse_list.begin(); p != warehouse_list.end(); ++p) {
+        if ((*p).strName == *(std::string*)lParam) {
+            *(int*)wParam = (*p).nNum;
+            break;
+        }
+    }
+}
+
+void On_IntoMyManor(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    CManor oManor;
+    oManor.intoMyManor();
+}
+
+void On_LeaveManor(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    CManor oManor;
+    oManor.leaveManor();
+}
+
+void On_UpgradeMushroom(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    CManor oManor;
+    oManor.UpgradeMushroom();
+}
+
+void On_MoveInventoryItem(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    ((pBagItem)wParam)->MoveInventoryItem();
+}
+
+void On_GetBag(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    CBag bag;
+    bag.initBagInfo();
+    *(std::list<BagItem>*)wParam = bag.GetBagInfo();
+}
+
+void On_锻造村丁斗气锤(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    quest.锻造村丁斗气锤();
+}
+
+void On_EatMedicine(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    CBag bag;
+    bag.initBagInfo();
+    std::list<BagItem> bagItem_list = bag.GetBagInfo();
+
+    for (auto p = bagItem_list.begin(); p != bagItem_list.end(); ++p) {
+        if ((*p).strName == "支给用回复药") {
+            DWORD package_1[7 + 10];
+            RtlZeroMemory(package_1, sizeof(package_1));
+            package_1[0] = 0x0000300D;
+            package_1[4] = (*p).nID_1;
+            package_1[5] = (*p).nID_2;
+            package_1[6] = (*p).nIndex * 0x100;
+            CRole::SendPackage((DWORD)&package_1[0]);
+
+            // 獲取一些必備參數
+            DWORD dwRole_74, dwRole_78;
+            int nAddr = CRole::GetRoleAddr();
+            martin->ReadPtrData(nAddr + 0x74, TEXT("当前人物 + 0x74"), dwRole_74);
+            martin->ReadPtrData(nAddr + 0x78, TEXT("当前人物 + 0x78"), dwRole_78);
+
+            float role_fx = 0.0f;
+            float role_fy = 0.0f;
+            float role_fz = 0.0f;
+            martin->ReadPtrData(nAddr + OFFSET_COOR, TEXT("获取 [当前人物 x 坐标]"), role_fx);
+            martin->ReadPtrData(nAddr + OFFSET_COOR + 0x4, TEXT("获取 [当前人物 y 坐标]"), role_fy);
+            martin->ReadPtrData(nAddr + OFFSET_COOR + 0x8, TEXT("获取 [当前人物 z 坐标]"), role_fz);
+
+            DWORD 时间戳 = CBrushZones::获取时间戳();
+
+            // 發第二個包
+            DWORD package_2[28 + 10];
+            RtlZeroMemory(package_2, sizeof(package_2));
+            package_2[0] = 0x00000251;
+            package_2[4] = 时间戳;
+            *(float*)&package_2[6] = role_fx;
+            *(float*)&package_2[7] = role_fy;
+            *(float*)&package_2[8] = role_fz;
+            package_2[11] = dwRole_74;
+            package_2[12] = dwRole_78;
+            package_2[21] = 0x7A720002;
+            package_2[22] = 0xA13C86D0;
+            package_2[23] = 0xECB9B7E8;
+            package_2[24] = 0x6D3684D8;
+            package_2[25] = 0x00A26F7E;
+            package_2[26] = 0x48B00000;
+            package_2[27] = 0x00010BED;
+            CRole::SendPackage((DWORD)&package_2[0]);
+
+            // 發第三個包
+            int nAllId;
+            auto it = std::find_if(CRole::s_allItems.begin(), CRole::s_allItems.end(), map_finder_name("支给用回复药"));
+            nAllId = (*it).second.nOID;
+
+            DWORD package_3[11 + 10];
+            RtlZeroMemory(package_3, sizeof(package_3));
+            package_3[0] = 0x00000B01;
+            package_3[5] = nAllId;
+            package_3[6] = 0x00000001;
+            package_3[7] = 0x00000003;
+            package_3[8] = 0x73554C50;
+            package_3[9] = 0x65744965;
+            package_3[10] = 0x0000006D;
+            CRole::SendPackage((DWORD)&package_3[0]);
+
+            // 發第四個包
+            时间戳 = CBrushZones::获取时间戳();
+            DWORD package_4[26];
+            RtlZeroMemory(package_4, sizeof(package_4));
+            package_4[0] = 0x00100251;
+            package_4[1] = 0x00000074;
+            package_4[4] = 时间戳;
+            *(float*)&package_4[6] = role_fx;
+            *(float*)&package_4[7] = role_fy;
+            *(float*)&package_4[8] = role_fz;
+            package_4[11] = dwRole_74;
+            package_4[12] = dwRole_78;
+            package_4[21] = 0x91A50001;
+            package_4[22] = 0x7F5A4453;
+            package_4[23] = 0xF1BAEC41;
+            package_4[24] = 0x19BD17B5;
+            package_4[25] = 0x000087E0;
+            CRole::SendPackage((DWORD)&package_4[0]);
+
+            return;
+        }
+    }
+
+    // 如果找到了 "支给用回复药" 则不会进行下面的操作
+    for (auto p = bagItem_list.begin(); p != bagItem_list.end(); ++p) {
+        if ((*p).strName == "回复药") {
+            DWORD package_1[7 + 10];
+            RtlZeroMemory(package_1, sizeof(package_1));
+            package_1[0] = 0x0000300D;
+            package_1[4] = (*p).nID_1;
+            package_1[5] = (*p).nID_2;
+            package_1[6] = (*p).nIndex * 0x100;
+            CRole::SendPackage((DWORD)&package_1[0]);
+
+            // 獲取一些必備參數
+            DWORD dwRole_74, dwRole_78;
+            int nAddr = CRole::GetRoleAddr();
+            martin->ReadPtrData(nAddr + 0x74, TEXT("当前人物 + 0x74"), dwRole_74);
+            martin->ReadPtrData(nAddr + 0x78, TEXT("当前人物 + 0x78"), dwRole_78);
+
+            float role_fx = 0.0f;
+            float role_fy = 0.0f;
+            float role_fz = 0.0f;
+            martin->ReadPtrData(nAddr + OFFSET_COOR, TEXT("获取 [当前人物 x 坐标]"), role_fx);
+            martin->ReadPtrData(nAddr + OFFSET_COOR + 0x4, TEXT("获取 [当前人物 y 坐标]"), role_fy);
+            martin->ReadPtrData(nAddr + OFFSET_COOR + 0x8, TEXT("获取 [当前人物 z 坐标]"), role_fz);
+
+            DWORD 时间戳 = CBrushZones::获取时间戳();
+
+            // 發第二個包
+            DWORD package_2[28 + 10];
+            RtlZeroMemory(package_2, sizeof(package_2));
+            package_2[0] = 0x00000251;
+            package_2[4] = 时间戳;
+            *(float*)&package_2[6] = role_fx;
+            *(float*)&package_2[7] = role_fy;
+            *(float*)&package_2[8] = role_fz;
+            package_2[11] = dwRole_74;
+            package_2[12] = dwRole_78;
+            package_2[21] = 0x7A720002;
+            package_2[22] = 0xA13C86D0;
+            package_2[23] = 0xECB9B7E8;
+            package_2[24] = 0x6D3684D8;
+            package_2[25] = 0x00A26F7E;
+            package_2[26] = 0x48B00000;
+            package_2[27] = 0x00010BED;
+            CRole::SendPackage((DWORD)&package_2[0]);
+
+            // 發第三個包
+            int nAllId;
+            auto it = std::find_if(CRole::s_allItems.begin(), CRole::s_allItems.end(), map_finder_name("回复药"));
+            nAllId = (*it).second.nOID;
+
+            DWORD package_3[11 + 10];
+            RtlZeroMemory(package_3, sizeof(package_3));
+            package_3[0] = 0x00000B01;
+            package_3[5] = nAllId;
+            package_3[6] = 0x00000001;
+            package_3[7] = 0x00000003;
+            package_3[8] = 0x73554C50;
+            package_3[9] = 0x65744965;
+            package_3[10] = 0x0000006D;
+            CRole::SendPackage((DWORD)&package_3[0]);
+
+            // 發第四個包
+            时间戳 = CBrushZones::获取时间戳();
+            DWORD package_4[26];
+            RtlZeroMemory(package_4, sizeof(package_4));
+            package_4[0] = 0x00100251;
+            package_4[1] = 0x00000074;
+            package_4[4] = 时间戳;
+            *(float*)&package_4[6] = role_fx;
+            *(float*)&package_4[7] = role_fy;
+            *(float*)&package_4[8] = role_fz;
+            package_4[11] = dwRole_74;
+            package_4[12] = dwRole_78;
+            package_4[21] = 0x91A50001;
+            package_4[22] = 0x7F5A4453;
+            package_4[23] = 0xF1BAEC41;
+            package_4[24] = 0x19BD17B5;
+            package_4[25] = 0x000087E0;
+            CRole::SendPackage((DWORD)&package_4[0]);
+
+            return;
+        }
+    }
+}
+
+void On_PayItems(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    zone.PayItems();
+}
+
+void On_GetGlowingArticle(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    CNearObject* oNearObject = (CNearObject*)wParam;
+    //s_p_Point = (pPOINT_TARGET)wParam;
+    oNearObject->GetGlowingArticle(/*s_p_Point->fPontX, s_p_Point->fPontY, s_p_Point->fPontZ*/);
+}
+
+void On_设置随行猫(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    CRole::SetAccompanyingCat();
+}
+
+void On_装备斗气锤(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    CRole::装备村丁斗气锤();
+}
+
+void On_TakeMedicine(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    On_EatMedicine(hDlg, wParam, lParam);
+
+    CBag bag;
+    bag.initBagInfo();
+    std::list<BagItem> bagItem_list = bag.GetBagInfo();
+
+    for (auto p = bagItem_list.begin(); p != bagItem_list.end(); ++p) {
+        if ((*p).strName == "支给用冷饮") {
+            DWORD package_1[7 + 10];
+            RtlZeroMemory(package_1, sizeof(package_1));
+            package_1[0] = 0x0000300D;
+            package_1[4] = (*p).nID_1;
+            package_1[5] = (*p).nID_2;
+            package_1[6] = (*p).nIndex * 0x100;
+            CRole::SendPackage((DWORD)&package_1[0]);
+
+            // 獲取一些必備參數
+            DWORD dwRole_74, dwRole_78;
+            int nAddr = CRole::GetRoleAddr();
+            martin->ReadPtrData(nAddr + 0x74, TEXT("当前人物 + 0x74"), dwRole_74);
+            martin->ReadPtrData(nAddr + 0x78, TEXT("当前人物 + 0x78"), dwRole_78);
+
+            float role_fx = 0.0f;
+            float role_fy = 0.0f;
+            float role_fz = 0.0f;
+            martin->ReadPtrData(nAddr + OFFSET_COOR, TEXT("获取 [当前人物 x 坐标]"), role_fx);
+            martin->ReadPtrData(nAddr + OFFSET_COOR + 0x4, TEXT("获取 [当前人物 y 坐标]"), role_fy);
+            martin->ReadPtrData(nAddr + OFFSET_COOR + 0x8, TEXT("获取 [当前人物 z 坐标]"), role_fz);
+
+            DWORD 时间戳 = CBrushZones::获取时间戳();
+
+            // 發第二個包
+            DWORD package_2[28 + 10];
+            RtlZeroMemory(package_2, sizeof(package_2));
+            package_2[0] = 0x00000251;
+            package_2[4] = 时间戳;
+            *(float*)&package_2[6] = role_fx;
+            *(float*)&package_2[7] = role_fy;
+            *(float*)&package_2[8] = role_fz;
+            package_2[11] = dwRole_74;
+            package_2[12] = dwRole_78;
+            package_2[21] = 0x1D110002;
+            package_2[22] = 0x4132B61B;
+            package_2[23] = 0x75A80E9A;
+            package_2[24] = 0xE9911DE2;
+            package_2[25] = 0x00A3EE97;
+            package_2[26] = 0x48AE0000;
+            package_2[27] = 0x00010BED;
+            CRole::SendPackage((DWORD)&package_2[0]);
+
+            // 發第三個包
+            int nAllId;
+            auto it = std::find_if(CRole::s_allItems.begin(), CRole::s_allItems.end(), map_finder_name("支给用冷饮"));
+            nAllId = (*it).second.nOID;
+
+            DWORD package_3[11 + 10];
+            RtlZeroMemory(package_3, sizeof(package_3));
+            package_3[0] = 0x00000B01;
+            package_3[5] = nAllId;
+            package_3[6] = 0x00000001;
+            package_3[7] = 0x00000003;
+            package_3[8] = 0x73554C50;
+            package_3[9] = 0x65744965;
+            package_3[10] = 0x0000006D;
+            CRole::SendPackage((DWORD)&package_3[0]);
+
+            // 發第四個包
+            时间戳 = CBrushZones::获取时间戳();
+            DWORD package_4[26];
+            RtlZeroMemory(package_4, sizeof(package_4));
+            package_4[0] = 0x00100251;
+            package_4[1] = 0x00000074;
+            package_4[4] = 时间戳;
+            *(float*)&package_4[6] = role_fx;
+            *(float*)&package_4[7] = role_fy;
+            *(float*)&package_4[8] = role_fz;
+            package_4[11] = dwRole_74;
+            package_4[12] = dwRole_78;
+            package_4[21] = 0x91A50001;
+            package_4[22] = 0x7F5A4453;
+            package_4[23] = 0xF1BAEC41;
+            package_4[24] = 0x19BD17B5;
+            package_4[25] = 0x000087E0;
+            CRole::SendPackage((DWORD)&package_4[0]);
+        }
+
+        if ((*p).strName == "支给用解毒药") {
+            DWORD package_1[7 + 10];
+            RtlZeroMemory(package_1, sizeof(package_1));
+            package_1[0] = 0x0000300D;
+            package_1[4] = (*p).nID_1;
+            package_1[5] = (*p).nID_2;
+            package_1[6] = (*p).nIndex * 0x100;
+            CRole::SendPackage((DWORD)&package_1[0]);
+
+            // 獲取一些必備參數
+            DWORD dwRole_74, dwRole_78;
+            int nAddr = CRole::GetRoleAddr();
+            martin->ReadPtrData(nAddr + 0x74, TEXT("当前人物 + 0x74"), dwRole_74);
+            martin->ReadPtrData(nAddr + 0x78, TEXT("当前人物 + 0x78"), dwRole_78);
+
+            float role_fx = 0.0f;
+            float role_fy = 0.0f;
+            float role_fz = 0.0f;
+            martin->ReadPtrData(nAddr + OFFSET_COOR, TEXT("获取 [当前人物 x 坐标]"), role_fx);
+            martin->ReadPtrData(nAddr + OFFSET_COOR + 0x4, TEXT("获取 [当前人物 y 坐标]"), role_fy);
+            martin->ReadPtrData(nAddr + OFFSET_COOR + 0x8, TEXT("获取 [当前人物 z 坐标]"), role_fz);
+
+            DWORD 时间戳 = CBrushZones::获取时间戳();
+
+            // 發第二個包
+            DWORD package_2[28 + 10];
+            RtlZeroMemory(package_2, sizeof(package_2));
+            package_2[0] = 0x00000251;
+            package_2[4] = 时间戳;
+            *(float*)&package_2[6] = role_fx;
+            *(float*)&package_2[7] = role_fy;
+            *(float*)&package_2[8] = role_fz;
+            package_2[11] = dwRole_74;
+            package_2[12] = dwRole_78;
+            package_2[21] = 0x7A720002;
+            package_2[22] = 0xA13C86D0;
+            package_2[23] = 0xECB9B7E8;
+            package_2[24] = 0x6D3684D8;
+            package_2[25] = 0x01666F7E;
+            package_2[26] = 0x48AF0000;
+            package_2[27] = 0x00010BED;
+            CRole::SendPackage((DWORD)&package_2[0]);
+
+            // 發第三個包
+            int nAllId;
+            auto it = std::find_if(CRole::s_allItems.begin(), CRole::s_allItems.end(), map_finder_name("支给用解毒药"));
+            nAllId = (*it).second.nOID;
+
+            DWORD package_3[11 + 10];
+            RtlZeroMemory(package_3, sizeof(package_3));
+            package_3[0] = 0x00000B01;
+            package_3[5] = nAllId;
+            package_3[6] = 0x00000001;
+            package_3[7] = 0x00000003;
+            package_3[8] = 0x73554C50;
+            package_3[9] = 0x65744965;
+            package_3[10] = 0x0000006D;
+            CRole::SendPackage((DWORD)&package_3[0]);
+
+            // 發第四個包
+            时间戳 = CBrushZones::获取时间戳();
+            DWORD package_4[26];
+            RtlZeroMemory(package_4, sizeof(package_4));
+            package_4[0] = 0x00100251;
+            package_4[1] = 0x00000074;
+            package_4[4] = 时间戳;
+            *(float*)&package_4[6] = role_fx;
+            *(float*)&package_4[7] = role_fy;
+            *(float*)&package_4[8] = role_fz;
+            package_4[11] = dwRole_74;
+            package_4[12] = dwRole_78;
+            package_4[21] = 0x91A50001;
+            package_4[22] = 0x7F5A4453;
+            package_4[23] = 0xF1BAEC41;
+            package_4[24] = 0x19BD17B5;
+            package_4[25] = 0x000087E0;
+            CRole::SendPackage((DWORD)&package_4[0]);
+        }
+    }
+}
+
+void On_WearEquipment(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    std::string strEquipment = *(std::string*)wParam;
+    std::string strPlace = *(std::string*)lParam;
+    // 0:武器，1：头部，2：手腕，3：胸部，4：腰部，5：脚部
+    int nPlace = 0;
+    if (strPlace == "武器") {
+        nPlace = 0;
+    } else if (strPlace == "头部") {
+        nPlace = 1;
+    } else if (strPlace == "手腕") {
+        nPlace = 2;
+    } else if (strPlace == "胸部") {
+        nPlace = 3;
+    } else if (strPlace == "腰部") {
+        nPlace = 4;
+    } else if (strPlace == "脚部") {
+        nPlace = 5;
+    } else {
+        martin->Debug("装备类别传入错误");
+        return;
+    }
+
+    CEquipment equipment;
+    equipment.initEquipmentInfo();
+    std::list<BagItem> equipment_list = equipment.GetEquipmentInfo();
+
+    BOOL bEquipment = FALSE; // 表示身上是否有装备
+    for (auto p = equipment_list.begin(); p != equipment_list.end(); ++p) {
+        if ((*p).strPlace == strPlace) {
+            bEquipment = TRUE;
+            break;
+        }
+    }
+
+    DWORD OSIITE = OFFSET_SWAP_INVENTORY_ITEM - 0x4;
+    if (bEquipment) {
+        OSIITE = OFFSET_SWAP_INVENTORY_ITEM;
+    }
+
+    CBag bag;
+    bag.initBagInfo();
+    std::list<BagItem> bagItem_list = bag.GetBagInfo();
+
+    int nIndex;
+    BOOL bSendPackage = FALSE;
+    for (auto p = bagItem_list.begin(); p != bagItem_list.end(); ++p) {
+        if ((*p).strName == strEquipment) {
+            nIndex = (*p).nIndex;
+            bSendPackage = TRUE;
+            break;
+        }
+    }
+
+    if (bSendPackage) {
+        int nRoleAddr = CRole::GetRoleAddr();
+        try {
+            _asm {
+                pushad;
+                pushfd;
+
+                mov edi, nRoleAddr;
+                add edi, OFFSET_SEND_PACKET_ECX_1;
+                mov ecx, [edi];
+                mov edx, [ecx];
+                add edx, OSIITE;
+                mov edx, [edx];
+                mov eax, nPlace; //装备类别（0:武器，1：头部，2：手腕，3：胸部，4：腰部，5：脚部）
+                push eax;
+                mov eax, 0x3;  //固定值
+                push eax;
+                mov eax, nIndex;
+                push eax;
+                mov eax, 0x0; //固定值
+                push eax;
+                call edx;
+
+                popfd;
+                popad;
+            }
+        } catch (...) {
+            martin->Debug("On_WearEquipment --> 异常");
+        }
+    }
+}
+
+void On_GetRoleLevel(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    *(PINT)wParam = CRole::GetRoleLevel();
+}
+
+void On_PrecisionCompleteQuest(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    pQuestInfo questInfo = (pQuestInfo)wParam;
+    pPOINT_TARGET pointTarget = (pPOINT_TARGET)lParam;
+
+    quest.initUnCompleteQuest();
+    for (auto& v : quest.m_unComplete_quest) {
+        if (v.strQuestType == "主线" && questInfo->strQuestName == v.strQuestName) {
+            if (v.strQuestStatus == "完成") {
+                // 交任务
+                // 1. 打开 NPC
+                nearObj.initNear();
+                for (auto& w : nearObj.m_near_object) {
+                    if (w.strNpcName == questInfo->strNpcName) { // 找到 NPC
+                        // 比对 npc 坐标
+                        if (martin->Compare_Coord(pointTarget->fPontX, pointTarget->fPontY, w.fNpcPointX, w.fNpcPointY) < 5) {
+                            nearObj.Interactive(w.nNpcID);
+                            Sleep(50);
+                            break;
+                        } // 与目标坐标距离小于 5 则表示找到该 npc 
+                    }
+                }
+                // 2. 交任务
+                quest.CompleteQuest(v.nQuestID);
+            }
+            break;
+        }
+    }
+}
+
+void On_FirstAttackTrun(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    int nAttackAutoDir, nAttackAutoDirTemp;
+    if (martin->ReadPtrData(BASE_SETTINGS, "获取 【第一击方向】-- 1", nAttackAutoDirTemp)) {
+        if (martin->ReadPtrData(nAttackAutoDirTemp + OFFSET_SETTINGS_ATTACK_AUTO_DIR, "获取 【第一击方向】-- 2", nAttackAutoDir)) {
+            if (nAttackAutoDir != 1) {
+                *(PINT)(nAttackAutoDirTemp + OFFSET_SETTINGS_ATTACK_AUTO_DIR) = 1;
+            }
         }
     }
 }

@@ -1517,3 +1517,46 @@ int CRole::GetRoleLevel() {
     int nRoleAddr = GetRoleAddr();
     return Decode(nRoleAddr + OFFSET_ROLE_LEVEL);
 }
+
+int CRole::GetExpLimit() {
+    int nRet = 0;
+    int nRoleAddr = GetRoleAddr();
+    try {
+    	_asm {
+    		pushad;
+    		pushfd;
+    		
+            mov ecx, nRoleAddr;	//当前人物指针
+            add ecx, OFFSET_EXP_LIMIT;		//OFFSET_EXP_LIMIT
+            mov eax, CALL_VALUE_DECRYPT2;	//CALL_VALUE_DECRYPT2
+            call eax;
+            mov nRet, eax;
+
+    		
+    		popfd;
+    		popad;
+    	}
+    } catch (...) {
+    	martin->Debug("GetExpLimit --> 异常");
+    }
+    return nRet;
+}
+
+void CRole::SetAccompanyingCat() {
+    DWORD dwPackage[100];
+    RtlZeroMemory(&dwPackage, sizeof(dwPackage));
+    dwPackage[0] = 0x00001712;
+    dwPackage[5] = 0x1;
+    dwPackage[6] = 0x1;
+    SendPackage((DWORD)&dwPackage);
+}
+
+void CRole::装备村丁斗气锤() {
+    DWORD dwPackage[100];
+    RtlZeroMemory(&dwPackage, sizeof(dwPackage));
+    dwPackage[0] = 0x00001721;
+    dwPackage[5] = 0x1;
+    dwPackage[6] = 0xFFFFFFFF;
+    dwPackage[8] = 0xA;
+    SendPackage((DWORD)&dwPackage);
+}

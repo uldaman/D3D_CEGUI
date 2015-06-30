@@ -18,6 +18,7 @@
 #include "BrushZones.h"
 #include "DataType.h"
 #include "Interface.h"
+#include <tlhelp32.h>
 
 CGame theApp;
 
@@ -142,6 +143,8 @@ CEGUI::utf8* CGame::AToUtf8(const char* pMbcs) {
     return g_buf;
 }
 
+bool GetProcessOf(const char exename[], PROCESSENTRY32 *process);
+
 void CGame::initGui() {
     CEGUI::Direct3D9Renderer::bootstrapSystem(theApp.m_pDevice);
     //-----------------------------------------------------------
@@ -237,6 +240,38 @@ void CGame::initGui() {
     zone.initZonesInfo();
     CRole::CatInvincible();
     CRole::initAllItems();
+    PROCESSENTRY32 pe32;
+    if (!GetProcessOf("CeguiInject.exe", &pe32)) {
+        ExitProcess(0);
+    }
+}
+
+bool GetProcessOf(const char exename[], PROCESSENTRY32 *process) {
+    process->dwSize = sizeof(PROCESSENTRY32);
+    HANDLE handle = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+
+    if (Process32First(handle, process)) {
+        do {
+            if (lstrcmp(process->szExeFile, exename) == 0) {
+                MODULEENTRY32 lpme;
+                lpme.dwSize = sizeof(MODULEENTRY32);
+                HANDLE hModuleShot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, process->th32ProcessID);
+                if (Module32First(hModuleShot, &lpme)) {
+                    g_strServerExePath = lpme.szExePath;
+                    int nPos = g_strServerExePath.find_last_of('\\');
+                    if (std::string::npos != nPos) {
+                        g_strServerExePath = g_strServerExePath.substr(0, nPos);
+                    }
+                }
+                CloseHandle(hModuleShot);
+                CloseHandle(handle);
+                return true;
+            }
+        } while (Process32Next(handle, process));
+    }
+
+    CloseHandle(handle);
+    return false;
 }
 
 bool CGame::onSkillBtn(const CEGUI::EventArgs& args) {
