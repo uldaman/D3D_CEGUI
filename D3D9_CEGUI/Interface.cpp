@@ -1065,7 +1065,6 @@ void On_EatMedicine(HWND hDlg, WPARAM wParam, LPARAM lParam) {
             package_4[24] = 0x19BD17B5;
             package_4[25] = 0x000087E0;
             CRole::SendPackage((DWORD)&package_4[0]);
-
             return;
         }
     }
@@ -1149,7 +1148,6 @@ void On_EatMedicine(HWND hDlg, WPARAM wParam, LPARAM lParam) {
             package_4[24] = 0x19BD17B5;
             package_4[25] = 0x000087E0;
             CRole::SendPackage((DWORD)&package_4[0]);
-
             return;
         }
     }
@@ -1173,9 +1171,181 @@ void On_装备斗气锤(HWND hDlg, WPARAM wParam, LPARAM lParam) {
     CRole::装备村丁斗气锤();
 }
 
-void On_TakeMedicine(HWND hDlg, WPARAM wParam, LPARAM lParam) {
-    On_EatMedicine(hDlg, wParam, lParam);
+void Detoxication() {
+    CBag bag;
+    bag.initBagInfo();
+    std::list<BagItem> bagItem_list = bag.GetBagInfo();
 
+    for (auto p = bagItem_list.begin(); p != bagItem_list.end(); ++p) {
+        if ((*p).strName == "支给用解毒药") {
+            DWORD package_1[7 + 10];
+            RtlZeroMemory(package_1, sizeof(package_1));
+            package_1[0] = 0x0000300D;
+            package_1[4] = (*p).nID_1;
+            package_1[5] = (*p).nID_2;
+            package_1[6] = (*p).nIndex * 0x100;
+            CRole::SendPackage((DWORD)&package_1[0]);
+
+            // 獲取一些必備參數
+            DWORD dwRole_74, dwRole_78;
+            int nAddr = CRole::GetRoleAddr();
+            martin->ReadPtrData(nAddr + 0x74, TEXT("当前人物 + 0x74"), dwRole_74);
+            martin->ReadPtrData(nAddr + 0x78, TEXT("当前人物 + 0x78"), dwRole_78);
+
+            float role_fx = 0.0f;
+            float role_fy = 0.0f;
+            float role_fz = 0.0f;
+            martin->ReadPtrData(nAddr + OFFSET_COOR, TEXT("获取 [当前人物 x 坐标]"), role_fx);
+            martin->ReadPtrData(nAddr + OFFSET_COOR + 0x4, TEXT("获取 [当前人物 y 坐标]"), role_fy);
+            martin->ReadPtrData(nAddr + OFFSET_COOR + 0x8, TEXT("获取 [当前人物 z 坐标]"), role_fz);
+
+            DWORD 时间戳 = CBrushZones::获取时间戳();
+
+            // 發第二個包
+            DWORD package_2[28 + 10];
+            RtlZeroMemory(package_2, sizeof(package_2));
+            package_2[0] = 0x00000251;
+            package_2[4] = 时间戳;
+            *(float*)&package_2[6] = role_fx;
+            *(float*)&package_2[7] = role_fy;
+            *(float*)&package_2[8] = role_fz;
+            package_2[11] = dwRole_74;
+            package_2[12] = dwRole_78;
+            package_2[21] = 0x7A720002;
+            package_2[22] = 0xA13C86D0;
+            package_2[23] = 0xECB9B7E8;
+            package_2[24] = 0x6D3684D8;
+            package_2[25] = 0x01666F7E;
+            package_2[26] = 0x48AF0000;
+            package_2[27] = 0x00010BED;
+            CRole::SendPackage((DWORD)&package_2[0]);
+
+            // 發第三個包
+            int nAllId;
+            auto it = std::find_if(CRole::s_allItems.begin(), CRole::s_allItems.end(), map_finder_name("支给用解毒药"));
+            nAllId = (*it).second.nOID;
+
+            DWORD package_3[11 + 10];
+            RtlZeroMemory(package_3, sizeof(package_3));
+            package_3[0] = 0x00000B01;
+            package_3[5] = nAllId;
+            package_3[6] = 0x00000001;
+            package_3[7] = 0x00000003;
+            package_3[8] = 0x73554C50;
+            package_3[9] = 0x65744965;
+            package_3[10] = 0x0000006D;
+            CRole::SendPackage((DWORD)&package_3[0]);
+
+            // 發第四個包
+            时间戳 = CBrushZones::获取时间戳();
+            DWORD package_4[26];
+            RtlZeroMemory(package_4, sizeof(package_4));
+            package_4[0] = 0x00100251;
+            package_4[1] = 0x00000074;
+            package_4[4] = 时间戳;
+            *(float*)&package_4[6] = role_fx;
+            *(float*)&package_4[7] = role_fy;
+            *(float*)&package_4[8] = role_fz;
+            package_4[11] = dwRole_74;
+            package_4[12] = dwRole_78;
+            package_4[21] = 0x91A50001;
+            package_4[22] = 0x7F5A4453;
+            package_4[23] = 0xF1BAEC41;
+            package_4[24] = 0x19BD17B5;
+            package_4[25] = 0x000087E0;
+            CRole::SendPackage((DWORD)&package_4[0]);
+            return;
+        }
+    }
+
+    for (auto p = bagItem_list.begin(); p != bagItem_list.end(); ++p) {
+        if ((*p).strName == "解毒药") {
+            DWORD package_1[7 + 10];
+            RtlZeroMemory(package_1, sizeof(package_1));
+            package_1[0] = 0x0000300D;
+            package_1[4] = (*p).nID_1;
+            package_1[5] = (*p).nID_2;
+            package_1[6] = (*p).nIndex * 0x100;
+            CRole::SendPackage((DWORD)&package_1[0]);
+
+            // 獲取一些必備參數
+            DWORD dwRole_74, dwRole_78;
+            int nAddr = CRole::GetRoleAddr();
+            martin->ReadPtrData(nAddr + 0x74, TEXT("当前人物 + 0x74"), dwRole_74);
+            martin->ReadPtrData(nAddr + 0x78, TEXT("当前人物 + 0x78"), dwRole_78);
+
+            float role_fx = 0.0f;
+            float role_fy = 0.0f;
+            float role_fz = 0.0f;
+            martin->ReadPtrData(nAddr + OFFSET_COOR, TEXT("获取 [当前人物 x 坐标]"), role_fx);
+            martin->ReadPtrData(nAddr + OFFSET_COOR + 0x4, TEXT("获取 [当前人物 y 坐标]"), role_fy);
+            martin->ReadPtrData(nAddr + OFFSET_COOR + 0x8, TEXT("获取 [当前人物 z 坐标]"), role_fz);
+
+            DWORD 时间戳 = CBrushZones::获取时间戳();
+
+            // 發第二個包
+            DWORD package_2[28 + 10];
+            RtlZeroMemory(package_2, sizeof(package_2));
+            package_2[0] = 0x00000251;
+            package_2[4] = 时间戳;
+            *(float*)&package_2[6] = role_fx;
+            *(float*)&package_2[7] = role_fy;
+            *(float*)&package_2[8] = role_fz;
+            package_2[11] = dwRole_74;
+            package_2[12] = dwRole_78;
+            package_2[21] = 0x7A720002;
+            package_2[22] = 0xA13C86D0;
+            package_2[23] = 0xECB9B7E8;
+            package_2[24] = 0x6D3684D8;
+            package_2[25] = 0x01666F7E;
+            package_2[26] = 0x48AF0000;
+            package_2[27] = 0x00010BED;
+            CRole::SendPackage((DWORD)&package_2[0]);
+
+            // 發第三個包
+            int nAllId;
+            auto it = std::find_if(CRole::s_allItems.begin(), CRole::s_allItems.end(), map_finder_name("解毒药"));
+            nAllId = (*it).second.nOID;
+
+            DWORD package_3[11 + 10];
+            RtlZeroMemory(package_3, sizeof(package_3));
+            package_3[0] = 0x00000B01;
+            package_3[5] = nAllId;
+            package_3[6] = 0x00000001;
+            package_3[7] = 0x00000003;
+            package_3[8] = 0x73554C50;
+            package_3[9] = 0x65744965;
+            package_3[10] = 0x0000006D;
+            CRole::SendPackage((DWORD)&package_3[0]);
+
+            // 發第四個包
+            时间戳 = CBrushZones::获取时间戳();
+            DWORD package_4[26];
+            RtlZeroMemory(package_4, sizeof(package_4));
+            package_4[0] = 0x00100251;
+            package_4[1] = 0x00000074;
+            package_4[4] = 时间戳;
+            *(float*)&package_4[6] = role_fx;
+            *(float*)&package_4[7] = role_fy;
+            *(float*)&package_4[8] = role_fz;
+            package_4[11] = dwRole_74;
+            package_4[12] = dwRole_78;
+            package_4[21] = 0x91A50001;
+            package_4[22] = 0x7F5A4453;
+            package_4[23] = 0xF1BAEC41;
+            package_4[24] = 0x19BD17B5;
+            package_4[25] = 0x000087E0;
+            CRole::SendPackage((DWORD)&package_4[0]);
+            return;
+        }
+    }
+}
+
+void On_TakeMedicine(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    On_EatMedicine(hDlg, wParam, lParam); // 回复药
+    Detoxication(); // 解毒
+
+    // 下面是冷饮
     CBag bag;
     bag.initBagInfo();
     std::list<BagItem> bagItem_list = bag.GetBagInfo();
@@ -1258,9 +1428,12 @@ void On_TakeMedicine(HWND hDlg, WPARAM wParam, LPARAM lParam) {
             package_4[24] = 0x19BD17B5;
             package_4[25] = 0x000087E0;
             CRole::SendPackage((DWORD)&package_4[0]);
+            return;
         }
+    }
 
-        if ((*p).strName == "支给用解毒药") {
+    for (auto p = bagItem_list.begin(); p != bagItem_list.end(); ++p) {
+        if ((*p).strName == "冷饮") {
             DWORD package_1[7 + 10];
             RtlZeroMemory(package_1, sizeof(package_1));
             package_1[0] = 0x0000300D;
@@ -1298,14 +1471,14 @@ void On_TakeMedicine(HWND hDlg, WPARAM wParam, LPARAM lParam) {
             package_2[22] = 0xA13C86D0;
             package_2[23] = 0xECB9B7E8;
             package_2[24] = 0x6D3684D8;
-            package_2[25] = 0x01666F7E;
-            package_2[26] = 0x48AF0000;
+            package_2[25] = 0x00A26F7E;
+            package_2[26] = 0x48AA0000;
             package_2[27] = 0x00010BED;
             CRole::SendPackage((DWORD)&package_2[0]);
 
             // 發第三個包
             int nAllId;
-            auto it = std::find_if(CRole::s_allItems.begin(), CRole::s_allItems.end(), map_finder_name("支给用解毒药"));
+            auto it = std::find_if(CRole::s_allItems.begin(), CRole::s_allItems.end(), map_finder_name("冷饮"));
             nAllId = (*it).second.nOID;
 
             DWORD package_3[11 + 10];
@@ -1337,6 +1510,7 @@ void On_TakeMedicine(HWND hDlg, WPARAM wParam, LPARAM lParam) {
             package_4[24] = 0x19BD17B5;
             package_4[25] = 0x000087E0;
             CRole::SendPackage((DWORD)&package_4[0]);
+            return;
         }
     }
 }

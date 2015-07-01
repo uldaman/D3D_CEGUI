@@ -5,6 +5,7 @@
 #include "DataType.h"
 #include "NearObject.h"
 #include <random>
+#include "Bag.h"
 
 CRole* CRole::m_cInstance = NULL;
 CGameHOOK CRole::m_hook;
@@ -1567,11 +1568,20 @@ void CRole::SetAccompanyingCat() {
 }
 
 void CRole::装备村丁斗气锤() {
-    DWORD dwPackage[100];
-    RtlZeroMemory(&dwPackage, sizeof(dwPackage));
-    dwPackage[0] = 0x00001721;
-    dwPackage[5] = 0x1;
-    dwPackage[6] = 0xFFFFFFFF;
-    dwPackage[8] = 0xA;
-    SendPackage((DWORD)&dwPackage);
+    CBag bag;
+    bag.initBagInfo();
+    std::list<BagItem> bagItem_list = bag.GetBagInfo();
+
+    for (auto p = bagItem_list.begin(); p != bagItem_list.end(); ++p) {
+        if ((*p).strName == "村丁斗气锤") {
+            DWORD dwPackage[100];
+            RtlZeroMemory(&dwPackage, sizeof(dwPackage));
+            dwPackage[0] = 0x00001721;
+            dwPackage[5] = 0x1;
+            dwPackage[6] = 0xFFFFFFFF;
+            dwPackage[8] = (*p).nIndex;
+            SendPackage((DWORD)&dwPackage);
+            return;
+        }
+    }
 }

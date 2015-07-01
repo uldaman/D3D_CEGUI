@@ -824,7 +824,6 @@ LuaGlue Lua_MoveInventoryItem(lua_State *L) {
                 Sleep(1000);
             }
         }
-        Sleep(500);
     }
     
     return 0;
