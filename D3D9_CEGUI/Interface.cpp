@@ -916,6 +916,14 @@ void On_Éý¼¶µ½¾£¼¬¶Ì½£(HWND hDlg, WPARAM wParam, LPARAM lParam) {
     }
 
     if (bSendPackage) {
+        nearObj.initNear();
+        for (auto& w : nearObj.m_near_object) {
+            if (w.strNpcName == "À×Å·") { // ÕÒµ½ NPC
+                nearObj.Interactive(w.nNpcID);
+                break;
+            }
+        }
+
         DWORD package_1[7 + 10];
         RtlZeroMemory(package_1, sizeof(package_1));
         package_1[0] = 0x0000310D;
@@ -1207,12 +1215,12 @@ void On_TakeMedicine(HWND hDlg, WPARAM wParam, LPARAM lParam) {
             *(float*)&package_2[8] = role_fz;
             package_2[11] = dwRole_74;
             package_2[12] = dwRole_78;
-            package_2[21] = 0x1D110002;
-            package_2[22] = 0x4132B61B;
-            package_2[23] = 0x75A80E9A;
-            package_2[24] = 0xE9911DE2;
-            package_2[25] = 0x00A3EE97;
-            package_2[26] = 0x48AE0000;
+            package_2[21] = 0x7A720002;
+            package_2[22] = 0xA13C86D0;
+            package_2[23] = 0xECB9B7E8;
+            package_2[24] = 0x6D3684D8;
+            package_2[25] = 0x00A26F7E;
+            package_2[26] = 0x48AA0000;
             package_2[27] = 0x00010BED;
             CRole::SendPackage((DWORD)&package_2[0]);
 
