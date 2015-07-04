@@ -65,6 +65,18 @@
     <ClCompile Include="My_Ini.cpp">
       <Filter>INI</Filter>
     </ClCompile>
+    <ClCompile Include="cqvip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cqvip.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cqvip.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ksreglib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ceguiinject.h">
@@ -75,6 +87,12 @@
     </CustomBuild>
     <CustomBuild Include="ceguiinject.qrc">
       <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="cqvip.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="cqvip.ui">
+      <Filter>Form Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +107,12 @@
     </ClInclude>
     <ClInclude Include="My_Ini.h">
       <Filter>INI</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_cqvip.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ksreglib.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

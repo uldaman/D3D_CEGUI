@@ -876,6 +876,7 @@ LuaGlue Lua_设置随行猫(lua_State *L) {
     ::SendMessage(theApp.m_hGWnd, WM_设置随行猫, NULL, NULL);
     return 0;
 }
+
 // MH_装备斗气锤
 LuaGlue Lua_装备斗气锤(lua_State *L) {
     ::SendMessage(theApp.m_hGWnd, WM_装备斗气锤, NULL, NULL);
