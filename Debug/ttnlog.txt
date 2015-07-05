@@ -7746,3 +7746,1522 @@ Hooked Direct3D9 device: 0x18b88b60 -> 0x79f7ff8
 È«²¿¼ÓÔØÍê±Ï...
 ---------------------
 
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x51807e0 -> 0x7522a20
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x51807e0 -> 0x7522e48
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x140e6260 -> 0x74e1b98
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x177b0060 -> 0x74e1c10
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x177c8b60 -> 0x74e1c88
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x51d07e0 -> 0x7768848
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x51d07e0 -> 0x7768ab0
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0xf3d6260 -> 0x7763600
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17810060 -> 0x7763678
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17828b60 -> 0x77636f0
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:0x1F25CC80 -- 0x1F25CC80
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4ef07e0 -> 0x6f41620
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4ef07e0 -> 0x6f41a80
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0xeab6260 -> 0x6f2c618
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x177a0060 -> 0x6f2c690
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x177b8b60 -> 0x6f2c708
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:0x3FB288B8 -- 0x3FB29068
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4f607e0 -> 0x71a3318
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4f607e0 -> 0x71a3580
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x12b06260 -> 0x71bede8
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17a90060 -> 0x71bee60
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17aa8b60 -> 0x71beed8
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:0x3FCE50A8 -- 0x3FCE4A40
+Debug:
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x2bc07e0 -> 0x70a4908
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x2bc07e0 -> 0x70a4d68
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x143c6260 -> 0x70aacc0
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x179a0060 -> 0x70aad38
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x179b8b60 -> 0x70aadb0
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x57307e0 -> 0x7891a78
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x57307e0 -> 0x7891ea0
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x14506260 -> 0x789f630
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17b00060 -> 0x789f6a8
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17b18b60 -> 0x789f720
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:0x3F5D5608 -- 0x3F5D59E0
+Debug:0x3F5D5608 -- 0x3F5D59E0
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x50e07e0 -> 0x6fbc230
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x50e07e0 -> 0x6fbc658
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0xee96260 -> 0x6fc3040
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x179a0060 -> 0x6fc30b8
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x179b8b60 -> 0x6fc3130
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:0x3F42FF48 -- 0x3F430320
+Debug:0x3F42FF5C
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x54307e0 -> 0x75d7438
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x54307e0 -> 0x75d7860
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x142e6260 -> 0x75d1430
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17980060 -> 0x75d14a8
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17998b60 -> 0x75d1520
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4db07e0 -> 0x76ce9f8
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4db07e0 -> 0x76cec60
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x14466260 -> 0x76e34c8
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17ab0060 -> 0x76e3540
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17ac8b60 -> 0x76e35b8
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:0x3FC0A388 -- 0x3FC0A760
+Debug:0x3FC0A39C
+Debug:0x3FC0A4E4
+Debug:0x3FC0A62C
+Debug:0x3FC0A774
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x51507e0 -> 0x75613e0
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x51507e0 -> 0x7561648
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x12dd6260 -> 0x75218c0
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17b80060 -> 0x7521938
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17b98b60 -> 0x75219b0
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:0x3F54EC90 -- 0x3F54F068
+Debug:afgadsgasd
+Debug:hgsfdg
+Debug:SDFSADF
+Debug:vcxbvcxb
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x51b07e0 -> 0x76df470
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x51b07e0 -> 0x76df6d8
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x14476260 -> 0x76fb030
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17a60060 -> 0x76fb0a8
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17a78b60 -> 0x76fb120
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:0x3FE04530 -- 0x3FE04CE0
+Debug:çš„å“‡ä¸‰å¤§ç¢—
+Debug:afgadsgasd
+Debug:hgsfdg
+Debug:SDFSADF
+Debug:vcxbvcxb
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x43707e0 -> 0x78ee228
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x43707e0 -> 0x78ee688
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x12ad6260 -> 0x7909930
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17b40060 -> 0x79099a8
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17b58b60 -> 0x7909a20
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:0x4065FAA0 -- 0x3FCEFCF0
+Debug:µÄÍÛÈý´óÍë
+Debug:afgadsgasd
+Debug:hgsfdg
+Debug:SDFSADF
+Debug:vcxbvcxb
+Debug:0x3FCEFCF0 -- 0x4FA10760
+Debug:µÄÍÛÈý´óÍë
+Debug:afgadsgasd
+Debug:hgsfdg
+Debug:SDFSADF
+Debug:vcxbvcxb
+Debug:gasdgfas
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x58c07e0 -> 0x70d62c0
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x58c07e0 -> 0x70d6758
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0xf1a6260 -> 0x7081178
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17c10060 -> 0x70811f0
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17c28b60 -> 0x7081268
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:SendPackage --> Òì³£
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4b107e0 -> 0x7227720
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4b107e0 -> 0x7227988
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0xf996260 -> 0x72088d8
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17d40060 -> 0x14b2fe18
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17d58b60 -> 0x14b2fe90
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x52907e0 -> 0x77d8420
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x52907e0 -> 0x77d8848
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x12c26260 -> 0x77a91e8
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17d40060 -> 0x77a9260
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17d58b60 -> 0x77a92d8
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:SendPackage --> Òì³£
+Debug:SendPackage --> Òì³£
+Debug:SendPackage --> Òì³£
+Debug:SendPackage --> Òì³£
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x52007e0 -> 0x7826a18
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x52007e0 -> 0x7826eb0
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0xf7d6260 -> 0x7829958
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17c90060 -> 0x78299d0
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17ca8b60 -> 0x7829a48
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4ef07e0 -> 0x755ad48
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4ef07e0 -> 0x755b1a8
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x12c26260 -> 0x7556268
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17ca0060 -> 0x75562e0
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17cb8b60 -> 0x7556358
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x50707e0 -> 0x72527a8
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x50707e0 -> 0x7252a48
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0xf336260 -> 0x7258208
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17de0060 -> 0x7258280
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17df8b60 -> 0x72582f8
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x55907e0 -> 0x72224c0
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x55907e0 -> 0x7222728
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x146e6260 -> 0x7204758
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17da0060 -> 0x72047d0
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17db8b60 -> 0x7204848
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x58107e0 -> 0x74b8488
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x58107e0 -> 0x74b8760
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x146b6260 -> 0x748ea50
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17dc0060 -> 0x748eac8
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17dd8b60 -> 0x748eb40
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x2c07e0 -> 0x75ecb10
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x2c07e0 -> 0x75ecd78
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x12d56260 -> 0x760a1a8
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17cc0060 -> 0x760a220
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17cd8b60 -> 0x760a298
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x54907e0 -> 0x7611a80
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x54907e0 -> 0x7611ce8
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x12e76260 -> 0x76226f8
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17ea0060 -> 0x7622770
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17eb8b60 -> 0x76227e8
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x50307e0 -> 0x6e89b48
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x50307e0 -> 0x6e89e20
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x12f86260 -> 0x6ea7618
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17e60060 -> 0x6ea7690
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17e78b60 -> 0x6ea7708
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x51f07e0 -> 0x75a9f60
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x51f07e0 -> 0x75aa1c8
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x12d56260 -> 0x75ab5c0
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17cc0060 -> 0x75ab638
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17cd8b60 -> 0x75ab6b0
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x3d07e0 -> 0x705f2f8
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x3d07e0 -> 0x705f560
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x14406260 -> 0x7066d58
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17ac0060 -> 0x7066dd0
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17ad8b60 -> 0x7066e48
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x2907e0 -> 0x7710080
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x2907e0 -> 0x77102e8
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x12d26260 -> 0x76cd9c0
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17b80060 -> 0x76cda38
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17b98b60 -> 0x76cdab0
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4f807e0 -> 0x7062540
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4f807e0 -> 0x70627a8
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0xee06260 -> 0x706b818
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17a70060 -> 0x706b890
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17a88b60 -> 0x706b908
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x50707e0 -> 0x75fa258
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x50707e0 -> 0x75fa530
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x141b6260 -> 0x7618038
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x178e0060 -> 0x76180b0
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x178f8b60 -> 0x7618128
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x51207e0 -> 0x6f27ac8
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x51207e0 -> 0x6f27da0
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x13ff6260 -> 0x6f3b4e0
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x179d0060 -> 0x6f3b558
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x179e8b60 -> 0x6f3b5d0
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x53707e0 -> 0x779a970
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x53707e0 -> 0x779abd8
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x12d56260 -> 0x77a3170
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17cb0060 -> 0x77a31e8
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17cc8b60 -> 0x77a3260
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+Debug:11111111
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x56607e0 -> 0x706ef20
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x56607e0 -> 0x706f1f8
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0xed56260 -> 0x702bfb0
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17a50060 -> 0x702c028
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17a68b60 -> 0x702c0a0
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:0x1FCB5A10
+Debug:0x1FCB5A10
+Debug:0x1FCB5A10
+Debug:0x1FCB5A10
+Debug:0x1FCB5A10
+Debug:0x1FCB5A10
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x2b907e0 -> 0x72ab0a8
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x2b907e0 -> 0x72ab310
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0xef16260 -> 0x72c85d8
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17a10060 -> 0x72c8650
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17a28b60 -> 0x72c86c8
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x1FB25EC0
+Debug:0x3FF6BDE8
+Debug:0x3FF6BDE8
+Debug:0x3FF6BDE8
+Debug:0x3FF6BDE8
+Debug:0x3FF6BDE8
+Debug:0x3FF6BDE8
+Debug:0x3FF6BDE8
+Debug:0x3FF6BDE8
+Debug:0x3FF6BDE8
+Debug:0x3FF6BDE8
+Debug:0x3FF6BDE8
+Debug:0x3FF6BDE8
+Debug:0x3FF6BDE8
+Debug:0x3FF6BDE8
+Debug:0x3FF6BDE8
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4b007e0 -> 0x6e962a0
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4b007e0 -> 0x6e96508
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0xeed6260 -> 0x6e7bdb0
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17b10060 -> 0x6e7be28
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17b28b60 -> 0x148c0808
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x205C6270
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364638
+Debug:0x3E364F30
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x55a07e0 -> 0x78140d0
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x55a07e0 -> 0x7814338
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x12c16260 -> 0x782eb30
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17b70060 -> 0x782eba8
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17b88b60 -> 0x782ec20
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:SDFSADF
+Debug:123123123
+Debug:SDFSADF
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4ac07e0 -> 0x70d1310
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4ac07e0 -> 0x70d15e8
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0xed46260 -> 0x70b6e18
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x179a0060 -> 0x70b6e90
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x179b8b60 -> 0x70b6f08
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:SDFSADF
+Debug:SDFSADF
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4de07e0 -> 0x747f120
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4de07e0 -> 0x747f388
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0xf516260 -> 0x7487b80
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17c40060 -> 0x7487bf8
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17c58b60 -> 0x7487c70
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:SDFSADF
+Debug:SDFSADF
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x52507e0 -> 0x7471258
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x52507e0 -> 0x7471530
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0xf146260 -> 0x747ec38
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17a10060 -> 0x747ecb0
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17a28b60 -> 0x747ed28
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+Debug:SDFSADF
+Debug:SDFSADF
+Debug:SDFSADF
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4eb07e0 -> 0x72034b0
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4eb07e0 -> 0x7203718
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x12db6260 -> 0x721e000
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17c90060 -> 0x721e078
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17ca8b60 -> 0x721e0f0
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x55620A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x54d07e0 -> 0x6f3d4e0
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x54d07e0 -> 0x6f3d748
+---------------------
+
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x141c6260 -> 0x6f46c28
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17ae0060 -> 0x6f46ca0
+CreateDevice ·µ»ØÖµ 0x0
+Hooked Direct3D9 device: 0x17af8b60 -> 0x14a48a08
+ÉèÖÃÄ¬ÈÏ×ÊÔ´Â·¾¶
+ÉèÖÃÊ¹ÓÃµÄÈ±Ê¡×ÊÔ´
+¼ÓÔØ·½°¸
+
+---------------------
+È«²¿¼ÓÔØÍê±Ï...
+---------------------
+

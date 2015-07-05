@@ -950,6 +950,80 @@ LuaGlue Lua_FirstAttackTrun(lua_State *L) {
     return 0;
 }
 
+// MH_登录游戏
+LuaGlue Lua_Login(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_LOGIN, NULL, NULL);
+    return 0;
+}
+
+// MH_新建角色
+LuaGlue Lua_NewRole(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_NEW_ROLE, NULL, NULL);
+    return 0;
+}
+
+// MH_当前角色数量 // m_role_list
+LuaGlue Lua_CountsOfRoles(lua_State *L) {
+    int nRet = 0;
+    ::SendMessage(theApp.m_hGWnd, WM_COUNTS_OF_ROLES, (WPARAM)&nRet, NULL);
+    g_pClua->PushInt(nRet);
+    return 1;
+}
+
+// MH_确认频道
+LuaGlue Lua_EnterChannel(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_ENTER_CHANNEL, NULL, NULL);
+    return 0;
+}
+
+// MH_是否在线
+LuaGlue Lua_IsOnLine(lua_State *L) {
+    int nRet = 0;
+    ::SendMessage(theApp.m_hGWnd, WM_IS_ONLINE, (WPARAM)&nRet, NULL);
+    g_pClua->PushInt(nRet);
+    return 1;
+}
+
+// MH_是否过图中
+LuaGlue Lua_IsLoading(lua_State *L) {
+    int nRet = 0;
+    ::SendMessage(theApp.m_hGWnd, WM_IS_LOADING, (WPARAM)&nRet, NULL);
+    g_pClua->PushInt(nRet);
+    return 1;
+}
+
+//// MH_初始化角色列表 (m_role_list)
+//LuaGlue Lua_InitRoleList(lua_State *L) {
+//    ::SendMessage(theApp.m_hGWnd, WM_INIT_ROLE_LIST, NULL, NULL);
+//    return 0;
+//}
+
+// MH_是否在选择角色
+LuaGlue Lua_IsSelectRole(lua_State *L) {
+    int nRet = 0;
+    ::SendMessage(theApp.m_hGWnd, WM_IS_SELECT, (WPARAM)&nRet, NULL);
+    g_pClua->PushInt(nRet);
+    return 1;
+}
+
+// MH_领取成长武器兑换券
+LuaGlue Lua_领取成长武器兑换券(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_领取成长武器兑换券, NULL, NULL);
+    return 0;
+}
+
+// MH_兑换初心之剑
+LuaGlue Lua_兑换初心之剑(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_兑换初心之剑, NULL, NULL);
+    return 0;
+}
+
+// MH_兑换进阶之剑
+LuaGlue Lua_兑换进阶之剑(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_兑换进阶之剑, NULL, NULL);
+    return 0;
+}
+
 luaL_reg ConsoleGlue[] = {
         { "RegisterEvent", _RegisterEvent },
         { "MH_调试", Lua_Trac },
@@ -1030,6 +1104,17 @@ luaL_reg ConsoleGlue[] = {
         { "MH_精准接任务", Lua_PrecisionAcceptQuest },
         { "MH_精准交任务", Lua_PrecisionCompleteQuest },
         { "MH_开启第一击面向", Lua_FirstAttackTrun },
+        { "MH_登录游戏", Lua_Login },
+        { "MH_新建角色", Lua_NewRole },
+        { "MH_当前角色数量", Lua_CountsOfRoles },
+        { "MH_确认频道", Lua_EnterChannel },
+        { "MH_是否在线", Lua_IsOnLine },
+        { "MH_是否过图中", Lua_IsLoading },
+        { "MH_是否在选择角色", Lua_IsSelectRole },
+        { "MH_领取成长武器兑换券", Lua_领取成长武器兑换券 },
+        { "MH_兑换初心之剑", Lua_兑换初心之剑 },
+        { "MH_兑换进阶之剑", Lua_兑换进阶之剑 },
+        //{ "MH_初始化角色列表", Lua_InitRoleList },
         { nullptr, NULL },
 };
 

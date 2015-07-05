@@ -105,6 +105,12 @@
     <ClCompile Include="My_Ini.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="CLogin.cpp">
+      <Filter>怪物猎人</Filter>
+    </ClCompile>
+    <ClCompile Include="StrConvert.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Martin.h">
@@ -183,6 +189,12 @@
       <Filter>怪物猎人</Filter>
     </ClInclude>
     <ClInclude Include="My_Ini.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CLogin.h">
+      <Filter>怪物猎人</Filter>
+    </ClInclude>
+    <ClInclude Include="StrConvert.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>

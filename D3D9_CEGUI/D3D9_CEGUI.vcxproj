@@ -89,6 +89,7 @@
   <ItemGroup>
     <ClCompile Include="Bag.cpp" />
     <ClCompile Include="BrushZones.cpp" />
+    <ClCompile Include="CLogin.cpp" />
     <ClCompile Include="d3d9.cpp" />
     <ClCompile Include="d3d9dev.cpp" />
     <ClCompile Include="d3d9int.cpp" />
@@ -107,6 +108,7 @@
     <ClCompile Include="NearObject.cpp" />
     <ClCompile Include="Quest.cpp" />
     <ClCompile Include="Role.cpp" />
+    <ClCompile Include="StrConvert.cpp" />
     <ClCompile Include="Supply.cpp" />
     <ClCompile Include="Warehouse.cpp" />
   </ItemGroup>
@@ -114,6 +116,7 @@
     <ClInclude Include="Bag.h" />
     <ClInclude Include="Base.h" />
     <ClInclude Include="BrushZones.h" />
+    <ClInclude Include="CLogin.h" />
     <ClInclude Include="CLua.h" />
     <ClInclude Include="d3d9.h" />
     <ClInclude Include="d3d9dev.h" />
@@ -135,6 +138,7 @@
     <ClInclude Include="NearObject.h" />
     <ClInclude Include="Quest.h" />
     <ClInclude Include="Role.h" />
+    <ClInclude Include="StrConvert.h" />
     <ClInclude Include="Supply.h" />
     <ClInclude Include="Warehouse.h" />
   </ItemGroup>

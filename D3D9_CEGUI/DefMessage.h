@@ -78,3 +78,14 @@
 #define WM_GET_ROLE_LEVEL               WM_USER + 2376  // 获取人物等级
 #define WM_PRECISION_COMPLETE_QUEST     WM_USER + 2377  // 精准交任务, 通过比对 NPC 的坐标
 #define WM_FIRST_ATTACK_TRUN            WM_USER + 2378  // 开启第一击面向
+#define WM_LOGIN                        WM_USER + 2379  // 登录游戏
+#define WM_NEW_ROLE                     WM_USER + 2380  // 新建角色
+#define WM_COUNTS_OF_ROLES              WM_USER + 2381  // 当前角色数量
+#define WM_ENTER_CHANNEL                WM_USER + 2382  // 确认频道
+#define WM_IS_ONLINE                    WM_USER + 2383  // 是否在线
+#define WM_IS_LOADING                   WM_USER + 2384  // 是否过图
+//#define WM_INIT_ROLE_LIST               WM_USER + 2385  // 初始化角色列表
+#define WM_IS_SELECT                    WM_USER + 2386  // 是否在选择角色
+#define WM_领取成长武器兑换券           WM_USER + 2387  // 领取成长武器兑换券
+#define WM_兑换初心之剑                 WM_USER + 2388  // 兑换初心之剑
+#define WM_兑换进阶之剑                 WM_USER + 2389  // 兑换进阶之剑

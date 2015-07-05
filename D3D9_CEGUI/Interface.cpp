@@ -16,6 +16,7 @@
 #include "Manor.h"
 #include "My_Ini.h"
 #include "GlobalVariable.h"
+#include "Clogin.h"
 
 #define COMMAND_MSG(hwnd, uMsg, wParam, lParam, fn) \
     case (uMsg): return (void)(fn)((hwnd), (wParam), (lParam))
@@ -105,6 +106,17 @@ void MesageMapping(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
         COMMAND_MSG(hDlg, WM_GET_ROLE_LEVEL, wParam, lParam, On_GetRoleLevel); // 获取人物等级
         COMMAND_MSG(hDlg, WM_PRECISION_COMPLETE_QUEST, wParam, lParam, On_PrecisionCompleteQuest); // 精准交任务, 通过比对 NPC 的坐标
         COMMAND_MSG(hDlg, WM_FIRST_ATTACK_TRUN, wParam, lParam, On_FirstAttackTrun); // 开启第一击面向
+        COMMAND_MSG(hDlg, WM_LOGIN, wParam, lParam, On_Login); // 登录游戏
+        COMMAND_MSG(hDlg, WM_NEW_ROLE, wParam, lParam, On_NewRole); // 新建角色
+        COMMAND_MSG(hDlg, WM_COUNTS_OF_ROLES, wParam, lParam, On_CountsOfRoles); // 角色数量
+        COMMAND_MSG(hDlg, WM_ENTER_CHANNEL, wParam, lParam, On_EnterChannel); // 确认频道
+        COMMAND_MSG(hDlg, WM_IS_ONLINE, wParam, lParam, On_IsOnLine); // 是否在线
+        COMMAND_MSG(hDlg, WM_IS_LOADING, wParam, lParam, On_IsLoading); // 是否过图
+        //COMMAND_MSG(hDlg, WM_INIT_ROLE_LIST, wParam, lParam, On_InitRoleList); // 初始化角色列表
+        COMMAND_MSG(hDlg, WM_IS_SELECT, wParam, lParam, On_IsSelect); // 是否在选择角色
+        COMMAND_MSG(hDlg, WM_领取成长武器兑换券, wParam, lParam, On_领取成长武器兑换券); // 领取成长武器兑换券
+        COMMAND_MSG(hDlg, WM_兑换初心之剑, wParam, lParam, On_兑换初心之剑); // 兑换初心之剑
+        COMMAND_MSG(hDlg, WM_兑换进阶之剑, wParam, lParam, On_兑换进阶之剑); // 兑换进阶之剑
     }
 }
 
@@ -1643,3 +1655,110 @@ void On_FirstAttackTrun(HWND hDlg, WPARAM wParam, LPARAM lParam) {
         }
     }
 }
+
+void On_Login(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    CLogin oLogin;
+    oLogin.LoginGame();
+}
+
+void On_NewRole(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    CLogin oLogin;
+    oLogin.NewRole();
+}
+
+void On_CountsOfRoles(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    CLogin oLogin;
+    *(PINT)wParam = oLogin.GetCountsOfRoles();
+}
+
+void On_EnterChannel(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    CLogin oLogin;
+    oLogin.EnterChannel();
+}
+
+void On_IsOnLine(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    CLogin oLogin;
+    *(PINT)wParam = static_cast<int>(oLogin.IsOnline());
+}
+
+void On_IsLoading(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    int nRet = 0;
+    martin->ReadPtrData(BASE_LOADING_FLAG, "获取 [过图标识]", nRet);
+    if (nRet == 0) { // 过图完毕
+        *(PINT)wParam = 0; // 返回假, 表示不在过图
+    } else {
+        *(PINT)wParam = 1; // 返回真, 表示在过图
+    }
+}
+
+void On_IsSelect(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    *(PINT)wParam = 0;
+    DWORD dwRoleListAddr;
+    try {
+        _asm {
+            pushad;
+            pushfd;
+
+            mov eax, CALL_GET_ROLE_LIST_INFO;
+            call eax;
+            mov ecx, [eax + 0x4];
+            mov eax, [ecx];
+            mov edx, [eax + 0x28];
+            call edx;
+            mov dwRoleListAddr, eax;
+
+            popfd;
+            popad;
+        }
+    } catch (...) {
+        martin->Debug("RoleTraverse --> 异常");
+        return;
+    }
+
+    int nRet;
+    if (martin->ReadPtrData(dwRoleListAddr + 0x10, "获取 [角色列表加载完毕信息]", nRet)) {
+        if (nRet == 1) {
+            *(PINT)wParam = 1;
+        }
+    }
+}
+
+void On_领取成长武器兑换券(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    DWORD dwPackage[100];
+    RtlZeroMemory(&dwPackage, sizeof(dwPackage));
+    dwPackage[0] = 0x00004807;
+    dwPackage[4] = 0x00000082;
+    dwPackage[5] = 0x017FE301;
+    dwPackage[6] = 0x00000060;
+    dwPackage[7] = 0x000000D8;
+    CRole::SendPackage((DWORD)&dwPackage);
+}
+
+void On_兑换初心之剑(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    DWORD dwPackage[100];
+    RtlZeroMemory(&dwPackage, sizeof(dwPackage));
+    dwPackage[0] = 0x00000F01;
+    dwPackage[4] = 0x0000002D;
+    dwPackage[5] = 0x000002B6;
+    dwPackage[6] = 0x00000001;
+    dwPackage[7] = 0xFFFFFFFF;
+    dwPackage[8] = 0xFFFFFFFF;
+    CRole::SendPackage((DWORD)&dwPackage);
+}
+
+void On_兑换进阶之剑(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    DWORD dwPackage[100];
+    RtlZeroMemory(&dwPackage, sizeof(dwPackage));
+    dwPackage[0] = 0x00000F01;
+    dwPackage[4] = 0x0000002D;
+    dwPackage[5] = 0x000002BD;
+    dwPackage[6] = 0x00000001;
+    dwPackage[7] = 0xFFFFFFFF;
+    dwPackage[8] = 0xFFFFFFFF;
+    CRole::SendPackage((DWORD)&dwPackage);
+}
+
+//void On_InitRoleList(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+//    CLogin oLogin;
+//    oLogin.RoleTraverse();
+//}

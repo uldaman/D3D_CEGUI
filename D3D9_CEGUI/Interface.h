@@ -88,3 +88,14 @@ void On_WearEquipment(HWND hDlg, WPARAM wParam, LPARAM lParam);  // 穿装备
 void On_GetRoleLevel(HWND hDlg, WPARAM wParam, LPARAM lParam);  // 获取人物等级
 void On_PrecisionCompleteQuest(HWND hDlg, WPARAM wParam, LPARAM lParam);  // 精准交任务, 通过比对 NPC 的坐标
 void On_FirstAttackTrun(HWND hDlg, WPARAM wParam, LPARAM lParam);  // 开启第一击面向
+void On_Login(HWND hDlg, WPARAM wParam, LPARAM lParam); // 开始游戏(非进入游戏, 开始游戏后还要选择频道)
+void On_NewRole(HWND hDlg, WPARAM wParam, LPARAM lParam); // 新建角色
+void On_CountsOfRoles(HWND hDlg, WPARAM wParam, LPARAM lParam); // 获取当前角色数量
+void On_EnterChannel(HWND hDlg, WPARAM wParam, LPARAM lParam); // 确认频道, 确认后就进入游戏了
+void On_IsOnLine(HWND hDlg, WPARAM wParam, LPARAM lParam); // 是否在线
+void On_IsLoading(HWND hDlg, WPARAM wParam, LPARAM lParam); // 是否过图
+//void On_InitRoleList(HWND hDlg, WPARAM wParam, LPARAM lParam); // 初始化列表
+void On_IsSelect(HWND hDlg, WPARAM wParam, LPARAM lParam); // 是否在选择角色
+void On_领取成长武器兑换券(HWND hDlg, WPARAM wParam, LPARAM lParam); // 领取成长武器兑换券
+void On_兑换初心之剑(HWND hDlg, WPARAM wParam, LPARAM lParam); // 兑换初心之剑
+void On_兑换进阶之剑(HWND hDlg, WPARAM wParam, LPARAM lParam); // 兑换进阶之剑
