@@ -1,6 +1,6 @@
 #pragma once
-#include "Clua.h"
 #include "GlobalVariable.h"
+#include "Clua.h"
 #include <windows.h>
 #include "Martin.h"
 

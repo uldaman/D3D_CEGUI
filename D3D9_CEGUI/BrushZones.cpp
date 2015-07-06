@@ -1,10 +1,10 @@
+#include "GlobalVariable.h"
 #include "BrushZones.h"
 #include "Martin.h"
 #include "Base.h"
 #include "DataType.h"
 #include "Role.h"
 #include "NearObject.h"
-#include "GlobalVariable.h"
 
 std::map<std::string, int> CBrushZones::s_fbMap;
 std::list<Monster> CBrushZones::m_monster_list;

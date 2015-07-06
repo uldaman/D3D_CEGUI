@@ -1,3 +1,4 @@
+#include "GlobalVariable.h"
 #include "Game.h"
 #include "main.h"
 #include "CEGUI/CEGUI.h"
@@ -9,7 +10,6 @@
 #include <CEGUI/InputEvent.h>
 #include "Martin.h"
 #include "Quest.h"
-#include "GlobalVariable.h"
 #include "LuaAPI.h"
 #include <process.h>
 #include "DefMessage.h"

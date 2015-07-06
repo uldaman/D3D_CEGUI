@@ -1,9 +1,9 @@
+#include "GlobalVariable.h"
 #include "NearObject.h"
 #include "Martin.h"
 #include "Base.h"
 #include "DataType.h"
 #include "Role.h"
-#include "GlobalVariable.h"
 
 
 CNearObject::CNearObject() {

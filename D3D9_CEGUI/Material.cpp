@@ -1,10 +1,10 @@
+#include "GlobalVariable.h"
 #include "Material.h"
 #include <windows.h>
 #include "Martin.h"
 #include "Base.h"
 #include <algorithm>
 #include "Role.h"
-#include "GlobalVariable.h"
 #include "DefMessage.h"
 #include "DataType.h"
 #include <process.h>

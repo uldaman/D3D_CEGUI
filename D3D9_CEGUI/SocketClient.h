@@ -8,4 +8,5 @@ public:
     
     ~CSocketClient() {
     };
+
 };

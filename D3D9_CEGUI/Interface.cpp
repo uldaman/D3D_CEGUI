@@ -1,3 +1,4 @@
+#include "GlobalVariable.h"
 #include "Interface.h"
 #include "DefMessage.h"
 #include "Quest.h"
@@ -15,7 +16,6 @@
 #include "Warehouse.h"
 #include "Manor.h"
 #include "My_Ini.h"
-#include "GlobalVariable.h"
 #include "Clogin.h"
 
 #define COMMAND_MSG(hwnd, uMsg, wParam, lParam, fn) \

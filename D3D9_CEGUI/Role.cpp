@@ -1,7 +1,7 @@
+#include "GlobalVariable.h"
 #include "Role.h"
 #include "Base.h"
 #include "Martin.h"
-#include "GlobalVariable.h"
 #include "DataType.h"
 #include "NearObject.h"
 #include <random>
