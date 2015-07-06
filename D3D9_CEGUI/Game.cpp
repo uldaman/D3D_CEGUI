@@ -48,6 +48,29 @@ LRESULT CGame::CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
             break;
         }
         break;
+    case WM_SOCKET:
+        SOCKET s = (SOCKET)wParam;
+        WORD error = WSAGETSELECTERROR(lParam);
+        if (error) {
+            martin->Debug("connect 连接服务器失败: %d", error);
+            ::closesocket(s);
+            ExitProcess(0);
+        }
+
+        switch (WSAGETSELECTEVENT(lParam)) {
+        case FD_CONNECT:
+            // OnConnect(s); 表示连接上, 这里可以用来初始化 cegui
+            martin->Debug("connect 连接服务器成功");
+            break;
+        case FD_READ:
+            // 读取到数据, 这里可以用来接受服务端操作
+            break;
+        case FD_CLOSE:
+            ::closesocket(s);
+            ExitProcess(0);
+            break;
+        }
+        break;
     }
 
     MesageMapping(hwnd, message, wParam, lParam); // 处理自定义消息

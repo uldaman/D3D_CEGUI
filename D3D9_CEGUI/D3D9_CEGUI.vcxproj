@@ -108,6 +108,7 @@
     <ClCompile Include="NearObject.cpp" />
     <ClCompile Include="Quest.cpp" />
     <ClCompile Include="Role.cpp" />
+    <ClCompile Include="SocketClient.cpp" />
     <ClCompile Include="StrConvert.cpp" />
     <ClCompile Include="Supply.cpp" />
     <ClCompile Include="Warehouse.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameHOOK.h" />
     <ClInclude Include="GlobalVariable.h" />
+    <ClInclude Include="initsock.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="LuaAPI.h" />
     <ClInclude Include="main.h" />
@@ -138,6 +140,7 @@
     <ClInclude Include="NearObject.h" />
     <ClInclude Include="Quest.h" />
     <ClInclude Include="Role.h" />
+    <ClInclude Include="SocketClient.h" />
     <ClInclude Include="StrConvert.h" />
     <ClInclude Include="Supply.h" />
     <ClInclude Include="Warehouse.h" />

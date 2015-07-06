@@ -34,6 +34,9 @@
     <Filter Include="Lua">
       <UniqueIdentifier>{2e0fb408-fbe0-4c0f-8197-bc2111d9493e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Socket">
+      <UniqueIdentifier>{26262663-4628-4b58-870e-9f6493064659}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -110,6 +113,9 @@
     </ClCompile>
     <ClCompile Include="StrConvert.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketClient.cpp">
+      <Filter>Socket</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +202,12 @@
     </ClInclude>
     <ClInclude Include="StrConvert.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="initsock.h">
+      <Filter>Socket</Filter>
+    </ClInclude>
+    <ClInclude Include="SocketClient.h">
+      <Filter>Socket</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

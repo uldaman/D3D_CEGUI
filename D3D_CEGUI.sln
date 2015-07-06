@@ -12,6 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "D3D8_CEGUI", "D3D8_CEGUI\D3
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "D3D9_CEGUI", "D3D9_CEGUI\D3D9_CEGUI.vcxproj", "{836503A3-41CE-4BD5-9C72-0242B8D69128}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QTServer", "QTServer\QTServer.vcxproj", "{BF7053D6-AC83-472B-BC73-B86F6C5E3CF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -44,6 +46,14 @@ Global
 		{836503A3-41CE-4BD5-9C72-0242B8D69128}.Release|Win32.Build.0 = Release|Win32
 		{836503A3-41CE-4BD5-9C72-0242B8D69128}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
 		{836503A3-41CE-4BD5-9C72-0242B8D69128}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{BF7053D6-AC83-472B-BC73-B86F6C5E3CF6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BF7053D6-AC83-472B-BC73-B86F6C5E3CF6}.Debug|Win32.Build.0 = Debug|Win32
+		{BF7053D6-AC83-472B-BC73-B86F6C5E3CF6}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{BF7053D6-AC83-472B-BC73-B86F6C5E3CF6}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{BF7053D6-AC83-472B-BC73-B86F6C5E3CF6}.Release|Win32.ActiveCfg = Release|Win32
+		{BF7053D6-AC83-472B-BC73-B86F6C5E3CF6}.Release|Win32.Build.0 = Release|Win32
+		{BF7053D6-AC83-472B-BC73-B86F6C5E3CF6}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{BF7053D6-AC83-472B-BC73-B86F6C5E3CF6}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
