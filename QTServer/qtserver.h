@@ -22,6 +22,7 @@ private:
     
 private slots:
     void message_read();
+    void client_closed();
     void new_connect();
     void AddAccount();
     void OptionSet();

@@ -57,7 +57,7 @@ QTServer::~QTServer() {
 void QTServer::new_connect() {
     QTcpSocket* pTcpSocket = m_tcpServer->nextPendingConnection();                     //得到每个连进来的socket
     m_tcpSocketList.append(pTcpSocket);
-    //connect (pTcpSocket, SIGNAL(disconnected()), this, SLOT(updateSendStatus()));
+    connect (pTcpSocket, SIGNAL(disconnected()), this, SLOT(client_closed()));
     connect(pTcpSocket, SIGNAL(disconnected()), pTcpSocket, SLOT(deleteLater()));
     connect(pTcpSocket, SIGNAL(readyRead()), this, SLOT(message_read()));
 }
@@ -76,6 +76,15 @@ void QTServer::message_read() {
         }
     }
 }
+
+void QTServer::client_closed() {
+    for (int i = 0; i < m_tcpSocketList.length(); i++) {
+        if (m_tcpSocketList[i]->state() == QAbstractSocket::UnconnectedState) {
+            m_tcpSocketList.removeAt(i);
+        }
+    }
+}
+
 
 void QTServer::AddAccount() {
     CAddAccount* a = new CAddAccount(this);
@@ -123,3 +132,4 @@ void QTServer::startNewGame() {
         // 如果返回成功, 就開啟 DLL 注入線程
     }
 }
+

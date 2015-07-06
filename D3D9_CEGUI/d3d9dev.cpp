@@ -1,5 +1,5 @@
 /*	Direct3D9 Device */
-
+#include "GlobalVariable.h"
 #include <windows.h>
 #include "main.h"
 #include "d3d9.h"
@@ -9,6 +9,7 @@
 #include <CEGUI\WindowManager.h>
 #include <CEGUI\RendererModules\Direct3D9\Renderer.h>
 #include "Martin.h"
+
 
 #define D3DHOOK_TEXTURES //comment this to disable texture hooking
 
@@ -372,6 +373,14 @@ HRESULT APIENTRY hkIDirect3DDevice9::Present(CONST RECT *pSourceRect, CONST RECT
     //theApp.Render();
     if (theApp.m_bInit) {
         CEGUI::System::getSingleton().renderAllGUIContexts();
+    }
+
+    static int nStepper = 0;
+    nStepper++;
+
+    if (g_pSocketClient && (nStepper % 520) == 0) {
+        g_pSocketClient->SendGameInfo(nStepper);
+        nStepper = 0;
     }
 
     return m_pD3Ddev->Present(pSourceRect, pDestRect, hDestWindowOverride, pDirtyRegion);

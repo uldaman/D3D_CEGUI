@@ -1,6 +1,7 @@
 /*	Direct3D9 Interface */
 
 #include "SocketClient.h"
+#include "GlobalVariable.h"
 #include <windows.h>
 #include "main.h"
 #include "d3d9.h"
@@ -56,7 +57,7 @@ HRESULT APIENTRY hkIDirect3D9::CreateDevice(UINT Adapter, D3DDEVTYPE DeviceType,
                 theApp.m_OrgWndProc = ::GetWindowLong(theApp.m_hGWnd, GWL_WNDPROC);
                 if (theApp.m_OrgWndProc) {
                     ::SetWindowLong(theApp.m_hGWnd, GWL_WNDPROC, (LONG)&FilterWndProc);
-                    CSocketClient client = CSocketClient(theApp.m_hGWnd);
+                    g_pSocketClient = new CSocketClient(theApp.m_hGWnd);
                 } else {
                     martin->add_log("GetWindowLong() Failed.");
                     ::ExitProcess(-1);

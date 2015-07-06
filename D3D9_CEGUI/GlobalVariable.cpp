@@ -9,6 +9,7 @@ BOOL                    g_isWork = FALSE;
 std::string             g_strEventHandle = "";
 std::string             g_strServerExePath = ""; // 用来保存控制台 EXE 路径
 int                     g_nCountOfGlowingArticle = 0;
+CSocketClient*          g_pSocketClient = nullptr;
 
 std::string BossName[] = { "战鬼河狸兽", "逃离的雌火龙", "新手河狸兽", "新手引导关香菇猪", "新手香菇猪", "祸星龙", "星龙", "骇狩蛛", "岩龙", "红电龙", "尾晶蝎", "雪狮子王", \
 "一角龙", "黑狼鸟", "紫毒鸟", "将军镰蟹", "沙雷鸟", "青怪鸟", "眠鸟", "金毛兽王", "大名盾蟹", \
