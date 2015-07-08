@@ -36,6 +36,9 @@
     <Filter Include="CMartin">
       <UniqueIdentifier>{17de0332-941b-404c-9e15-849b3b378486}</UniqueIdentifier>
     </Filter>
+    <Filter Include="XML">
+      <UniqueIdentifier>{f3519607-3925-49e6-a80f-f7ea60100ca6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -80,6 +83,12 @@
     <ClCompile Include="GeneratedFiles\Release\moc_coption.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="Xml.cpp">
+      <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinystr.cpp">
+      <Filter>XML</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qtserver.h">
@@ -122,6 +131,15 @@
     </ClInclude>
     <ClInclude Include="CMartin.h">
       <Filter>CMartin</Filter>
+    </ClInclude>
+    <ClInclude Include="Xml.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml.h">
+      <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="tinystr.h">
+      <Filter>XML</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

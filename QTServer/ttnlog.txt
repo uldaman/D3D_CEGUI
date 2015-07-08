@@ -8,3 +8,5 @@ Debug:EXE入口地址: 1404CD3
 Debug:DLL入口地址: 80000
 Debug:EXE入口地址: 1434CD3
 Debug:DLL入口地址: 80000
+Debug:Version -- 0.4.17.937
+Debug:VersionDemoStr -- 0.4.17

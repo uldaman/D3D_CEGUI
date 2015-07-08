@@ -9852,3 +9852,5 @@ Hooked Direct3D9 device: 0x19130060 -> 0x786ef28
 CreateDevice 返回值 0x0
 Hooked Direct3D9 device: 0x19148b60 -> 0x88ce5a8
 Debug:connect 连接服务器成功
+Debug:Version -- 0.4.17.937
+Debug:Version -- 0.4.17.937

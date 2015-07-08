@@ -130,6 +130,8 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="qtserver.cpp" />
+    <ClCompile Include="tinystr.cpp" />
+    <ClCompile Include="Xml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qtserver.h">
@@ -157,6 +159,9 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="tinystr.h" />
+    <ClInclude Include="tinyxml.h" />
+    <ClInclude Include="Xml.h" />
     <CustomBuild Include="caddaccount.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing caddaccount.h...</Message>

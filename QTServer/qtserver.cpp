@@ -4,6 +4,7 @@
 #include "caddaccount.h"
 #include "coption.h"
 #include "CMartin.h"
+#include "Xml.h"
 
 QTServer::QTServer(QWidget *parent)
     : QMainWindow(parent) {
@@ -128,8 +129,21 @@ void QTServer::initGamePath() {
 }
 
 void QTServer::startNewGame() {
-    if (martin->CreatProcessInsertDLL("F:\\ty\\bootloader.exe", "\"F:\\ty\\bootloader.exe\"  0", "Q:\\Ty\\TyInject\\Debug\\Inject.dll", "F:\\ty/")) {
-        // 如果返回成功, 就開啟 DLL 注入線程
+    //if (martin->CreatProcessInsertDLL("F:\\ty\\bootloader.exe", "\"F:\\ty\\bootloader.exe\"  0", "Q:\\Ty\\TyInject\\Debug\\Inject.dll", "F:\\ty/")) {
+    //    // 如果返回成功, 就開啟 DLL 注入線程
+    //}
+
+    std::list<_Xml> lAllVal;
+    std::vector<std::string> arrFindXmlKeyName;
+    arrFindXmlKeyName.swap(std::vector<std::string>());
+    arrFindXmlKeyName.push_back("VersionDemoStr");
+    CXml::DeadXml(lAllVal, arrFindXmlKeyName, "F:\\怪物猎人Online\\TCLS\\mmog_data.xml");
+    for (auto& v : lAllVal) {
+        martin->Debug((v.KeyName + " -- " + v.Val).c_str());
     }
+    
+    //if (lAllVal.front().Val.Find(Edition) != -1)
+    //    return FALSE;
+    //return TRUE;
 }
 
