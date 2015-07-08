@@ -5,22 +5,34 @@
 #include "coption.h"
 #include "CMartin.h"
 #include "Xml.h"
+#include "QMessageBox"
 
 QTServer::QTServer(QWidget *parent)
     : QMainWindow(parent) {
     ui.setupUi(this);
 
+    //
+    GlobalAddAtom("shitnow");
+
     //设置表头及大小
     QStringList header;
-    header << QStringLiteral("账号") << QStringLiteral("密码") << QStringLiteral("角色") << QStringLiteral("金币");
+    header << QStringLiteral("账号") << QStringLiteral("大区") << QStringLiteral("服务器")
+        << QStringLiteral("角色") << QStringLiteral("金币") << QStringLiteral("地图") << QStringLiteral("脚本");
     ui.tableWidget->setColumnCount(header.count());
-    ui.tableWidget->setRowCount(10);
     ui.tableWidget->setHorizontalHeaderLabels(header);
-    ui.tableWidget->setColumnWidth(0, 150);//设置第一列宽度
-    ui.tableWidget->setColumnWidth(1, 150);//设置第二列宽度
-    ui.tableWidget->setColumnWidth(2, 150);//设置第三列宽度
-    ui.tableWidget->horizontalHeader()->setStretchLastSection(true);//将最后一列延伸到整个列表全满
-
+    //ui.tableWidget->setRowCount(20); // 设置行数
+    ui.tableWidget->horizontalHeader()->setDefaultSectionSize(150);
+    //ui.tableWidget->setColumnWidth(0, 150); //设置第一列宽度
+    //ui.tableWidget->setColumnWidth(1, 150); //设置第二列宽度
+    //ui.tableWidget->setColumnWidth(2, 150); //设置第三列宽度
+    //ui.tableWidget->setColumnWidth(3, 150);
+    //ui.tableWidget->setColumnWidth(4, 150);
+    //ui.tableWidget->setColumnWidth(5, 150);
+    //ui.tableWidget->setColumnWidth(6, 150);
+    //ui.tableWidget->horizontalHeader()->setStretchLastSection(true); //将最后一列延伸到整个列表全满
+    ui.tableWidget->horizontalHeader()->setSectionsClickable(false); //设置表头不可点击（默认点击后进行排序）
+    ui.tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch); // 所有列自适应窗口宽度
+    
     //设置隔一行变一颜色，即：一灰一白
     ui.tableWidget->setAlternatingRowColors(true);
 
@@ -43,6 +55,7 @@ QTServer::QTServer(QWidget *parent)
     //菜单栏关联
     connect(ui.actionAddAccount, SIGNAL(triggered()), this, SLOT(AddAccount()));
     connect(ui.actionOption, SIGNAL(triggered()), this, SLOT(OptionSet()));
+    connect(ui.tableWidget, &CMyTableWidget::send_addAcc, this, &QTServer::addAcc);
 
     // 以下为设置游戏路径
     initGamePath();
@@ -58,7 +71,7 @@ QTServer::~QTServer() {
 void QTServer::new_connect() {
     QTcpSocket* pTcpSocket = m_tcpServer->nextPendingConnection();                     //得到每个连进来的socket
     m_tcpSocketList.append(pTcpSocket);
-    connect (pTcpSocket, SIGNAL(disconnected()), this, SLOT(client_closed()));
+    connect(pTcpSocket, SIGNAL(disconnected()), this, SLOT(client_closed()));
     connect(pTcpSocket, SIGNAL(disconnected()), pTcpSocket, SLOT(deleteLater()));
     connect(pTcpSocket, SIGNAL(readyRead()), this, SLOT(message_read()));
 }
@@ -90,7 +103,28 @@ void QTServer::client_closed() {
 void QTServer::AddAccount() {
     CAddAccount* a = new CAddAccount(this);
     a->setAttribute(Qt::WA_DeleteOnClose);
+    QObject::connect(a, &CAddAccount::newAcc, this, &QTServer::addAcc);
     a->show();
+}
+
+void QTServer::addAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer) {
+    QTableWidgetItem* _strAcc = new QTableWidgetItem(strAcc);
+    //_strAcc->setText(QString::fromWCharArray(A2W(data)));
+    _strAcc->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    _strAcc->setData(Qt::UserRole, strPsw); //关联数据, 类似 MFC 中的 SetItemData
+
+    QTableWidgetItem* _strArea = new QTableWidgetItem(strArea);
+    _strArea->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+
+    QTableWidgetItem* _strServer = new QTableWidgetItem(strServer);
+    _strServer->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+
+    //首先rowCount()得到当前中的行数，然后在调用insertRow(row);即可
+    int nIndex = ui.tableWidget->rowCount();
+    ui.tableWidget->insertRow(nIndex);
+    ui.tableWidget->setItem(nIndex, 0, _strAcc);
+    ui.tableWidget->setItem(nIndex, 1, _strArea);
+    ui.tableWidget->setItem(nIndex, 2, _strServer);
 }
 
 void QTServer::OptionSet() {
@@ -128,22 +162,78 @@ void QTServer::initGamePath() {
     m_gamePath = QString::fromLocal8Bit(martin->GetString("Path", "Game").c_str());
 }
 
+#pragma pack(push, 1)
+typedef struct {
+    DWORD dwRet;
+    DWORD Key;
+    WCHAR DatiAcc[25];
+    WCHAR DatiPwd[25];
+    DWORD DatiErrorCode;
+    DWORD DatiType;
+    DWORD cmdtype;
+    WCHAR acc[25];
+    WCHAR psw[25];
+    WCHAR area[25];
+    WCHAR server[25];
+}ShareLoginInfo, *PShareLoginInfo;
+#pragma pack(pop,1)
+
+enum SHARELGOININFOSTATE { //自动登录dll(新)
+    SHARELGOININFOSTATE_INFO = 1, //告诉登陆器开始登陆账号
+    SHARELGOININFOSTATE_SUCCEED, //成功登陆
+    SHARELGOININFOSTATE_CLOSE, //告诉登陆器关闭
+    SHARELGOINRET_ERROR_ACCDONGJIE, //被冻结
+    SHARELGOINRET_ERROR_PSWWRONG
+};
+
 void QTServer::startNewGame() {
     //if (martin->CreatProcessInsertDLL("F:\\ty\\bootloader.exe", "\"F:\\ty\\bootloader.exe\"  0", "Q:\\Ty\\TyInject\\Debug\\Inject.dll", "F:\\ty/")) {
     //    // 如果返回成功, 就開啟 DLL 注入線程
     //}
 
-    std::list<_Xml> lAllVal;
-    std::vector<std::string> arrFindXmlKeyName;
-    arrFindXmlKeyName.swap(std::vector<std::string>());
-    arrFindXmlKeyName.push_back("VersionDemoStr");
-    CXml::DeadXml(lAllVal, arrFindXmlKeyName, "F:\\怪物猎人Online\\TCLS\\mmog_data.xml");
-    for (auto& v : lAllVal) {
-        martin->Debug((v.KeyName + " -- " + v.Val).c_str());
-    }
-    
-    //if (lAllVal.front().Val.Find(Edition) != -1)
-    //    return FALSE;
-    //return TRUE;
+    //std::list<_Xml> lAllVal;
+    //std::vector<std::string> arrFindXmlKeyName;
+    //arrFindXmlKeyName.swap(std::vector<std::string>());
+    //arrFindXmlKeyName.push_back("VersionDemoStr");
+    //CXml::DeadXml(lAllVal, arrFindXmlKeyName, "F:\\怪物猎人Online\\TCLS\\mmog_data.xml");
+    //for (auto& v : lAllVal) {
+    //    martin->Debug((v.KeyName + " -- " + v.Val).c_str());
+    //}
+
+    std::string  QxDllpath = "F:\\怪物猎人Online\\TCLS\\Tenio.ini";
+    WritePrivateProfileString("DefaultValue", "Dlls", "TCLS.dll,TenBase.dll,Dir.dll,TenTPF.dll,MemoryAlloctor.dll,June.dll,log.dll,qxpatch.dll", QxDllpath.c_str());
+    HANDLE hMapping = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, 0x255, "GW_APSInfo");
+
+    DWORD dwMyPid = ::GetCurrentProcessId();
+    PShareLoginInfo pLogMsg = (PShareLoginInfo)MapViewOfFile(hMapping, FILE_MAP_ALL_ACCESS, 0, 0, 0);
+    RtlZeroMemory(pLogMsg, sizeof(PShareLoginInfo));
+    pLogMsg->cmdtype = SHARELGOININFOSTATE_INFO;
+    pLogMsg->dwRet = 0;
+    pLogMsg->Key = (dwMyPid * 22) >> 2;
+    pLogMsg->DatiType = 0;
+    pLogMsg->DatiErrorCode = 0;
+
+    //CStringW cwDatiPwd, cwacc, cwpsw, cwarea, cwserver, cwDatiAcc;
+    USES_CONVERSION;
+    //cwacc = A2W(Ltp.Account);
+    //cwpsw = A2W(Ltp.Key);
+    //cwserver = A2W(Ltp.Server);
+    //cwDatiAcc = A2W(m_Verificationcode.Use);
+    //cwDatiPwd = A2W(m_Verificationcode.Key);
+    //cwarea = A2W(Ltp.Area);
+
+    std::string acc = "2631608094";
+    std::string psw = "h0030526h";
+    wcscpy_s(pLogMsg->acc, (acc.length() + 1) * 2, A2W(acc.c_str()));
+    wcscpy_s(pLogMsg->psw, (psw.length() + 1) * 2, A2W(psw.c_str()));
+
+    std::string area = "觉醒内测区";
+    std::string server = "觉醒内测1服";
+    wcscpy_s(pLogMsg->area, (area.length() + 1) * 2, A2W(area.c_str()));
+    wcscpy_s(pLogMsg->server, (server.length() + 1) * 2, A2W(server.c_str()));
+
+    //wcscpy_s(pLogMsg->DatiAcc, wcslen(cwDatiAcc) + 1, cwDatiAcc);
+    //wcscpy_s(pLogMsg->DatiPwd, wcslen(cwDatiPwd) + 1, cwDatiPwd);
 }
+
 

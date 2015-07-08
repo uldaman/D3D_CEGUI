@@ -20,9 +20,11 @@ protected:
 private slots:
 void AddAccount();
 void StartGame();
+void addAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
 
 signals:
 void startNewGame();
+void send_addAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
 };
 
 #endif // CMYTABLEWIDGET_H

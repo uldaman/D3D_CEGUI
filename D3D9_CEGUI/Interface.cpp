@@ -576,16 +576,17 @@ void On_CommonUseItems(HWND hDlg, WPARAM wParam, LPARAM lParam) {
 void On_PrecisionAcceptQuest(HWND hDlg, WPARAM wParam, LPARAM lParam) {
     pQuestInfo questInfo = (pQuestInfo)wParam;
     pPOINT_TARGET pointTarget = (pPOINT_TARGET)lParam;
-
     quest.initQuestTable();
     for (auto& v : quest.m_questTable_quest) {
-        if (*(std::string*)wParam == v.strQuestName) {
+        if (questInfo->strQuestName == v.strQuestName) {
+            martin->Debug((*(std::string*)wParam).c_str());
             // 接任务
             // 1. 打开 NPC
             nearObj.initNear();
             for (auto& w : nearObj.m_near_object) {
                 if (w.strNpcName == questInfo->strNpcName) { // 找到 NPC
                     // 比对 npc 坐标
+                    martin->Debug((questInfo->strNpcName).c_str());
                     if (martin->Compare_Coord(pointTarget->fPontX, pointTarget->fPontY, w.fNpcPointX, w.fNpcPointY) < 5) {
                         nearObj.Interactive(w.nNpcID);
                         Sleep(50);
@@ -595,8 +596,8 @@ void On_PrecisionAcceptQuest(HWND hDlg, WPARAM wParam, LPARAM lParam) {
             }
             // 2. 接任务
             quest.AcceptQuest(v.nQuestID);
+            break;
         }
-        break;
     }
 }
 
@@ -1639,8 +1640,8 @@ void On_PrecisionCompleteQuest(HWND hDlg, WPARAM wParam, LPARAM lParam) {
                 }
                 // 2. 交任务
                 quest.CompleteQuest(v.nQuestID);
+                break;
             }
-            break;
         }
     }
 }

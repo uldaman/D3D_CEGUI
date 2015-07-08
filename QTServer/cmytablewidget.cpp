@@ -28,9 +28,15 @@ void CMyTableWidget::CreateActions() {
 
 void CMyTableWidget::AddAccount() {
     CAddAccount* a = new CAddAccount;
+    QObject::connect(a, &CAddAccount::newAcc, this, &CMyTableWidget::addAcc);
     a->setAttribute(Qt::WA_DeleteOnClose);
     a->show();
 }
+
+void CMyTableWidget::addAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer) {
+    emit send_addAcc(strAcc, strPsw, strArea, strServer);
+}
+
 
 void CMyTableWidget::StartGame() {
     // ЖҐД”я[Ст

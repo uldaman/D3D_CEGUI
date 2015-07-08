@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>526</width>
+    <width>958</width>
     <height>354</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Server</string>
+   <string>怪物猎人Online$</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="sizePolicy">
@@ -41,6 +41,18 @@
     </property>
     <item>
      <widget class="CMyTableWidget" name="tableWidget">
+      <property name="acceptDrops">
+       <bool>false</bool>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="dragEnabled">
+       <bool>false</bool>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>false</bool>
+      </property>
       <attribute name="horizontalHeaderCascadingSectionResizes">
        <bool>true</bool>
       </attribute>
@@ -50,14 +62,29 @@
       <attribute name="horizontalHeaderMinimumSectionSize">
        <number>27</number>
       </attribute>
-      <attribute name="verticalHeaderCascadingSectionResizes">
+      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
        <bool>false</bool>
+      </attribute>
+      <attribute name="horizontalHeaderStretchLastSection">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderCascadingSectionResizes">
+       <bool>true</bool>
       </attribute>
       <attribute name="verticalHeaderDefaultSectionSize">
        <number>30</number>
       </attribute>
       <attribute name="verticalHeaderMinimumSectionSize">
        <number>21</number>
+      </attribute>
+      <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderStretchLastSection">
+       <bool>false</bool>
       </attribute>
      </widget>
     </item>
@@ -68,7 +95,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>526</width>
+     <width>958</width>
      <height>23</height>
     </rect>
    </property>

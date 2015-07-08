@@ -38,7 +38,7 @@ public:
     {
         if (QTServerClass->objectName().isEmpty())
             QTServerClass->setObjectName(QStringLiteral("QTServerClass"));
-        QTServerClass->resize(526, 354);
+        QTServerClass->resize(958, 354);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -59,19 +59,28 @@ public:
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
         tableWidget = new CMyTableWidget(centralWidget);
         tableWidget->setObjectName(QStringLiteral("tableWidget"));
+        tableWidget->setAcceptDrops(false);
+        tableWidget->setAutoFillBackground(false);
+        tableWidget->setDragEnabled(false);
+        tableWidget->setAlternatingRowColors(false);
         tableWidget->horizontalHeader()->setCascadingSectionResizes(true);
         tableWidget->horizontalHeader()->setDefaultSectionSize(100);
         tableWidget->horizontalHeader()->setMinimumSectionSize(27);
-        tableWidget->verticalHeader()->setCascadingSectionResizes(false);
+        tableWidget->horizontalHeader()->setProperty("showSortIndicator", QVariant(false));
+        tableWidget->horizontalHeader()->setStretchLastSection(false);
+        tableWidget->verticalHeader()->setVisible(false);
+        tableWidget->verticalHeader()->setCascadingSectionResizes(true);
         tableWidget->verticalHeader()->setDefaultSectionSize(30);
         tableWidget->verticalHeader()->setMinimumSectionSize(21);
+        tableWidget->verticalHeader()->setProperty("showSortIndicator", QVariant(false));
+        tableWidget->verticalHeader()->setStretchLastSection(false);
 
         horizontalLayout->addWidget(tableWidget);
 
         QTServerClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(QTServerClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 526, 23));
+        menuBar->setGeometry(QRect(0, 0, 958, 23));
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
         QTServerClass->setMenuBar(menuBar);
@@ -87,7 +96,7 @@ public:
 
     void retranslateUi(QMainWindow *QTServerClass)
     {
-        QTServerClass->setWindowTitle(QApplication::translate("QTServerClass", "Server", 0));
+        QTServerClass->setWindowTitle(QApplication::translate("QTServerClass", "\346\200\252\347\211\251\347\214\216\344\272\272Online$", 0));
         actionAddAccount->setText(QApplication::translate("QTServerClass", "\346\267\273\345\212\240\350\263\254\350\231\237", 0));
         actionOption->setText(QApplication::translate("QTServerClass", "\345\261\254\346\200\247\350\250\255\347\275\256", 0));
         menu->setTitle(QApplication::translate("QTServerClass", "\350\256\276\347\275\256", 0));

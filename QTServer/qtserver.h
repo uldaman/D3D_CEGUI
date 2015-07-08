@@ -28,6 +28,7 @@ private slots:
     void OptionSet();
     void startNewGame();
     void initGamePath();
+    void addAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
 };
 
 #endif // QTSERVER_H

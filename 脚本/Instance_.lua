@@ -406,6 +406,12 @@ Instance.MapList["Map011"][7][2] = {key = "SwitchRegionTrigger_7to2"}
 Instance.MapList["Map011"][7][3] = {key = "SwitchRegionTrigger_7to3"}
 Instance.MapList["Map011"][7][4] = {key = "SwitchRegionTrigger_7to4"}
 
+
+Instance.MapList["Arena_001"] = {}
+Instance.MapList["Arena_001"][0] = {}
+Instance.MapList["Arena_001"][0][1] = {key = "SwitchRegionTrigger1"}
+
+
 Instance.攻击部位 = {}
 Instance.攻击部位["新手河狸兽"] = {身体 = 0xB, 默认 = 0xCA}
 Instance.攻击部位["新手香菇猪"] = {身体 = 0xB, 默认 = 0xCA}
@@ -457,12 +463,7 @@ end
 
 --根据ID序号查找房间号
 function Instance.FindRoomName(mapName, k)
-	local count_map = 0			--记录地图数量
-	for i, v in pairs(Instance.MapList[mapName]) do
-		count_map = count_map + 1
-	end
-
-	local find_map = 0
+	local find_map = 1
 	local id = 1
 	for i, v in pairs(Instance.MapList[mapName]) do
 		if id == k then
@@ -485,7 +486,7 @@ function Instance.FindBoss(mapName)	--返回途径总地图(包括起始地图和目标地图)列表
 	MH_调试("目标房间是 "..tagRoom)
 	--MH_调试(Instance.MapList[mapName][tonumber(nowRoom)][tonumber(tagRoom)].key)
 
-	local count_map = 0	--房间节点总数量
+	local count_map = 1	--房间节点总数量
 	for i,v in pairs(Instance.MapList[mapName]) do
 		count_map = count_map+1
 	end
