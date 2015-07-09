@@ -4,7 +4,6 @@
 #include "caddaccount.h"
 #include "coption.h"
 #include "CMartin.h"
-#include "Xml.h"
 #include "QMessageBox"
 
 QTServer::QTServer(QWidget *parent)
@@ -50,33 +49,33 @@ QTServer::QTServer(QWidget *parent)
 
     m_tcpServer = new QTcpServer(this);
     m_tcpServer->listen(QHostAddress::Any, 12589); //监听任何连上12589端口的ip
-    connect(m_tcpServer, SIGNAL(newConnection()), this, SLOT(new_connect()));
+    connect(m_tcpServer, SIGNAL(newConnection()), this, SLOT(SlotNewConnect()));
 
     //菜单栏关联
-    connect(ui.actionAddAccount, SIGNAL(triggered()), this, SLOT(AddAccount()));
-    connect(ui.actionOption, SIGNAL(triggered()), this, SLOT(OptionSet()));
-    connect(ui.tableWidget, &CMyTableWidget::send_addAcc, this, &QTServer::addAcc);
+    connect(ui.actionAddAccount, SIGNAL(triggered()), this, SLOT(SlotAddAccount()));
+    connect(ui.actionOption, SIGNAL(triggered()), this, SLOT(SlotOptionSet()));
+    connect(ui.tableWidget, &CMyTableWidget::SignalSendAddAcc, this, &QTServer::SlotAddAcc);
 
     // 以下为设置游戏路径
-    initGamePath();
+    SlotInitGamePath();
 
     // 列表框關聯
-    QObject::connect(ui.tableWidget, &CMyTableWidget::startNewGame, this, &QTServer::startNewGame);
+    QObject::connect(ui.tableWidget, &CMyTableWidget::SignalStartNewGame, this, &QTServer::SlotStartNewGame);
 }
 
 QTServer::~QTServer() {
 
 }
 
-void QTServer::new_connect() {
+void QTServer::SlotNewConnect() {
     QTcpSocket* pTcpSocket = m_tcpServer->nextPendingConnection();                     //得到每个连进来的socket
     m_tcpSocketList.append(pTcpSocket);
-    connect(pTcpSocket, SIGNAL(disconnected()), this, SLOT(client_closed()));
+    connect(pTcpSocket, SIGNAL(disconnected()), this, SLOT(SlotClientClosed()));
     connect(pTcpSocket, SIGNAL(disconnected()), pTcpSocket, SLOT(deleteLater()));
-    connect(pTcpSocket, SIGNAL(readyRead()), this, SLOT(message_read()));
+    connect(pTcpSocket, SIGNAL(readyRead()), this, SLOT(SlotMessageRead()));
 }
 
-void QTServer::message_read() {
+void QTServer::SlotMessageRead() {
     USES_CONVERSION;
     for (int i = 0; i < m_tcpSocketList.length(); i++) {
         if (m_tcpSocketList[i]->bytesAvailable() > 0) {
@@ -91,7 +90,7 @@ void QTServer::message_read() {
     }
 }
 
-void QTServer::client_closed() {
+void QTServer::SlotClientClosed() {
     for (int i = 0; i < m_tcpSocketList.length(); i++) {
         if (m_tcpSocketList[i]->state() == QAbstractSocket::UnconnectedState) {
             m_tcpSocketList.removeAt(i);
@@ -100,14 +99,14 @@ void QTServer::client_closed() {
 }
 
 
-void QTServer::AddAccount() {
+void QTServer::SlotAddAccount() {
     CAddAccount* a = new CAddAccount(this);
     a->setAttribute(Qt::WA_DeleteOnClose);
-    QObject::connect(a, &CAddAccount::newAcc, this, &QTServer::addAcc);
+    QObject::connect(a, &CAddAccount::SignalNewAcc, this, &QTServer::SlotAddAcc);
     a->show();
 }
 
-void QTServer::addAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer) {
+void QTServer::SlotAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer) {
     QTableWidgetItem* _strAcc = new QTableWidgetItem(strAcc);
     //_strAcc->setText(QString::fromWCharArray(A2W(data)));
     _strAcc->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
@@ -127,38 +126,21 @@ void QTServer::addAcc(const QString &strAcc, const QString &strPsw, const QStrin
     ui.tableWidget->setItem(nIndex, 2, _strServer);
 }
 
-void QTServer::OptionSet() {
+void QTServer::SlotOptionSet() {
     COption* a = new COption(this, m_gamePath);
-    QObject::connect(a, &COption::newGamePath, this, &QTServer::initGamePath);
+    QObject::connect(a, &COption::SignalNewGamePath, this, &QTServer::SlotInitGamePath);
     a->setAttribute(Qt::WA_DeleteOnClose);
     a->show();
 }
 
-void QTServer::initGamePath() {
-    //-----------------------------------------------------------
-    //    獲取當前程序全路徑
-    //-----------------------------------------------------------
-    char dllname[MAX_PATH];
-    GetModuleFileName(NULL, dllname, MAX_PATH);
-
-    //-----------------------------------------------------------
-    //    轉換成 QString, 然後去掉路徑中的文件名, 保留當前目錄
-    //    在當前目錄後面加上配置文件名 
-    //-----------------------------------------------------------
-    std::string strDll = dllname;
-    //QString qstrDll = QString::fromStdString(strDll); // 此用法会造成中文乱码
-    QString qstrDll = QString::fromLocal8Bit(strDll.c_str());
-    QString strSplit = "\\";
-    int index = qstrDll.lastIndexOf(strSplit);
-    qstrDll = qstrDll.left(index);
-    //strDll = qstrDll.toStdString(); // 此用法会造成程序崩溃
-    strDll = std::string((const char*)qstrDll.toLocal8Bit());
-    strDll += "\\Config.ini";
+void QTServer::SlotInitGamePath() {
+    std::string strPath = martin->GetModulePath(NULL);
+    strPath += "\\Config.ini";
 
     //-----------------------------------------------------------
     //    获取配置文件信息
     //-----------------------------------------------------------
-    martin->SetPathName(strDll.c_str());
+    martin->SetPathName(strPath.c_str());
     m_gamePath = QString::fromLocal8Bit(martin->GetString("Path", "Game").c_str());
 }
 
@@ -186,21 +168,15 @@ enum SHARELGOININFOSTATE { //自动登录dll(新)
     SHARELGOINRET_ERROR_PSWWRONG
 };
 
-void QTServer::startNewGame() {
+void QTServer::SlotStartNewGame(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer) {
     //if (martin->CreatProcessInsertDLL("F:\\ty\\bootloader.exe", "\"F:\\ty\\bootloader.exe\"  0", "Q:\\Ty\\TyInject\\Debug\\Inject.dll", "F:\\ty/")) {
     //    // 如果返回成功, 就開啟 DLL 注入線程
     //}
 
-    //std::list<_Xml> lAllVal;
-    //std::vector<std::string> arrFindXmlKeyName;
-    //arrFindXmlKeyName.swap(std::vector<std::string>());
-    //arrFindXmlKeyName.push_back("VersionDemoStr");
-    //CXml::DeadXml(lAllVal, arrFindXmlKeyName, "F:\\怪物猎人Online\\TCLS\\mmog_data.xml");
-    //for (auto& v : lAllVal) {
-    //    martin->Debug((v.KeyName + " -- " + v.Val).c_str());
-    //}
 
-    std::string  QxDllpath = "F:\\怪物猎人Online\\TCLS\\Tenio.ini";
+    QString gamePath = m_gamePath;
+    std::string QxDllpath = (const char*)(gamePath.replace("/", "\\").toLocal8Bit());
+    QxDllpath += "\\TCLS\\Tenio.ini";
     WritePrivateProfileString("DefaultValue", "Dlls", "TCLS.dll,TenBase.dll,Dir.dll,TenTPF.dll,MemoryAlloctor.dll,June.dll,log.dll,qxpatch.dll", QxDllpath.c_str());
     HANDLE hMapping = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, 0x255, "GW_APSInfo");
 
@@ -213,22 +189,15 @@ void QTServer::startNewGame() {
     pLogMsg->DatiType = 0;
     pLogMsg->DatiErrorCode = 0;
 
-    //CStringW cwDatiPwd, cwacc, cwpsw, cwarea, cwserver, cwDatiAcc;
     USES_CONVERSION;
-    //cwacc = A2W(Ltp.Account);
-    //cwpsw = A2W(Ltp.Key);
-    //cwserver = A2W(Ltp.Server);
-    //cwDatiAcc = A2W(m_Verificationcode.Use);
-    //cwDatiPwd = A2W(m_Verificationcode.Key);
-    //cwarea = A2W(Ltp.Area);
 
-    std::string acc = "2631608094";
-    std::string psw = "h0030526h";
+    std::string acc = ((const char*)strAcc.toLocal8Bit());
+    std::string psw = ((const char*)strPsw.toLocal8Bit());
     wcscpy_s(pLogMsg->acc, (acc.length() + 1) * 2, A2W(acc.c_str()));
     wcscpy_s(pLogMsg->psw, (psw.length() + 1) * 2, A2W(psw.c_str()));
 
-    std::string area = "觉醒内测区";
-    std::string server = "觉醒内测1服";
+    std::string area = ((const char*)strArea.toLocal8Bit());
+    std::string server = ((const char*)strServer.toLocal8Bit());
     wcscpy_s(pLogMsg->area, (area.length() + 1) * 2, A2W(area.c_str()));
     wcscpy_s(pLogMsg->server, (server.length() + 1) * 2, A2W(server.c_str()));
 
@@ -236,4 +205,23 @@ void QTServer::startNewGame() {
     //wcscpy_s(pLogMsg->DatiPwd, wcslen(cwDatiPwd) + 1, cwDatiPwd);
 }
 
-
+//std::string QTServer::GetGetCurentModulePath() {
+//    //-----------------------------------------------------------
+//    //    獲取當前程序全路徑
+//    //-----------------------------------------------------------
+//    char dllname[MAX_PATH];
+//    GetModuleFileName(NULL, dllname, MAX_PATH);
+//
+//    //-----------------------------------------------------------
+//    //    轉換成 QString, 然後去掉路徑中的文件名, 保留當前目錄
+//    //-----------------------------------------------------------
+//    std::string strDll = dllname;
+//    //QString qstrDll = QString::fromStdString(strDll); // 此用法会造成中文乱码
+//    QString qstrDll = QString::fromLocal8Bit(strDll.c_str());
+//    QString strSplit = "\\";
+//    int index = qstrDll.lastIndexOf(strSplit);
+//    qstrDll = qstrDll.left(index);
+//    //strDll = qstrDll.toStdString(); // 此用法会造成程序崩溃
+//    strDll = std::string((const char*)qstrDll.toLocal8Bit());
+//    return strDll;
+//}

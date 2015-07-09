@@ -6,8 +6,7 @@
 #include <QtNetwork/QTcpServer>
 #include <QtNetwork/QTcpSocket>
 
-class QTServer : public QMainWindow
-{
+class QTServer : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -19,16 +18,17 @@ private:
     QTcpServer* m_tcpServer;
     QList<QTcpSocket *> m_tcpSocketList; //连接成功的套接字
     QString m_gamePath;
-    
-private slots:
-    void message_read();
-    void client_closed();
-    void new_connect();
-    void AddAccount();
-    void OptionSet();
-    void startNewGame();
-    void initGamePath();
-    void addAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
+    //std::string GetGetCurentModulePath();
+
+    private slots:
+    void SlotMessageRead();
+    void SlotClientClosed();
+    void SlotNewConnect();
+    void SlotAddAccount();
+    void SlotOptionSet();
+    void SlotStartNewGame(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
+    void SlotInitGamePath();
+    void SlotAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
 };
 
 #endif // QTSERVER_H

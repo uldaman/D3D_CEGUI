@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_COption_t {
     QByteArrayData data[5];
-    char stringdata[42];
+    char stringdata[48];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,13 +30,14 @@ struct qt_meta_stringdata_COption_t {
 static const qt_meta_stringdata_COption_t qt_meta_stringdata_COption = {
     {
 QT_MOC_LITERAL(0, 0, 7), // "COption"
-QT_MOC_LITERAL(1, 8, 11), // "newGamePath"
-QT_MOC_LITERAL(2, 20, 0), // ""
-QT_MOC_LITERAL(3, 21, 4), // "name"
-QT_MOC_LITERAL(4, 26, 15) // "PushButton_Path"
+QT_MOC_LITERAL(1, 8, 17), // "SignalNewGamePath"
+QT_MOC_LITERAL(2, 26, 0), // ""
+QT_MOC_LITERAL(3, 27, 4), // "name"
+QT_MOC_LITERAL(4, 32, 15) // "PushButton_Path"
 
     },
-    "COption\0newGamePath\0\0name\0PushButton_Path"
+    "COption\0SignalNewGamePath\0\0name\0"
+    "PushButton_Path"
 };
 #undef QT_MOC_LITERAL
 
@@ -73,7 +74,7 @@ void COption::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
     if (_c == QMetaObject::InvokeMetaMethod) {
         COption *_t = static_cast<COption *>(_o);
         switch (_id) {
-        case 0: _t->newGamePath((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 0: _t->SignalNewGamePath((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 1: _t->PushButton_Path(); break;
         default: ;
         }
@@ -82,7 +83,7 @@ void COption::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         void **func = reinterpret_cast<void **>(_a[1]);
         {
             typedef void (COption::*_t)(const QString & );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&COption::newGamePath)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&COption::SignalNewGamePath)) {
                 *result = 0;
             }
         }
@@ -126,7 +127,7 @@ int COption::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void COption::newGamePath(const QString & _t1)
+void COption::SignalNewGamePath(const QString & _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

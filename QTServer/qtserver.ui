@@ -99,23 +99,41 @@
      <height>23</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu">
+   <widget class="QMenu" name="menu_property">
     <property name="title">
-     <string>设置</string>
+     <string>挂机设置</string>
     </property>
-    <addaction name="actionAddAccount"/>
     <addaction name="actionOption"/>
    </widget>
-   <addaction name="menu"/>
+   <widget class="QMenu" name="menu_account">
+    <property name="title">
+     <string>账号设置</string>
+    </property>
+    <addaction name="actionAddAccount"/>
+    <addaction name="actionImportAcc"/>
+    <addaction name="actionExportAcc"/>
+   </widget>
+   <addaction name="menu_property"/>
+   <addaction name="menu_account"/>
   </widget>
-  <action name="actionAddAccount">
-   <property name="text">
-    <string>添加賬號</string>
-   </property>
-  </action>
   <action name="actionOption">
    <property name="text">
     <string>屬性設置</string>
+   </property>
+  </action>
+  <action name="actionAddAccount">
+   <property name="text">
+    <string>添加账号</string>
+   </property>
+  </action>
+  <action name="actionImportAcc">
+   <property name="text">
+    <string>导入账号</string>
+   </property>
+  </action>
+  <action name="actionExportAcc">
+   <property name="text">
+    <string>导出账号</string>
    </property>
   </action>
  </widget>

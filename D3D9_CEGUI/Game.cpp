@@ -263,39 +263,70 @@ void CGame::initGui() {
     zone.initZonesInfo();
     CRole::CatInvincible();
     CRole::initAllItems();
-    PROCESSENTRY32 pe32;
-    if (!GetProcessOf("CeguiInject.exe", &pe32)) {
+    //PROCESSENTRY32 pe32;
+    //if (!GetProcessOf("CeguiInject.exe", &pe32)) {
+    //    ExitProcess(0);
+    
+    if (GetWgPath() == false) {
         ExitProcess(0);
     }
 }
 
-bool GetProcessOf(const char exename[], PROCESSENTRY32 *process) {
-    process->dwSize = sizeof(PROCESSENTRY32);
-    HANDLE handle = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-
-    if (Process32First(handle, process)) {
-        do {
-            if (lstrcmp(process->szExeFile, exename) == 0) {
-                MODULEENTRY32 lpme;
-                lpme.dwSize = sizeof(MODULEENTRY32);
-                HANDLE hModuleShot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, process->th32ProcessID);
-                if (Module32First(hModuleShot, &lpme)) {
-                    g_strServerExePath = lpme.szExePath;
-                    int nPos = g_strServerExePath.find_last_of('\\');
-                    if (std::string::npos != nPos) {
-                        g_strServerExePath = g_strServerExePath.substr(0, nPos);
-                    }
-                }
-                CloseHandle(hModuleShot);
-                CloseHandle(handle);
-                return true;
-            }
-        } while (Process32Next(handle, process));
+bool CGame::GetWgPath() {
+    DWORD pid = NULL;
+    HWND h = ::FindWindow(NULL, "¹ÖÎïÁÔÈËOnline$");
+    if (h == NULL) {
+        return false;
+    }
+    DWORD tid = GetWindowThreadProcessId(h, &pid);
+    if (pid == NULL) {
+        CloseHandle(h);
+        return false;
     }
 
-    CloseHandle(handle);
-    return false;
+    MODULEENTRY32 lpme;
+    lpme.dwSize = sizeof(MODULEENTRY32);
+    HANDLE hModuleShot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, pid);
+    if (Module32First(hModuleShot, &lpme)) {
+        g_strServerExePath = lpme.szExePath;
+        int nPos = g_strServerExePath.find_last_of('\\');
+        if (std::string::npos != nPos) {
+            g_strServerExePath = g_strServerExePath.substr(0, nPos);
+        }
+    }
+
+    CloseHandle(hModuleShot);
+    CloseHandle(h);
+    return true;
 }
+
+//bool GetProcessOf(const char exename[], PROCESSENTRY32 *process) {
+//    process->dwSize = sizeof(PROCESSENTRY32);
+//    HANDLE handle = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+//
+//    if (Process32First(handle, process)) {
+//        do {
+//            if (lstrcmp(process->szExeFile, exename) == 0) {
+//                MODULEENTRY32 lpme;
+//                lpme.dwSize = sizeof(MODULEENTRY32);
+//                HANDLE hModuleShot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, process->th32ProcessID);
+//                if (Module32First(hModuleShot, &lpme)) {
+//                    g_strServerExePath = lpme.szExePath;
+//                    int nPos = g_strServerExePath.find_last_of('\\');
+//                    if (std::string::npos != nPos) {
+//                        g_strServerExePath = g_strServerExePath.substr(0, nPos);
+//                    }
+//                }
+//                CloseHandle(hModuleShot);
+//                CloseHandle(handle);
+//                return true;
+//            }
+//        } while (Process32Next(handle, process));
+//    }
+//
+//    CloseHandle(handle);
+//    return false;
+//}
 
 bool CGame::onSkillBtn(const CEGUI::EventArgs& args) {
     if (m_itemWnd->isVisible()) {

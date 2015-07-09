@@ -57,7 +57,7 @@ HRESULT APIENTRY hkIDirect3D9::CreateDevice(UINT Adapter, D3DDEVTYPE DeviceType,
                 theApp.m_OrgWndProc = ::GetWindowLong(theApp.m_hGWnd, GWL_WNDPROC);
                 if (theApp.m_OrgWndProc) {
                     ::SetWindowLong(theApp.m_hGWnd, GWL_WNDPROC, (LONG)&FilterWndProc);
-                    //g_pSocketClient = new CSocketClient(theApp.m_hGWnd);
+                    g_pSocketClient = new CSocketClient(theApp.m_hGWnd);
                 } else {
                     martin->add_log("GetWindowLong() Failed.");
                     ::ExitProcess(-1);

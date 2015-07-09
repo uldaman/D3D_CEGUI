@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_CAddAccount_t {
     QByteArrayData data[8];
-    char stringdata[73];
+    char stringdata[79];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,17 +30,17 @@ struct qt_meta_stringdata_CAddAccount_t {
 static const qt_meta_stringdata_CAddAccount_t qt_meta_stringdata_CAddAccount = {
     {
 QT_MOC_LITERAL(0, 0, 11), // "CAddAccount"
-QT_MOC_LITERAL(1, 12, 6), // "newAcc"
-QT_MOC_LITERAL(2, 19, 0), // ""
-QT_MOC_LITERAL(3, 20, 6), // "strAcc"
-QT_MOC_LITERAL(4, 27, 6), // "strPsw"
-QT_MOC_LITERAL(5, 34, 7), // "strArea"
-QT_MOC_LITERAL(6, 42, 9), // "strServer"
-QT_MOC_LITERAL(7, 52, 20) // "PushButton_Enter_Acc"
+QT_MOC_LITERAL(1, 12, 12), // "SignalNewAcc"
+QT_MOC_LITERAL(2, 25, 0), // ""
+QT_MOC_LITERAL(3, 26, 6), // "strAcc"
+QT_MOC_LITERAL(4, 33, 6), // "strPsw"
+QT_MOC_LITERAL(5, 40, 7), // "strArea"
+QT_MOC_LITERAL(6, 48, 9), // "strServer"
+QT_MOC_LITERAL(7, 58, 20) // "PushButton_Enter_Acc"
 
     },
-    "CAddAccount\0newAcc\0\0strAcc\0strPsw\0"
-    "strArea\0strServer\0PushButton_Enter_Acc"
+    "CAddAccount\0SignalNewAcc\0\0strAcc\0"
+    "strPsw\0strArea\0strServer\0PushButton_Enter_Acc"
 };
 #undef QT_MOC_LITERAL
 
@@ -77,7 +77,7 @@ void CAddAccount::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
     if (_c == QMetaObject::InvokeMetaMethod) {
         CAddAccount *_t = static_cast<CAddAccount *>(_o);
         switch (_id) {
-        case 0: _t->newAcc((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4]))); break;
+        case 0: _t->SignalNewAcc((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4]))); break;
         case 1: _t->PushButton_Enter_Acc(); break;
         default: ;
         }
@@ -86,7 +86,7 @@ void CAddAccount::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         void **func = reinterpret_cast<void **>(_a[1]);
         {
             typedef void (CAddAccount::*_t)(const QString & , const QString & , const QString & , const QString & );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CAddAccount::newAcc)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CAddAccount::SignalNewAcc)) {
                 *result = 0;
             }
         }
@@ -130,7 +130,7 @@ int CAddAccount::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void CAddAccount::newAcc(const QString & _t1, const QString & _t2, const QString & _t3, const QString & _t4)
+void CAddAccount::SignalNewAcc(const QString & _t1, const QString & _t2, const QString & _t3, const QString & _t4)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

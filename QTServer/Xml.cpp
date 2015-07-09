@@ -13,9 +13,12 @@ BOOL CXml::FindXmlKeyFlag(std::vector<std::string> &arrFindXmlKeyName, TiXmlElem
         return FALSE;
     }
     for (auto& v : arrFindXmlKeyName) {
-        if (v.find(Level->Value()) != std::string::npos) {
+        //if (v.find(Level->Value()) != std::string::npos) {
+        //    return TRUE;
+        //}
+        if (v == Level->Value()) {
             return TRUE;
-        }
+       } 
     }
     return FALSE;
 }

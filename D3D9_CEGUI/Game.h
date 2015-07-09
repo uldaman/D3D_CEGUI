@@ -18,6 +18,7 @@ public:
     LRESULT CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lparam);
 
     void initGui();
+    bool GetWgPath(); // 获取控制台路径
     CEGUI::utf8* AToUtf8(const char* pMbcs);
 
     CEGUI::DefaultWindow* m_root;

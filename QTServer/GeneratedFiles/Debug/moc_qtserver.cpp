@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_QTServer_t {
     QByteArrayData data[14];
-    char stringdata[135];
+    char stringdata[164];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,25 +30,26 @@ struct qt_meta_stringdata_QTServer_t {
 static const qt_meta_stringdata_QTServer_t qt_meta_stringdata_QTServer = {
     {
 QT_MOC_LITERAL(0, 0, 8), // "QTServer"
-QT_MOC_LITERAL(1, 9, 12), // "message_read"
-QT_MOC_LITERAL(2, 22, 0), // ""
-QT_MOC_LITERAL(3, 23, 13), // "client_closed"
-QT_MOC_LITERAL(4, 37, 11), // "new_connect"
-QT_MOC_LITERAL(5, 49, 10), // "AddAccount"
-QT_MOC_LITERAL(6, 60, 9), // "OptionSet"
-QT_MOC_LITERAL(7, 70, 12), // "startNewGame"
-QT_MOC_LITERAL(8, 83, 12), // "initGamePath"
-QT_MOC_LITERAL(9, 96, 6), // "addAcc"
-QT_MOC_LITERAL(10, 103, 6), // "strAcc"
-QT_MOC_LITERAL(11, 110, 6), // "strPsw"
-QT_MOC_LITERAL(12, 117, 7), // "strArea"
-QT_MOC_LITERAL(13, 125, 9) // "strServer"
+QT_MOC_LITERAL(1, 9, 15), // "SlotMessageRead"
+QT_MOC_LITERAL(2, 25, 0), // ""
+QT_MOC_LITERAL(3, 26, 16), // "SlotClientClosed"
+QT_MOC_LITERAL(4, 43, 14), // "SlotNewConnect"
+QT_MOC_LITERAL(5, 58, 14), // "SlotAddAccount"
+QT_MOC_LITERAL(6, 73, 13), // "SlotOptionSet"
+QT_MOC_LITERAL(7, 87, 16), // "SlotStartNewGame"
+QT_MOC_LITERAL(8, 104, 6), // "strAcc"
+QT_MOC_LITERAL(9, 111, 6), // "strPsw"
+QT_MOC_LITERAL(10, 118, 7), // "strArea"
+QT_MOC_LITERAL(11, 126, 9), // "strServer"
+QT_MOC_LITERAL(12, 136, 16), // "SlotInitGamePath"
+QT_MOC_LITERAL(13, 153, 10) // "SlotAddAcc"
 
     },
-    "QTServer\0message_read\0\0client_closed\0"
-    "new_connect\0AddAccount\0OptionSet\0"
-    "startNewGame\0initGamePath\0addAcc\0"
-    "strAcc\0strPsw\0strArea\0strServer"
+    "QTServer\0SlotMessageRead\0\0SlotClientClosed\0"
+    "SlotNewConnect\0SlotAddAccount\0"
+    "SlotOptionSet\0SlotStartNewGame\0strAcc\0"
+    "strPsw\0strArea\0strServer\0SlotInitGamePath\0"
+    "SlotAddAcc"
 };
 #undef QT_MOC_LITERAL
 
@@ -71,9 +72,9 @@ static const uint qt_meta_data_QTServer[] = {
        4,    0,   56,    2, 0x08 /* Private */,
        5,    0,   57,    2, 0x08 /* Private */,
        6,    0,   58,    2, 0x08 /* Private */,
-       7,    0,   59,    2, 0x08 /* Private */,
-       8,    0,   60,    2, 0x08 /* Private */,
-       9,    4,   61,    2, 0x08 /* Private */,
+       7,    4,   59,    2, 0x08 /* Private */,
+      12,    0,   68,    2, 0x08 /* Private */,
+      13,    4,   69,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -81,9 +82,9 @@ static const uint qt_meta_data_QTServer[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,    8,    9,   10,   11,
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,   10,   11,   12,   13,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,    8,    9,   10,   11,
 
        0        // eod
 };
@@ -93,14 +94,14 @@ void QTServer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
     if (_c == QMetaObject::InvokeMetaMethod) {
         QTServer *_t = static_cast<QTServer *>(_o);
         switch (_id) {
-        case 0: _t->message_read(); break;
-        case 1: _t->client_closed(); break;
-        case 2: _t->new_connect(); break;
-        case 3: _t->AddAccount(); break;
-        case 4: _t->OptionSet(); break;
-        case 5: _t->startNewGame(); break;
-        case 6: _t->initGamePath(); break;
-        case 7: _t->addAcc((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4]))); break;
+        case 0: _t->SlotMessageRead(); break;
+        case 1: _t->SlotClientClosed(); break;
+        case 2: _t->SlotNewConnect(); break;
+        case 3: _t->SlotAddAccount(); break;
+        case 4: _t->SlotOptionSet(); break;
+        case 5: _t->SlotStartNewGame((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4]))); break;
+        case 6: _t->SlotInitGamePath(); break;
+        case 7: _t->SlotAddAcc((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4]))); break;
         default: ;
         }
     }

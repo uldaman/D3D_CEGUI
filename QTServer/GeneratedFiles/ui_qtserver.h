@@ -26,13 +26,16 @@ QT_BEGIN_NAMESPACE
 class Ui_QTServerClass
 {
 public:
-    QAction *actionAddAccount;
     QAction *actionOption;
+    QAction *actionAddAccount;
+    QAction *actionImportAcc;
+    QAction *actionExportAcc;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
     CMyTableWidget *tableWidget;
     QMenuBar *menuBar;
-    QMenu *menu;
+    QMenu *menu_property;
+    QMenu *menu_account;
 
     void setupUi(QMainWindow *QTServerClass)
     {
@@ -44,10 +47,14 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(QTServerClass->sizePolicy().hasHeightForWidth());
         QTServerClass->setSizePolicy(sizePolicy);
-        actionAddAccount = new QAction(QTServerClass);
-        actionAddAccount->setObjectName(QStringLiteral("actionAddAccount"));
         actionOption = new QAction(QTServerClass);
         actionOption->setObjectName(QStringLiteral("actionOption"));
+        actionAddAccount = new QAction(QTServerClass);
+        actionAddAccount->setObjectName(QStringLiteral("actionAddAccount"));
+        actionImportAcc = new QAction(QTServerClass);
+        actionImportAcc->setObjectName(QStringLiteral("actionImportAcc"));
+        actionExportAcc = new QAction(QTServerClass);
+        actionExportAcc->setObjectName(QStringLiteral("actionExportAcc"));
         centralWidget = new QWidget(QTServerClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
@@ -81,13 +88,18 @@ public:
         menuBar = new QMenuBar(QTServerClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 958, 23));
-        menu = new QMenu(menuBar);
-        menu->setObjectName(QStringLiteral("menu"));
+        menu_property = new QMenu(menuBar);
+        menu_property->setObjectName(QStringLiteral("menu_property"));
+        menu_account = new QMenu(menuBar);
+        menu_account->setObjectName(QStringLiteral("menu_account"));
         QTServerClass->setMenuBar(menuBar);
 
-        menuBar->addAction(menu->menuAction());
-        menu->addAction(actionAddAccount);
-        menu->addAction(actionOption);
+        menuBar->addAction(menu_property->menuAction());
+        menuBar->addAction(menu_account->menuAction());
+        menu_property->addAction(actionOption);
+        menu_account->addAction(actionAddAccount);
+        menu_account->addAction(actionImportAcc);
+        menu_account->addAction(actionExportAcc);
 
         retranslateUi(QTServerClass);
 
@@ -97,9 +109,12 @@ public:
     void retranslateUi(QMainWindow *QTServerClass)
     {
         QTServerClass->setWindowTitle(QApplication::translate("QTServerClass", "\346\200\252\347\211\251\347\214\216\344\272\272Online$", 0));
-        actionAddAccount->setText(QApplication::translate("QTServerClass", "\346\267\273\345\212\240\350\263\254\350\231\237", 0));
         actionOption->setText(QApplication::translate("QTServerClass", "\345\261\254\346\200\247\350\250\255\347\275\256", 0));
-        menu->setTitle(QApplication::translate("QTServerClass", "\350\256\276\347\275\256", 0));
+        actionAddAccount->setText(QApplication::translate("QTServerClass", "\346\267\273\345\212\240\350\264\246\345\217\267", 0));
+        actionImportAcc->setText(QApplication::translate("QTServerClass", "\345\257\274\345\205\245\350\264\246\345\217\267", 0));
+        actionExportAcc->setText(QApplication::translate("QTServerClass", "\345\257\274\345\207\272\350\264\246\345\217\267", 0));
+        menu_property->setTitle(QApplication::translate("QTServerClass", "\346\214\202\346\234\272\350\256\276\347\275\256", 0));
+        menu_account->setTitle(QApplication::translate("QTServerClass", "\350\264\246\345\217\267\350\256\276\347\275\256", 0));
     } // retranslateUi
 
 };

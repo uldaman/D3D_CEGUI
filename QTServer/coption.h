@@ -19,7 +19,7 @@ private:
     void PushButton_Path();
 
 signals:
-    void newGamePath(const QString &name);
+    void SignalNewGamePath(const QString &name);
 };
 
 #endif // COPTION_H

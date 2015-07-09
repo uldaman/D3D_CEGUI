@@ -18,7 +18,7 @@ private:
     void PushButton_Enter_Acc();
 
 signals:
-    void newAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer); // 添加新账号
+    void SignalNewAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer); // 添加新账号
 };
 
 #endif // CADDACCOUNT_H

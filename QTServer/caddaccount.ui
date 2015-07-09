@@ -29,7 +29,7 @@
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>60</y>
+     <y>50</y>
      <width>101</width>
      <height>20</height>
     </rect>
@@ -49,7 +49,7 @@
    <property name="geometry">
     <rect>
      <x>260</x>
-     <y>60</y>
+     <y>50</y>
      <width>121</width>
      <height>22</height>
     </rect>
@@ -73,8 +73,8 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>12</x>
-     <y>60</y>
+     <x>10</x>
+     <y>50</y>
      <width>30</width>
      <height>21</height>
     </rect>
@@ -90,7 +90,7 @@
    <property name="geometry">
     <rect>
      <x>210</x>
-     <y>60</y>
+     <y>50</y>
      <width>41</width>
      <height>21</height>
     </rect>
@@ -106,17 +106,17 @@ background-color: rgb(255, 0, 127);</string>
   <widget class="QPushButton" name="pushButton_enter_acc">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>100</y>
-     <width>75</width>
-     <height>31</height>
+     <x>290</x>
+     <y>90</y>
+     <width>61</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
     <string>确  定</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -141,7 +141,7 @@ background-color: rgb(255, 0, 127);</string>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>210</x>
@@ -165,6 +165,32 @@ background-color: rgb(255, 0, 127);</string>
      <widget class="QLineEdit" name="lineEdit_psw"/>
     </item>
    </layout>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>90</y>
+     <width>30</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(0, 170, 0);</string>
+   </property>
+   <property name="text">
+    <string>脚本:</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_script">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>90</y>
+     <width>101</width>
+     <height>20</height>
+    </rect>
+   </property>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
