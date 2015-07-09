@@ -28,7 +28,7 @@ private:
     void SlotOptionSet();
     void SlotStartNewGame(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
     void SlotInitGamePath();
-    void SlotAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
+    void SlotAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer, const QString &strScript);
 };
 
 #endif // QTSERVER_H

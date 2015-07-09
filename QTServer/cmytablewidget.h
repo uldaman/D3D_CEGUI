@@ -16,6 +16,8 @@ public:
     QString m_area;
     QTableWidgetItem* m_itemServer;
     QString m_server;
+    QTableWidgetItem* m_itemScript;
+    QString m_script;
 
 protected:
     void CreateActions();
@@ -32,12 +34,12 @@ private slots:
 void SlotAddAccount();
 void SlotStartGame();
 void SlotChangeAccount();
-void SlotChangeAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
-void SlotAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
+void SlotChangeAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer, const QString &strScript);
+void SlotAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer, const QString &strScript);
 
 signals:
 void SignalStartNewGame(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
-void SignalSendAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
+void SignalSendAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer, const QString &strScript);
 };
 
 #endif // CMYTABLEWIDGET_H

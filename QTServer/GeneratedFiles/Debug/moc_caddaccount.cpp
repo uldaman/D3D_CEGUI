@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_CAddAccount_t {
-    QByteArrayData data[8];
-    char stringdata[79];
+    QByteArrayData data[9];
+    char stringdata[89];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,11 +36,13 @@ QT_MOC_LITERAL(3, 26, 6), // "strAcc"
 QT_MOC_LITERAL(4, 33, 6), // "strPsw"
 QT_MOC_LITERAL(5, 40, 7), // "strArea"
 QT_MOC_LITERAL(6, 48, 9), // "strServer"
-QT_MOC_LITERAL(7, 58, 20) // "PushButton_Enter_Acc"
+QT_MOC_LITERAL(7, 58, 9), // "strScript"
+QT_MOC_LITERAL(8, 68, 20) // "PushButton_Enter_Acc"
 
     },
     "CAddAccount\0SignalNewAcc\0\0strAcc\0"
-    "strPsw\0strArea\0strServer\0PushButton_Enter_Acc"
+    "strPsw\0strArea\0strServer\0strScript\0"
+    "PushButton_Enter_Acc"
 };
 #undef QT_MOC_LITERAL
 
@@ -58,13 +60,13 @@ static const uint qt_meta_data_CAddAccount[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    4,   24,    2, 0x06 /* Public */,
+       1,    5,   24,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    0,   33,    2, 0x08 /* Private */,
+       8,    0,   35,    2, 0x08 /* Private */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,    3,    4,    5,    6,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,    3,    4,    5,    6,    7,
 
  // slots: parameters
     QMetaType::Void,
@@ -77,7 +79,7 @@ void CAddAccount::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
     if (_c == QMetaObject::InvokeMetaMethod) {
         CAddAccount *_t = static_cast<CAddAccount *>(_o);
         switch (_id) {
-        case 0: _t->SignalNewAcc((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4]))); break;
+        case 0: _t->SignalNewAcc((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4])),(*reinterpret_cast< const QString(*)>(_a[5]))); break;
         case 1: _t->PushButton_Enter_Acc(); break;
         default: ;
         }
@@ -85,7 +87,7 @@ void CAddAccount::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (CAddAccount::*_t)(const QString & , const QString & , const QString & , const QString & );
+            typedef void (CAddAccount::*_t)(const QString & , const QString & , const QString & , const QString & , const QString & );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CAddAccount::SignalNewAcc)) {
                 *result = 0;
             }
@@ -130,9 +132,9 @@ int CAddAccount::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void CAddAccount::SignalNewAcc(const QString & _t1, const QString & _t2, const QString & _t3, const QString & _t4)
+void CAddAccount::SignalNewAcc(const QString & _t1, const QString & _t2, const QString & _t3, const QString & _t4, const QString & _t5)
 {
-    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)) };
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)), const_cast<void*>(reinterpret_cast<const void*>(&_t5)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

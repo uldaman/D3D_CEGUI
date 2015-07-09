@@ -111,8 +111,9 @@ LuaGlue Lua_IsInFB(lua_State *L) {
 // MH_加载脚本
 LuaGlue Lua_LoadScript(lua_State *L) {
     std::string strScript = g_pClua->GetStringArgument(1, "");
-    std::string strPath = martin->GetModulePath(NULL);
-    strScript = strPath + "\\" + strScript;
+    //std::string strPath = martin->GetModulePath(NULL);
+    //strScript = strPath + "\\" + strScript;
+    strScript = g_strServerExePath + "\\Script\\" + strScript;
     g_pClua->RunScript(strScript.c_str());
 
     return 0;
@@ -810,7 +811,7 @@ LuaGlue Lua_UpgradeMushroom(lua_State *L) {
 
 // MH_存仓
 LuaGlue Lua_MoveInventoryItem(lua_State *L) {
-    std::string strItems = g_strServerExePath + "\\item.ini";
+    std::string strItems = g_strServerExePath + "\\Script\\item.ini";
     CMy_Ini obj_ini(strItems.c_str());
     strItems = obj_ini.GetString("Item", "存仓");
     std::vector<std::string> vctItems = martin->split(strItems, "|");
@@ -1150,12 +1151,12 @@ void LuaError_Output(const char* szBuffer) {
 unsigned int __stdcall ThreadAutoMatic(PVOID pM) {
     try {
         g_pClua->SetErrorHandler(LuaError_Output);
-
-        std::string strPath = martin->GetModulePath(NULL);
-        strPath += "\\S\\script";
+        //std::string strPath = martin->GetModulePath(NULL);
+        //strPath += "\\S\\script";
+        std::string strScript = g_strServerExePath + "\\Script\\script.lua";
         theApp.m_mainWnd->setText(theApp.AToUtf8("执行脚本中 ... "));
         theApp.m_questBtn->setText(theApp.AToUtf8("停止主线"));
-        g_pClua->RunScript(strPath.c_str());
+        g_pClua->RunScript(strScript.c_str());
     } catch (...) {
         //Interface_Output(TEXT("cLua::RunScript 异常!!"));
     }

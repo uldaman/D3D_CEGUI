@@ -40,8 +40,8 @@ void CMyTableWidget::SlotAddAccount() {
     a->show();
 }
 
-void CMyTableWidget::SlotAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer) {
-    emit SignalSendAddAcc(strAcc, strPsw, strArea, strServer);
+void CMyTableWidget::SlotAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer, const QString &strScript) {
+    emit SignalSendAddAcc(strAcc, strPsw, strArea, strServer, strScript);
 }
 
 
@@ -74,6 +74,9 @@ void CMyTableWidget::contextMenuEvent(QContextMenuEvent* event) {
 
         m_itemServer = this->item(m_nRow, 2);
         m_server = m_itemServer->data(Qt::DisplayRole).toString();
+
+        m_itemScript = this->item(m_nRow, 3);
+        m_script = m_itemScript->data(Qt::DisplayRole).toString();
     }
 
     //菜单出现的位置为当前鼠标的位置
@@ -81,11 +84,12 @@ void CMyTableWidget::contextMenuEvent(QContextMenuEvent* event) {
     event->accept();
 }
 
-void CMyTableWidget::SlotChangeAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer) {
+void CMyTableWidget::SlotChangeAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer, const QString &strScript) {
     m_itemAcc->setData(Qt::DisplayRole, strAcc);
     m_itemAcc->setData(Qt::UserRole, strPsw);
     m_itemArea->setData(Qt::DisplayRole, strArea);
     m_itemServer->setData(Qt::DisplayRole, strServer);
+    m_itemScript->setData(Qt::DisplayRole, strScript);
 }
 
 void CMyTableWidget::SlotChangeAccount() {

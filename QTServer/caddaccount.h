@@ -10,6 +10,7 @@ class CAddAccount : public QDialog {
 public:
     CAddAccount(QWidget *parent = 0);
     ~CAddAccount();
+    bool TransferScript();
 
 private:
     Ui::CAddAccount ui;
@@ -18,7 +19,7 @@ private:
     void PushButton_Enter_Acc();
 
 signals:
-    void SignalNewAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer); // 添加新账号
+    void SignalNewAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer, const QString &strScript); // 添加新账号
 };
 
 #endif // CADDACCOUNT_H

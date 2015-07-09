@@ -15,8 +15,8 @@ QTServer::QTServer(QWidget *parent)
 
     //设置表头及大小
     QStringList header;
-    header << QStringLiteral("账号") << QStringLiteral("大区") << QStringLiteral("服务器")
-        << QStringLiteral("角色") << QStringLiteral("金币") << QStringLiteral("地图") << QStringLiteral("脚本");
+    header << QStringLiteral("账号") << QStringLiteral("大区") << QStringLiteral("服务器") << QStringLiteral("脚本")
+        << QStringLiteral("角色") << QStringLiteral("金币") << QStringLiteral("地图") << QStringLiteral("状态");
     ui.tableWidget->setColumnCount(header.count());
     ui.tableWidget->setHorizontalHeaderLabels(header);
     //ui.tableWidget->setRowCount(20); // 设置行数
@@ -100,13 +100,13 @@ void QTServer::SlotClientClosed() {
 
 
 void QTServer::SlotAddAccount() {
-    CAddAccount* a = new CAddAccount(this);
+    CAddAccount* a = new CAddAccount;
     a->setAttribute(Qt::WA_DeleteOnClose);
     QObject::connect(a, &CAddAccount::SignalNewAcc, this, &QTServer::SlotAddAcc);
     a->show();
 }
 
-void QTServer::SlotAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer) {
+void QTServer::SlotAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer, const QString &strScript) {
     QTableWidgetItem* _strAcc = new QTableWidgetItem(strAcc);
     //_strAcc->setText(QString::fromWCharArray(A2W(data)));
     _strAcc->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
@@ -118,12 +118,16 @@ void QTServer::SlotAddAcc(const QString &strAcc, const QString &strPsw, const QS
     QTableWidgetItem* _strServer = new QTableWidgetItem(strServer);
     _strServer->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
+    QTableWidgetItem* _strScript = new QTableWidgetItem(strScript);
+    _strScript->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+
     //首先rowCount()得到当前中的行数，然后在调用insertRow(row);即可
     int nIndex = ui.tableWidget->rowCount();
     ui.tableWidget->insertRow(nIndex);
     ui.tableWidget->setItem(nIndex, 0, _strAcc);
     ui.tableWidget->setItem(nIndex, 1, _strArea);
     ui.tableWidget->setItem(nIndex, 2, _strServer);
+    ui.tableWidget->setItem(nIndex, 3, _strScript);
 }
 
 void QTServer::SlotOptionSet() {
@@ -172,7 +176,6 @@ void QTServer::SlotStartNewGame(const QString &strAcc, const QString &strPsw, co
     //if (martin->CreatProcessInsertDLL("F:\\ty\\bootloader.exe", "\"F:\\ty\\bootloader.exe\"  0", "Q:\\Ty\\TyInject\\Debug\\Inject.dll", "F:\\ty/")) {
     //    // 如果返回成功, 就開啟 DLL 注入線程
     //}
-
 
     QString gamePath = m_gamePath;
     std::string QxDllpath = (const char*)(gamePath.replace("/", "\\").toLocal8Bit());
