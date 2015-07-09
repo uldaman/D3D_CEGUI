@@ -5,6 +5,9 @@
 #include "ui_qtserver.h"
 #include <QtNetwork/QTcpServer>
 #include <QtNetwork/QTcpSocket>
+#include <windows.h>
+
+const std::string g_strVersion = "0.4.18";
 
 class QTServer : public QMainWindow {
     Q_OBJECT
@@ -18,6 +21,8 @@ private:
     QTcpServer* m_tcpServer;
     QList<QTcpSocket *> m_tcpSocketList; //连接成功的套接字
     QString m_gamePath;
+    BOOL WhetherIsUpdated();
+
     //std::string GetGetCurentModulePath();
 
     private slots:

@@ -5,6 +5,7 @@
 #include "coption.h"
 #include "CMartin.h"
 #include "QMessageBox"
+#include "Xml.h"
 
 QTServer::QTServer(QWidget *parent)
     : QMainWindow(parent) {
@@ -176,6 +177,10 @@ void QTServer::SlotStartNewGame(const QString &strAcc, const QString &strPsw, co
     //if (martin->CreatProcessInsertDLL("F:\\ty\\bootloader.exe", "\"F:\\ty\\bootloader.exe\"  0", "Q:\\Ty\\TyInject\\Debug\\Inject.dll", "F:\\ty/")) {
     //    // 如果返回成功, 就開啟 DLL 注入線程
     //}
+    if (WhetherIsUpdated()) {
+        QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("游戏有更新! 请更新软件!"));
+        return;
+    }
 
     QString gamePath = m_gamePath;
     std::string QxDllpath = (const char*)(gamePath.replace("/", "\\").toLocal8Bit());
@@ -206,6 +211,25 @@ void QTServer::SlotStartNewGame(const QString &strAcc, const QString &strPsw, co
 
     //wcscpy_s(pLogMsg->DatiAcc, wcslen(cwDatiAcc) + 1, cwDatiAcc);
     //wcscpy_s(pLogMsg->DatiPwd, wcslen(cwDatiPwd) + 1, cwDatiPwd);
+}
+
+BOOL QTServer::WhetherIsUpdated() {
+    std::list<_Xml> lAllVal;
+    std::vector<std::string> arrFindXmlKeyName;
+    arrFindXmlKeyName.swap(std::vector<std::string>());
+    arrFindXmlKeyName.push_back("VersionDemoStr");
+
+    QString gamePath = m_gamePath;
+    std::string strVer = (const char*)(gamePath.replace("/", "\\").toLocal8Bit());
+    strVer += "\\TCLS\\mmog_data.xml";
+
+    CXml::DeadXml(lAllVal, arrFindXmlKeyName, strVer);
+    if (lAllVal.front().Val != g_strVersion) {
+        //MessageBox(NULL, "游戏有更新! 请更新软件!", "提示", MB_OK);
+        //ExitProcess(0);
+        return TRUE;
+    }
+    return FALSE;
 }
 
 //std::string QTServer::GetGetCurentModulePath() {
