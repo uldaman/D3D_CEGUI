@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>359</width>
-    <height>146</height>
+    <height>142</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -29,7 +29,7 @@
    <property name="geometry">
     <rect>
      <x>310</x>
-     <y>40</y>
+     <y>10</y>
      <width>41</width>
      <height>23</height>
     </rect>
@@ -43,7 +43,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>341</width>
+     <width>291</width>
      <height>22</height>
     </rect>
    </property>
@@ -58,14 +58,103 @@
     <item>
      <widget class="QLineEdit" name="lineEdit_path">
       <property name="text">
-       <string>請選擇遊戲主目錄,如『F:\ty』...</string>
+       <string>請選擇遊戲主目錄,如『F:\怪物猎人Online』...</string>
       </property>
      </widget>
     </item>
    </layout>
   </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>60</y>
+     <width>201</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 0, 0);</string>
+   </property>
+   <property name="title">
+    <string>注意</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>初次使用本软件, 请点击&quot;初始化&quot;,
+否则请直接点击&quot;确定.&quot;</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="pushButton_initializesAttribute">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>60</y>
+     <width>75</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>初始化</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_saveAttribute">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>100</y>
+     <width>75</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>确  定</string>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_saveAttribute</sender>
+   <signal>clicked()</signal>
+   <receiver>COption</receiver>
+   <slot>PushButton_SaveAttribute()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>277</x>
+     <y>113</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>342</x>
+     <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_initializesAttribute</sender>
+   <signal>clicked()</signal>
+   <receiver>COption</receiver>
+   <slot>PushButton_InitializesAttribute()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>270</x>
+     <y>70</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>337</x>
+     <y>44</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>PushButton_SaveAttribute()</slot>
+  <slot>PushButton_InitializesAttribute()</slot>
+ </slots>
 </ui>
