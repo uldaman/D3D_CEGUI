@@ -6,6 +6,7 @@
 #include "CMartin.h"
 #include "QMessageBox"
 #include "Xml.h"
+#include "QFileDialog"
 
 QTServer::QTServer(QWidget *parent)
     : QMainWindow(parent) {
@@ -32,7 +33,7 @@ QTServer::QTServer(QWidget *parent)
     //ui.tableWidget->horizontalHeader()->setStretchLastSection(true); //将最后一列延伸到整个列表全满
     ui.tableWidget->horizontalHeader()->setSectionsClickable(false); //设置表头不可点击（默认点击后进行排序）
     ui.tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch); // 所有列自适应窗口宽度
-    
+
     //设置隔一行变一颜色，即：一灰一白
     ui.tableWidget->setAlternatingRowColors(true);
 
@@ -55,6 +56,8 @@ QTServer::QTServer(QWidget *parent)
     //菜单栏关联
     connect(ui.actionAddAccount, SIGNAL(triggered()), this, SLOT(SlotAddAccount()));
     connect(ui.actionOption, SIGNAL(triggered()), this, SLOT(SlotOptionSet()));
+    connect(ui.actionExportAcc, SIGNAL(triggered()), this, SLOT(SlotExportAcc()));
+    connect(ui.actionImportAcc, SIGNAL(triggered()), this, SLOT(SlotImportAcc()));
     connect(ui.tableWidget, &CMyTableWidget::SignalSendAddAcc, this, &QTServer::SlotAddAcc);
 
     // 以下为设置游戏路径
@@ -122,6 +125,9 @@ void QTServer::SlotAddAcc(const QString &strAcc, const QString &strPsw, const QS
     QTableWidgetItem* _strScript = new QTableWidgetItem(strScript);
     _strScript->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
+    QTableWidgetItem* _strStatu = new QTableWidgetItem(QStringLiteral("空闲"));
+    _strStatu->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+
     //首先rowCount()得到当前中的行数，然后在调用insertRow(row);即可
     int nIndex = ui.tableWidget->rowCount();
     ui.tableWidget->insertRow(nIndex);
@@ -129,6 +135,7 @@ void QTServer::SlotAddAcc(const QString &strAcc, const QString &strPsw, const QS
     ui.tableWidget->setItem(nIndex, 1, _strArea);
     ui.tableWidget->setItem(nIndex, 2, _strServer);
     ui.tableWidget->setItem(nIndex, 3, _strScript);
+    ui.tableWidget->setItem(nIndex, 7, _strStatu);
 }
 
 void QTServer::SlotOptionSet() {
@@ -177,10 +184,6 @@ void QTServer::SlotStartNewGame(const QString &strAcc, const QString &strPsw, co
     //if (martin->CreatProcessInsertDLL("F:\\ty\\bootloader.exe", "\"F:\\ty\\bootloader.exe\"  0", "Q:\\Ty\\TyInject\\Debug\\Inject.dll", "F:\\ty/")) {
     //    // 如果返回成功, 就開啟 DLL 注入線程
     //}
-    if (WhetherIsUpdated()) {
-        QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("游戏有更新! 请更新软件!"));
-        return;
-    }
 
     QString gamePath = m_gamePath;
     std::string QxDllpath = (const char*)(gamePath.replace("/", "\\").toLocal8Bit());
@@ -211,6 +214,62 @@ void QTServer::SlotStartNewGame(const QString &strAcc, const QString &strPsw, co
 
     //wcscpy_s(pLogMsg->DatiAcc, wcslen(cwDatiAcc) + 1, cwDatiAcc);
     //wcscpy_s(pLogMsg->DatiPwd, wcslen(cwDatiPwd) + 1, cwDatiPwd);
+
+    QString loginPath = m_gamePath;
+    std::string strLoginPath = (const char*)(loginPath.replace("/", "\\").toLocal8Bit());
+    strLoginPath += "\\TCLS\\Client.exe";
+    STARTUPINFO StartupInfo = { sizeof(STARTUPINFO) }; // 第一个参数是 STARTUPINFO.cb
+    StartupInfo.dwFlags = STARTF_USESHOWWINDOW;
+    StartupInfo.wShowWindow = TRUE;
+    PROCESS_INFORMATION ProcessInformation;
+    BOOL bRet = ::CreateProcess(
+        strLoginPath.c_str(),
+        NULL,
+        NULL,
+        NULL,
+        FALSE,
+        CREATE_NEW_CONSOLE | CREATE_UNICODE_ENVIRONMENT | CREATE_DEFAULT_ERROR_MODE,
+        NULL,
+        NULL,
+        &StartupInfo,
+        &ProcessInformation);
+    if (bRet == 0) {
+        QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("启动游戏失败! 请稍后再试!"));
+        return;
+    }
+
+    ::CloseHandle(ProcessInformation.hThread);
+    ::CloseHandle(ProcessInformation.hProcess);
+
+    int RunTimeout = 0;
+    while (pLogMsg->cmdtype == SHARELGOININFOSTATE_INFO) { //等待更改状态
+        Sleep(1000);
+        RunTimeout += 1000;
+
+        if (RunTimeout >= 5000) {
+            if (WhetherIsUpdated()) { // 检查游戏是否更新
+                QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("游戏有更新! 请更新软件!"));
+                return;
+            }
+        }
+
+        if (RunTimeout > 180000) {
+            QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("答题错误或登录超时!"));
+            return;
+        }
+    }
+
+    switch (pLogMsg->cmdtype) {
+    case SHARELGOININFOSTATE_SUCCEED: // 成功登陆
+        QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("成功登录!"));
+        break;
+    case SHARELGOINRET_ERROR_ACCDONGJIE:
+        QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("账号被冻结!"));
+        return;
+    case SHARELGOINRET_ERROR_PSWWRONG://密码错误
+        QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("密码错误!"));
+        return;
+    }
 }
 
 BOOL QTServer::WhetherIsUpdated() {
@@ -230,6 +289,85 @@ BOOL QTServer::WhetherIsUpdated() {
         return TRUE;
     }
     return FALSE;
+}
+
+void QTServer::SlotExportAcc() {
+    QString fileName = QFileDialog::getSaveFileName(this, "Save File", "user.ini");
+
+    if (!fileName.isEmpty()) {
+        std::string strUser = (const char*)(fileName.replace("/", "\\").toLocal8Bit());
+        martin->SetPathName(strUser.c_str());
+        martin->DeleteSection("user");
+
+        int nCount = ui.tableWidget->rowCount();
+        if (nCount) {
+            for (int nCurrentRow = 0; nCurrentRow < nCount; nCurrentRow++) {
+                std::vector<std::string> userVector;
+                QTableWidgetItem* pItem = ui.tableWidget->item(nCurrentRow, 0); 
+                QString strAcc = pItem->data(Qt::DisplayRole).toString(); //账号
+                QString strPsw = pItem->data(Qt::UserRole).toString(); //密码
+                userVector.push_back((const char*)strPsw.toLocal8Bit());
+
+                pItem = ui.tableWidget->item(nCurrentRow, 1);
+                QString strArea = pItem->data(Qt::DisplayRole).toString(); // 大区
+                userVector.push_back((const char*)strArea.toLocal8Bit());
+
+                pItem = ui.tableWidget->item(nCurrentRow, 2);
+                QString strServer = pItem->data(Qt::DisplayRole).toString(); // 服
+                userVector.push_back((const char*)strServer.toLocal8Bit());
+
+                pItem = ui.tableWidget->item(nCurrentRow, 3);
+                QString strScript = pItem->data(Qt::DisplayRole).toString(); // 脚本
+                userVector.push_back((const char*)strScript.toLocal8Bit());
+
+                pItem = ui.tableWidget->item(nCurrentRow, 7);
+                QString strStatu = pItem->data(Qt::DisplayRole).toString(); // 状态
+                userVector.push_back((const char*)strStatu.toLocal8Bit());
+                
+                martin->WriteArray("user", (const char*)strAcc.toLocal8Bit(), &userVector);
+            }
+        }
+    }
+}
+
+void QTServer::SlotImportAcc() {
+    QString fileName = QFileDialog::getOpenFileName(this, "Open File", "user.ini", "ini (*.ini)");
+
+    if (!fileName.isEmpty()) {
+        std::string strUser = (const char*)(fileName.replace("/", "\\").toLocal8Bit());
+        martin->SetPathName(strUser.c_str());
+
+        std::vector<std::string> strFilterName;
+        std::vector<std::string> strContent;
+        martin->GetKeyNames("user", &strFilterName);
+        for (auto& v : strFilterName) {
+            QTableWidgetItem* _strAcc = new QTableWidgetItem(QString::fromLocal8Bit(v.c_str()));
+            _strAcc->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+
+            martin->GetArray("user", v.c_str(), &strContent);
+            _strAcc->setData(Qt::UserRole, QString::fromLocal8Bit(strContent[0].c_str()));
+
+            QTableWidgetItem* _strArea = new QTableWidgetItem(QString::fromLocal8Bit(strContent[1].c_str()));
+            _strArea->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+
+            QTableWidgetItem* _strServer = new QTableWidgetItem(QString::fromLocal8Bit(strContent[2].c_str()));
+            _strServer->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+
+            QTableWidgetItem* _strScript = new QTableWidgetItem(QString::fromLocal8Bit(strContent[3].c_str()));
+            _strScript->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+
+            QTableWidgetItem* _strStatu = new QTableWidgetItem(QString::fromLocal8Bit(strContent[4].c_str()));
+            _strStatu->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+            //首先rowCount()得到当前中的行数，然后在调用insertRow(row);即可
+            int nIndex = ui.tableWidget->rowCount();
+            ui.tableWidget->insertRow(nIndex);
+            ui.tableWidget->setItem(nIndex, 0, _strAcc);
+            ui.tableWidget->setItem(nIndex, 1, _strArea);
+            ui.tableWidget->setItem(nIndex, 2, _strServer);
+            ui.tableWidget->setItem(nIndex, 3, _strScript);
+            ui.tableWidget->setItem(nIndex, 7, _strStatu);
+        }
+    }
 }
 
 //std::string QTServer::GetGetCurentModulePath() {

@@ -31,6 +31,8 @@ private:
     void SlotNewConnect();
     void SlotAddAccount();
     void SlotOptionSet();
+    void SlotExportAcc();
+    void SlotImportAcc();
     void SlotStartNewGame(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
     void SlotInitGamePath();
     void SlotAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer, const QString &strScript);

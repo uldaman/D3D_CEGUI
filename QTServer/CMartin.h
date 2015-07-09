@@ -70,6 +70,7 @@ public:
     static DWORD __StringSplit(LPCTSTR lpString, LPTSTR lpBuffer, DWORD dwBufSize, LPCTSTR lpDelimiter = NULL, BOOL bTrimString = TRUE);
     static BOOL ParseDNTString(LPCTSTR lpString, SUBSTRPROC lpFnStrProc, LPVOID lpParam = NULL);
     static BOOL CALLBACK __SubStrAdd(LPCTSTR lpString, LPVOID lpParam);
+    static BOOL CALLBACK __KeyPairProc(LPCTSTR lpString, LPVOID lpParam);
     LPTSTR __GetStringDynamic(LPCTSTR lpSection, LPCTSTR lpKey, LPCTSTR lpDefault = NULL) const;
 
     int GetInt(LPCTSTR lpSection, LPCTSTR lpKey, int nDefault, int nBase = BASE_DECIMAL) const;
@@ -78,7 +79,10 @@ public:
     std::string GetString(LPCTSTR lpSection, LPCTSTR lpKey, LPCTSTR lpDefault = NULL) const;
     void GetArray(LPCTSTR lpSection, LPCTSTR lpKey, std::vector<std::string>* pVector, LPCTSTR lpDelimiter = NULL, BOOL bTrimString = TRUE) const;
     DWORD GetArray(LPCTSTR lpSection, LPCTSTR lpKey, LPTSTR lpBuffer, DWORD dwBufSize, LPCTSTR lpDelimiter = NULL, BOOL bTrimString = TRUE) const;
-
+    DWORD GetKeyNames(LPCTSTR lpSection, LPTSTR lpBuffer, DWORD dwBufSize) const;
+    void GetKeyNames(LPCTSTR lpSection, std::vector<std::string>* pVector) const;
+    DWORD GetKeyLines(LPCTSTR lpSection, LPTSTR lpBuffer, DWORD dwBufSize) const;
+    void GetKeyLines(LPCTSTR lpSection, std::vector<std::string>* pVector) const;
 public:
     static CMartin* GetInstance();
 };
