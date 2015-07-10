@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_CMyTableWidget_t {
-    QByteArrayData data[14];
-    char stringdata[166];
+    QByteArrayData data[15];
+    char stringdata[171];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,22 +32,23 @@ static const qt_meta_stringdata_CMyTableWidget_t qt_meta_stringdata_CMyTableWidg
 QT_MOC_LITERAL(0, 0, 14), // "CMyTableWidget"
 QT_MOC_LITERAL(1, 15, 18), // "SignalStartNewGame"
 QT_MOC_LITERAL(2, 34, 0), // ""
-QT_MOC_LITERAL(3, 35, 6), // "strAcc"
-QT_MOC_LITERAL(4, 42, 6), // "strPsw"
-QT_MOC_LITERAL(5, 49, 7), // "strArea"
-QT_MOC_LITERAL(6, 57, 9), // "strServer"
-QT_MOC_LITERAL(7, 67, 16), // "SignalSendAddAcc"
-QT_MOC_LITERAL(8, 84, 9), // "strScript"
-QT_MOC_LITERAL(9, 94, 14), // "SlotAddAccount"
-QT_MOC_LITERAL(10, 109, 13), // "SlotStartGame"
-QT_MOC_LITERAL(11, 123, 17), // "SlotChangeAccount"
-QT_MOC_LITERAL(12, 141, 13), // "SlotChangeAcc"
-QT_MOC_LITERAL(13, 155, 10) // "SlotAddAcc"
+QT_MOC_LITERAL(3, 35, 4), // "nRow"
+QT_MOC_LITERAL(4, 40, 16), // "SignalSendAddAcc"
+QT_MOC_LITERAL(5, 57, 6), // "strAcc"
+QT_MOC_LITERAL(6, 64, 6), // "strPsw"
+QT_MOC_LITERAL(7, 71, 7), // "strArea"
+QT_MOC_LITERAL(8, 79, 9), // "strServer"
+QT_MOC_LITERAL(9, 89, 9), // "strScript"
+QT_MOC_LITERAL(10, 99, 14), // "SlotAddAccount"
+QT_MOC_LITERAL(11, 114, 13), // "SlotStartGame"
+QT_MOC_LITERAL(12, 128, 17), // "SlotChangeAccount"
+QT_MOC_LITERAL(13, 146, 13), // "SlotChangeAcc"
+QT_MOC_LITERAL(14, 160, 10) // "SlotAddAcc"
 
     },
     "CMyTableWidget\0SignalStartNewGame\0\0"
-    "strAcc\0strPsw\0strArea\0strServer\0"
-    "SignalSendAddAcc\0strScript\0SlotAddAccount\0"
+    "nRow\0SignalSendAddAcc\0strAcc\0strPsw\0"
+    "strArea\0strServer\0strScript\0SlotAddAccount\0"
     "SlotStartGame\0SlotChangeAccount\0"
     "SlotChangeAcc\0SlotAddAcc"
 };
@@ -67,26 +68,26 @@ static const uint qt_meta_data_CMyTableWidget[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    4,   49,    2, 0x06 /* Public */,
-       7,    5,   58,    2, 0x06 /* Public */,
+       1,    1,   49,    2, 0x06 /* Public */,
+       4,    5,   52,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       9,    0,   69,    2, 0x08 /* Private */,
-      10,    0,   70,    2, 0x08 /* Private */,
-      11,    0,   71,    2, 0x08 /* Private */,
-      12,    5,   72,    2, 0x08 /* Private */,
-      13,    5,   83,    2, 0x08 /* Private */,
+      10,    0,   63,    2, 0x08 /* Private */,
+      11,    0,   64,    2, 0x08 /* Private */,
+      12,    0,   65,    2, 0x08 /* Private */,
+      13,    5,   66,    2, 0x08 /* Private */,
+      14,    5,   77,    2, 0x08 /* Private */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,    3,    4,    5,    6,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,    3,    4,    5,    6,    8,
+    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,    5,    6,    7,    8,    9,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,    3,    4,    5,    6,    8,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,    3,    4,    5,    6,    8,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,    5,    6,    7,    8,    9,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,    5,    6,    7,    8,    9,
 
        0        // eod
 };
@@ -96,7 +97,7 @@ void CMyTableWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
     if (_c == QMetaObject::InvokeMetaMethod) {
         CMyTableWidget *_t = static_cast<CMyTableWidget *>(_o);
         switch (_id) {
-        case 0: _t->SignalStartNewGame((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4]))); break;
+        case 0: _t->SignalStartNewGame((*reinterpret_cast< const int(*)>(_a[1]))); break;
         case 1: _t->SignalSendAddAcc((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4])),(*reinterpret_cast< const QString(*)>(_a[5]))); break;
         case 2: _t->SlotAddAccount(); break;
         case 3: _t->SlotStartGame(); break;
@@ -109,7 +110,7 @@ void CMyTableWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (CMyTableWidget::*_t)(const QString & , const QString & , const QString & , const QString & );
+            typedef void (CMyTableWidget::*_t)(const int & );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CMyTableWidget::SignalStartNewGame)) {
                 *result = 0;
             }
@@ -160,9 +161,9 @@ int CMyTableWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void CMyTableWidget::SignalStartNewGame(const QString & _t1, const QString & _t2, const QString & _t3, const QString & _t4)
+void CMyTableWidget::SignalStartNewGame(const int & _t1)
 {
-    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)) };
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 

@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_QTServer_t {
-    QByteArrayData data[17];
-    char stringdata[202];
+    QByteArrayData data[18];
+    char stringdata[207];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -39,21 +39,22 @@ QT_MOC_LITERAL(6, 73, 13), // "SlotOptionSet"
 QT_MOC_LITERAL(7, 87, 13), // "SlotExportAcc"
 QT_MOC_LITERAL(8, 101, 13), // "SlotImportAcc"
 QT_MOC_LITERAL(9, 115, 16), // "SlotStartNewGame"
-QT_MOC_LITERAL(10, 132, 6), // "strAcc"
-QT_MOC_LITERAL(11, 139, 6), // "strPsw"
-QT_MOC_LITERAL(12, 146, 7), // "strArea"
-QT_MOC_LITERAL(13, 154, 9), // "strServer"
-QT_MOC_LITERAL(14, 164, 16), // "SlotInitGamePath"
-QT_MOC_LITERAL(15, 181, 10), // "SlotAddAcc"
-QT_MOC_LITERAL(16, 192, 9) // "strScript"
+QT_MOC_LITERAL(10, 132, 4), // "nRow"
+QT_MOC_LITERAL(11, 137, 16), // "SlotInitGamePath"
+QT_MOC_LITERAL(12, 154, 10), // "SlotAddAcc"
+QT_MOC_LITERAL(13, 165, 6), // "strAcc"
+QT_MOC_LITERAL(14, 172, 6), // "strPsw"
+QT_MOC_LITERAL(15, 179, 7), // "strArea"
+QT_MOC_LITERAL(16, 187, 9), // "strServer"
+QT_MOC_LITERAL(17, 197, 9) // "strScript"
 
     },
     "QTServer\0SlotMessageRead\0\0SlotClientClosed\0"
     "SlotNewConnect\0SlotAddAccount\0"
     "SlotOptionSet\0SlotExportAcc\0SlotImportAcc\0"
-    "SlotStartNewGame\0strAcc\0strPsw\0strArea\0"
-    "strServer\0SlotInitGamePath\0SlotAddAcc\0"
-    "strScript"
+    "SlotStartNewGame\0nRow\0SlotInitGamePath\0"
+    "SlotAddAcc\0strAcc\0strPsw\0strArea\0"
+    "strServer\0strScript"
 };
 #undef QT_MOC_LITERAL
 
@@ -78,9 +79,9 @@ static const uint qt_meta_data_QTServer[] = {
        6,    0,   68,    2, 0x08 /* Private */,
        7,    0,   69,    2, 0x08 /* Private */,
        8,    0,   70,    2, 0x08 /* Private */,
-       9,    4,   71,    2, 0x08 /* Private */,
-      14,    0,   80,    2, 0x08 /* Private */,
-      15,    5,   81,    2, 0x08 /* Private */,
+       9,    1,   71,    2, 0x08 /* Private */,
+      11,    0,   74,    2, 0x08 /* Private */,
+      12,    5,   75,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -90,9 +91,9 @@ static const uint qt_meta_data_QTServer[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,   10,   11,   12,   13,
+    QMetaType::Void, QMetaType::Int,   10,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,   10,   11,   12,   13,   16,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,   13,   14,   15,   16,   17,
 
        0        // eod
 };
@@ -109,7 +110,7 @@ void QTServer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 4: _t->SlotOptionSet(); break;
         case 5: _t->SlotExportAcc(); break;
         case 6: _t->SlotImportAcc(); break;
-        case 7: _t->SlotStartNewGame((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4]))); break;
+        case 7: _t->SlotStartNewGame((*reinterpret_cast< const int(*)>(_a[1]))); break;
         case 8: _t->SlotInitGamePath(); break;
         case 9: _t->SlotAddAcc((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4])),(*reinterpret_cast< const QString(*)>(_a[5]))); break;
         default: ;

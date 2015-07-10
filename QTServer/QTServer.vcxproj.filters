@@ -39,6 +39,9 @@
     <Filter Include="XML">
       <UniqueIdentifier>{f3519607-3925-49e6-a80f-f7ea60100ca6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="forcelib">
+      <UniqueIdentifier>{aaf4ca49-450f-4355-9cee-5d9bd9830fb6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -88,6 +91,12 @@
     </ClCompile>
     <ClCompile Include="tinystr.cpp">
       <Filter>XML</Filter>
+    </ClCompile>
+    <ClCompile Include="forcelib\ForceLibrary.cpp">
+      <Filter>forcelib</Filter>
+    </ClCompile>
+    <ClCompile Include="forcelib\TH32.cpp">
+      <Filter>forcelib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +149,12 @@
     </ClInclude>
     <ClInclude Include="tinystr.h">
       <Filter>XML</Filter>
+    </ClInclude>
+    <ClInclude Include="forcelib\ForceLib.h">
+      <Filter>forcelib</Filter>
+    </ClInclude>
+    <ClInclude Include="forcelib\TH32.h">
+      <Filter>forcelib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

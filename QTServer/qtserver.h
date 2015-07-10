@@ -7,7 +7,7 @@
 #include <QtNetwork/QTcpSocket>
 #include <windows.h>
 
-const std::string g_strVersion = "0.4.18";
+const std::string g_strVersion = "0.4.19";
 
 class QTServer : public QMainWindow {
     Q_OBJECT
@@ -33,7 +33,8 @@ private:
     void SlotOptionSet();
     void SlotExportAcc();
     void SlotImportAcc();
-    void SlotStartNewGame(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
+    //void SlotStartNewGame(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
+    void SlotStartNewGame(const int &nRow);
     void SlotInitGamePath();
     void SlotAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer, const QString &strScript);
 };

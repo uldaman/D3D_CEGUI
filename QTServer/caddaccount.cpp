@@ -15,7 +15,8 @@ bool CAddAccount::TransferScript() {
 
     QString strScript;
     do {
-        strScript = QString::fromStdString(fileInfo.name);
+        //strScript = QString::fromStdString(fileInfo.name); // ÖÐÎÄÂÒÂë
+        strScript = QString::fromLocal8Bit(fileInfo.name);
         ui.comboBox_script->addItem(strScript);
     } while (_findnext(handle, &fileInfo) == 0);
 
@@ -28,11 +29,17 @@ CAddAccount::CAddAccount(QWidget *parent)
     TransferScript();
     if (parent) {
         CMyTableWidget* pTable = (CMyTableWidget*)parent;
-        ui.lineEdit_acc->setText(pTable->m_acc);
-        ui.lineEdit_psw->setText(pTable->m_psw);
-        ui.comboBox_area->setCurrentIndex(ui.comboBox_area->findText(pTable->m_area));
-        ui.comboBox_server->setCurrentIndex(ui.comboBox_server->findText(pTable->m_server));
-        ui.comboBox_script->setCurrentIndex(ui.comboBox_script->findText(pTable->m_script));
+        QString strAcc = pTable->m_itemAcc->data(Qt::DisplayRole).toString();
+        QString strPsw = pTable->m_itemAcc->data(Qt::UserRole).toString();
+        QString strArea = pTable->m_itemArea->data(Qt::DisplayRole).toString();
+        QString strServer = pTable->m_itemServer->data(Qt::DisplayRole).toString();
+        QString strScript = pTable->m_itemScript->data(Qt::DisplayRole).toString();
+
+        ui.lineEdit_acc->setText(strAcc);
+        ui.lineEdit_psw->setText(strPsw);
+        ui.comboBox_area->setCurrentIndex(ui.comboBox_area->findText(strArea));
+        ui.comboBox_server->setCurrentIndex(ui.comboBox_server->findText(strServer));
+        ui.comboBox_script->setCurrentIndex(ui.comboBox_script->findText(strScript));
     }
 }
 

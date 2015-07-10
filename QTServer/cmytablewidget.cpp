@@ -47,7 +47,8 @@ void CMyTableWidget::SlotAddAcc(const QString &strAcc, const QString &strPsw, co
 
 void CMyTableWidget::SlotStartGame() {
     // 啟動遊戲
-    emit SignalStartNewGame(m_acc, m_psw, m_area, m_server);
+    //emit SignalStartNewGame(m_acc, m_psw, m_area, m_server);
+    emit SignalStartNewGame(m_nRow);
 }
 
 void CMyTableWidget::contextMenuEvent(QContextMenuEvent* event) {
@@ -66,17 +67,17 @@ void CMyTableWidget::contextMenuEvent(QContextMenuEvent* event) {
         m_popMenu->addAction(m_actionChange);
         m_popMenu->addAction(m_actionStart);
         m_itemAcc = this->item(m_nRow, 0);
-        m_acc = m_itemAcc->data(Qt::DisplayRole).toString();
-        m_psw = m_itemAcc->data(Qt::UserRole).toString();
+        //m_acc = m_itemAcc->data(Qt::DisplayRole).toString();
+        //m_psw = m_itemAcc->data(Qt::UserRole).toString();
 
         m_itemArea = this->item(m_nRow, 1);
-        m_area = m_itemArea->data(Qt::DisplayRole).toString();
+        //m_area = m_itemArea->data(Qt::DisplayRole).toString();
 
         m_itemServer = this->item(m_nRow, 2);
-        m_server = m_itemServer->data(Qt::DisplayRole).toString();
+        //m_server = m_itemServer->data(Qt::DisplayRole).toString();
 
         m_itemScript = this->item(m_nRow, 3);
-        m_script = m_itemScript->data(Qt::DisplayRole).toString();
+        //m_script = m_itemScript->data(Qt::DisplayRole).toString();
     }
 
     //菜单出现的位置为当前鼠标的位置

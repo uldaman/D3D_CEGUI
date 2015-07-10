@@ -7,6 +7,9 @@
 #include "QMessageBox"
 #include "Xml.h"
 #include "QFileDialog"
+#include <process.h>
+#include <tlhelp32.h>
+#include "forcelib\ForceLib.h"
 
 QTServer::QTServer(QWidget *parent)
     : QMainWindow(parent) {
@@ -102,7 +105,6 @@ void QTServer::SlotClientClosed() {
     }
 }
 
-
 void QTServer::SlotAddAccount() {
     CAddAccount* a = new CAddAccount;
     a->setAttribute(Qt::WA_DeleteOnClose);
@@ -125,8 +127,8 @@ void QTServer::SlotAddAcc(const QString &strAcc, const QString &strPsw, const QS
     QTableWidgetItem* _strScript = new QTableWidgetItem(strScript);
     _strScript->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
-    QTableWidgetItem* _strStatu = new QTableWidgetItem(QStringLiteral("空闲"));
-    _strStatu->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    QTableWidgetItem* _strStatus = new QTableWidgetItem(QStringLiteral("空闲"));
+    _strStatus->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
     //首先rowCount()得到当前中的行数，然后在调用insertRow(row);即可
     int nIndex = ui.tableWidget->rowCount();
@@ -135,7 +137,7 @@ void QTServer::SlotAddAcc(const QString &strAcc, const QString &strPsw, const QS
     ui.tableWidget->setItem(nIndex, 1, _strArea);
     ui.tableWidget->setItem(nIndex, 2, _strServer);
     ui.tableWidget->setItem(nIndex, 3, _strScript);
-    ui.tableWidget->setItem(nIndex, 7, _strStatu);
+    ui.tableWidget->setItem(nIndex, 7, _strStatus);
 }
 
 void QTServer::SlotOptionSet() {
@@ -180,11 +182,83 @@ enum SHARELGOININFOSTATE { //自动登录dll(新)
     SHARELGOINRET_ERROR_PSWWRONG
 };
 
-void QTServer::SlotStartNewGame(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer) {
-    //if (martin->CreatProcessInsertDLL("F:\\ty\\bootloader.exe", "\"F:\\ty\\bootloader.exe\"  0", "Q:\\Ty\\TyInject\\Debug\\Inject.dll", "F:\\ty/")) {
-    //    // 如果返回成功, 就開啟 DLL 注入線程
-    //}
+static BOOL g_bInjectDll = FALSE;
 
+bool GetProcessOf(const char exename[], PROCESSENTRY32 *process) {
+    HANDLE handle;
+    process->dwSize = sizeof(PROCESSENTRY32);
+    handle = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+
+    if (Process32First(handle, process)) {
+        do {
+            if (lstrcmp(process->szExeFile, exename) == 0) {
+                CloseHandle(handle);
+                return true;
+            }
+        } while (Process32Next(handle, process));
+    }
+
+    CloseHandle(handle);
+    return false;
+}
+
+bool GetThreadOf(DWORD ProcessID, THREADENTRY32* thread) {
+    HANDLE handle;
+    thread->dwSize = sizeof(THREADENTRY32);
+    handle = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
+
+    if (Thread32First(handle, thread)) {
+        do {
+            if (thread->th32OwnerProcessID == ProcessID) {
+                CloseHandle(handle);
+                return true;
+            }
+        } while (Thread32Next(handle, thread));
+    }
+
+    CloseHandle(handle);
+    return false;
+}
+
+unsigned __stdcall ThreadFun_InsertDLL(void * pParam) {
+    PROCESSENTRY32 pe32;
+    while (!GetProcessOf("MHOClient.exe", &pe32)) {
+        //if (GetAsyncKeyState(VK_ESCAPE)) {
+        //    return;
+        //}
+        if (g_bInjectDll == FALSE) {
+            return 0;
+        }
+        Sleep(10);
+    }
+
+    THREADENTRY32 te32;
+    while (!GetThreadOf(pe32.th32ProcessID, &te32)) {
+        if (g_bInjectDll == FALSE) {
+            return 0;
+        }
+        Sleep(2);
+    }
+
+    PROCESS_INFORMATION PI;
+    PI.dwProcessId = pe32.th32ProcessID;
+    PI.dwThreadId = te32.th32ThreadID;
+    PI.hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pe32.th32ProcessID);
+
+    std::string strDll = martin->GetModulePath(NULL);
+    strDll += "\\D3D9_CEGUI.dll";
+
+    if (!ForceLibrary(strDll.c_str(), &PI)) {
+        TerminateProcess(PI.hProcess, 0);
+        ::MessageBox(NULL, "无法开启插件...", "Tatnium Error", MB_ICONERROR);
+    }
+
+    CloseHandle(PI.hProcess);
+
+    return 0;
+}
+
+void QTServer::SlotStartNewGame(const int &nRow) {
     QString gamePath = m_gamePath;
     std::string QxDllpath = (const char*)(gamePath.replace("/", "\\").toLocal8Bit());
     QxDllpath += "\\TCLS\\Tenio.ini";
@@ -201,6 +275,21 @@ void QTServer::SlotStartNewGame(const QString &strAcc, const QString &strPsw, co
     pLogMsg->DatiErrorCode = 0;
 
     USES_CONVERSION;
+    QTableWidgetItem* _strAcc = ui.tableWidget->item(nRow, 0);
+    QString strAcc = _strAcc->data(Qt::DisplayRole).toString();
+    QString strPsw = _strAcc->data(Qt::UserRole).toString();
+
+    QTableWidgetItem* _strArea = ui.tableWidget->item(nRow, 1);
+    QString strArea = _strArea->data(Qt::DisplayRole).toString();
+
+    QTableWidgetItem* _strServer = ui.tableWidget->item(nRow, 2);
+    QString strServer = _strServer->data(Qt::DisplayRole).toString();
+
+    QTableWidgetItem* _strScript = ui.tableWidget->item(nRow, 3);
+    //QString strScript = _strScript->data(Qt::DisplayRole).toString();
+
+    QTableWidgetItem* _strStatus = ui.tableWidget->item(nRow, 7);
+    //QString strStatus = _strStatus->data(Qt::DisplayRole).toString();
 
     std::string acc = ((const char*)strAcc.toLocal8Bit());
     std::string psw = ((const char*)strPsw.toLocal8Bit());
@@ -214,6 +303,9 @@ void QTServer::SlotStartNewGame(const QString &strAcc, const QString &strPsw, co
 
     //wcscpy_s(pLogMsg->DatiAcc, wcslen(cwDatiAcc) + 1, cwDatiAcc);
     //wcscpy_s(pLogMsg->DatiPwd, wcslen(cwDatiPwd) + 1, cwDatiPwd);
+
+    g_bInjectDll = TRUE;
+    ::CloseHandle((HANDLE)_beginthreadex(NULL, 0, ThreadFun_InsertDLL, NULL, 0, NULL));
 
     QString loginPath = m_gamePath;
     std::string strLoginPath = (const char*)(loginPath.replace("/", "\\").toLocal8Bit());
@@ -234,6 +326,7 @@ void QTServer::SlotStartNewGame(const QString &strAcc, const QString &strPsw, co
         &StartupInfo,
         &ProcessInformation);
     if (bRet == 0) {
+        g_bInjectDll = FALSE;
         QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("启动游戏失败! 请稍后再试!"));
         return;
     }
@@ -248,29 +341,129 @@ void QTServer::SlotStartNewGame(const QString &strAcc, const QString &strPsw, co
 
         if (RunTimeout >= 5000) {
             if (WhetherIsUpdated()) { // 检查游戏是否更新
+                g_bInjectDll = FALSE;
                 QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("游戏有更新! 请更新软件!"));
                 return;
             }
         }
 
         if (RunTimeout > 180000) {
-            QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("答题错误或登录超时!"));
+            g_bInjectDll = FALSE;
+            _strStatus->setData(Qt::DisplayRole, QStringLiteral("登录超时"));
+            QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("登录超时! 请检查账号信息!!"));
             return;
         }
     }
 
     switch (pLogMsg->cmdtype) {
     case SHARELGOININFOSTATE_SUCCEED: // 成功登陆
-        QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("成功登录!"));
-        break;
+        _strStatus->setData(Qt::DisplayRole, QStringLiteral("成功登录"));
+        //QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("成功登录!"));
+        return;
     case SHARELGOINRET_ERROR_ACCDONGJIE:
+        g_bInjectDll = FALSE;
+        _strStatus->setData(Qt::DisplayRole, QStringLiteral("账号冻结"));
         QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("账号被冻结!"));
         return;
     case SHARELGOINRET_ERROR_PSWWRONG://密码错误
+        g_bInjectDll = FALSE;
+        _strStatus->setData(Qt::DisplayRole, QStringLiteral("密码错误"));
         QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("密码错误!"));
         return;
     }
 }
+
+//void QTServer::SlotStartNewGame(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer) {
+//    //if (martin->CreatProcessInsertDLL("F:\\ty\\bootloader.exe", "\"F:\\ty\\bootloader.exe\"  0", "Q:\\Ty\\TyInject\\Debug\\Inject.dll", "F:\\ty/")) {
+//    //    // 如果返回成功, 就開啟 DLL 注入線程
+//    //}
+//
+//    QString gamePath = m_gamePath;
+//    std::string QxDllpath = (const char*)(gamePath.replace("/", "\\").toLocal8Bit());
+//    QxDllpath += "\\TCLS\\Tenio.ini";
+//    WritePrivateProfileString("DefaultValue", "Dlls", "TCLS.dll,TenBase.dll,Dir.dll,TenTPF.dll,MemoryAlloctor.dll,June.dll,log.dll,qxpatch.dll", QxDllpath.c_str());
+//    HANDLE hMapping = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, 0x255, "GW_APSInfo");
+//
+//    DWORD dwMyPid = ::GetCurrentProcessId();
+//    PShareLoginInfo pLogMsg = (PShareLoginInfo)MapViewOfFile(hMapping, FILE_MAP_ALL_ACCESS, 0, 0, 0);
+//    RtlZeroMemory(pLogMsg, sizeof(PShareLoginInfo));
+//    pLogMsg->cmdtype = SHARELGOININFOSTATE_INFO;
+//    pLogMsg->dwRet = 0;
+//    pLogMsg->Key = (dwMyPid * 22) >> 2;
+//    pLogMsg->DatiType = 0;
+//    pLogMsg->DatiErrorCode = 0;
+//
+//    USES_CONVERSION;
+//
+//    std::string acc = ((const char*)strAcc.toLocal8Bit());
+//    std::string psw = ((const char*)strPsw.toLocal8Bit());
+//    wcscpy_s(pLogMsg->acc, (acc.length() + 1) * 2, A2W(acc.c_str()));
+//    wcscpy_s(pLogMsg->psw, (psw.length() + 1) * 2, A2W(psw.c_str()));
+//
+//    std::string area = ((const char*)strArea.toLocal8Bit());
+//    std::string server = ((const char*)strServer.toLocal8Bit());
+//    wcscpy_s(pLogMsg->area, (area.length() + 1) * 2, A2W(area.c_str()));
+//    wcscpy_s(pLogMsg->server, (server.length() + 1) * 2, A2W(server.c_str()));
+//
+//    //wcscpy_s(pLogMsg->DatiAcc, wcslen(cwDatiAcc) + 1, cwDatiAcc);
+//    //wcscpy_s(pLogMsg->DatiPwd, wcslen(cwDatiPwd) + 1, cwDatiPwd);
+//
+//    QString loginPath = m_gamePath;
+//    std::string strLoginPath = (const char*)(loginPath.replace("/", "\\").toLocal8Bit());
+//    strLoginPath += "\\TCLS\\Client.exe";
+//    STARTUPINFO StartupInfo = { sizeof(STARTUPINFO) }; // 第一个参数是 STARTUPINFO.cb
+//    StartupInfo.dwFlags = STARTF_USESHOWWINDOW;
+//    StartupInfo.wShowWindow = TRUE;
+//    PROCESS_INFORMATION ProcessInformation;
+//    BOOL bRet = ::CreateProcess(
+//        strLoginPath.c_str(),
+//        NULL,
+//        NULL,
+//        NULL,
+//        FALSE,
+//        CREATE_NEW_CONSOLE | CREATE_UNICODE_ENVIRONMENT | CREATE_DEFAULT_ERROR_MODE,
+//        NULL,
+//        NULL,
+//        &StartupInfo,
+//        &ProcessInformation);
+//    if (bRet == 0) {
+//        QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("启动游戏失败! 请稍后再试!"));
+//        return;
+//    }
+//
+//    ::CloseHandle(ProcessInformation.hThread);
+//    ::CloseHandle(ProcessInformation.hProcess);
+//
+//    int RunTimeout = 0;
+//    while (pLogMsg->cmdtype == SHARELGOININFOSTATE_INFO) { //等待更改状态
+//        Sleep(1000);
+//        RunTimeout += 1000;
+//
+//        if (RunTimeout >= 5000) {
+//            if (WhetherIsUpdated()) { // 检查游戏是否更新
+//                QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("游戏有更新! 请更新软件!"));
+//                return;
+//            }
+//        }
+//
+//        if (RunTimeout > 180000) {
+//            QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("登录超时! 请检查账号信息!!"));
+//            return;
+//        }
+//    }
+//
+//    switch (pLogMsg->cmdtype) {
+//    case SHARELGOININFOSTATE_SUCCEED: // 成功登陆
+//        QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("成功登录!"));
+//        break;
+//    case SHARELGOINRET_ERROR_ACCDONGJIE:
+//        QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("账号被冻结!"));
+//        return;
+//    case SHARELGOINRET_ERROR_PSWWRONG://密码错误
+//        QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("密码错误!"));
+//        return;
+//    }
+//}
 
 BOOL QTServer::WhetherIsUpdated() {
     std::list<_Xml> lAllVal;
@@ -321,8 +514,8 @@ void QTServer::SlotExportAcc() {
                 userVector.push_back((const char*)strScript.toLocal8Bit());
 
                 pItem = ui.tableWidget->item(nCurrentRow, 7);
-                QString strStatu = pItem->data(Qt::DisplayRole).toString(); // 状态
-                userVector.push_back((const char*)strStatu.toLocal8Bit());
+                QString strStatus = pItem->data(Qt::DisplayRole).toString(); // 状态
+                userVector.push_back((const char*)strStatus.toLocal8Bit());
                 
                 martin->WriteArray("user", (const char*)strAcc.toLocal8Bit(), &userVector);
             }
@@ -356,8 +549,8 @@ void QTServer::SlotImportAcc() {
             QTableWidgetItem* _strScript = new QTableWidgetItem(QString::fromLocal8Bit(strContent[3].c_str()));
             _strScript->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
-            QTableWidgetItem* _strStatu = new QTableWidgetItem(QString::fromLocal8Bit(strContent[4].c_str()));
-            _strStatu->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+            QTableWidgetItem* _strStatus = new QTableWidgetItem(QString::fromLocal8Bit(strContent[4].c_str()));
+            _strStatus->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
             //首先rowCount()得到当前中的行数，然后在调用insertRow(row);即可
             int nIndex = ui.tableWidget->rowCount();
             ui.tableWidget->insertRow(nIndex);
@@ -365,7 +558,7 @@ void QTServer::SlotImportAcc() {
             ui.tableWidget->setItem(nIndex, 1, _strArea);
             ui.tableWidget->setItem(nIndex, 2, _strServer);
             ui.tableWidget->setItem(nIndex, 3, _strScript);
-            ui.tableWidget->setItem(nIndex, 7, _strStatu);
+            ui.tableWidget->setItem(nIndex, 7, _strStatus);
         }
     }
 }

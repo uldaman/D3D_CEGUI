@@ -98,6 +98,8 @@
     <ClCompile Include="caddaccount.cpp" />
     <ClCompile Include="cmytablewidget.cpp" />
     <ClCompile Include="coption.cpp" />
+    <ClCompile Include="forcelib\ForceLibrary.cpp" />
+    <ClCompile Include="forcelib\TH32.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_caddaccount.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -159,6 +161,8 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="forcelib\ForceLib.h" />
+    <ClInclude Include="forcelib\TH32.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
     <ClInclude Include="Xml.h" />

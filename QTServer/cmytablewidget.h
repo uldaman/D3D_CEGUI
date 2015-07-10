@@ -10,14 +10,14 @@ public:
     CMyTableWidget(QWidget *parent = 0);
     ~CMyTableWidget();
     QTableWidgetItem* m_itemAcc;
-    QString m_acc;
-    QString m_psw;
+    //QString m_acc;
+    //QString m_psw;
     QTableWidgetItem* m_itemArea;
-    QString m_area;
+    //QString m_area;
     QTableWidgetItem* m_itemServer;
-    QString m_server;
+    //QString m_server;
     QTableWidgetItem* m_itemScript;
-    QString m_script;
+    //QString m_script;
 
 protected:
     void CreateActions();
@@ -38,7 +38,8 @@ void SlotChangeAcc(const QString &strAcc, const QString &strPsw, const QString &
 void SlotAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer, const QString &strScript);
 
 signals:
-void SignalStartNewGame(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
+//void SignalStartNewGame(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
+void SignalStartNewGame(const int &nRow);
 void SignalSendAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer, const QString &strScript);
 };
 

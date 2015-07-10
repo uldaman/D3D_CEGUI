@@ -7,6 +7,8 @@
 #include "d3d9.h"
 #include "Game.h"
 #include "Martin.h"
+#include <process.h>
+#include "DefMessage.h"
 
 HRESULT APIENTRY hkIDirect3D9::QueryInterface(REFIID riid, void **ppvObj) {
     return m_pD3Dint->QueryInterface(riid, ppvObj);
@@ -43,6 +45,14 @@ LRESULT CALLBACK FilterWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
         return 1;
 }
 
+unsigned __stdcall ThreadFun_IsSelect(void * pParam) {
+    int nRet = 0;
+    ::SendMessage(theApp.m_hGWnd, WM_IS_SELECT, (WPARAM)&nRet, NULL);
+    g_pClua->PushInt(nRet);
+
+    return 0;
+}
+
 HRESULT APIENTRY hkIDirect3D9::CreateDevice(UINT Adapter, D3DDEVTYPE DeviceType, HWND hFocusWindow, DWORD BehaviorFlags, D3DPRESENT_PARAMETERS *pPresentationParameters, IDirect3DDevice9 **ppReturnedDeviceInterface) {
     HRESULT hRet = m_pD3Dint->CreateDevice(Adapter, DeviceType, hFocusWindow, BehaviorFlags, pPresentationParameters, ppReturnedDeviceInterface);
     //static int nCount = 0;
@@ -57,7 +67,9 @@ HRESULT APIENTRY hkIDirect3D9::CreateDevice(UINT Adapter, D3DDEVTYPE DeviceType,
                 theApp.m_OrgWndProc = ::GetWindowLong(theApp.m_hGWnd, GWL_WNDPROC);
                 if (theApp.m_OrgWndProc) {
                     ::SetWindowLong(theApp.m_hGWnd, GWL_WNDPROC, (LONG)&FilterWndProc);
-                    g_pSocketClient = new CSocketClient(theApp.m_hGWnd);
+                    // g_pSocketClient = new CSocketClient(theApp.m_hGWnd);
+                    // 开启线程, 检测是否到达角色选择界面
+                    ::CloseHandle((HANDLE)_beginthreadex(NULL, 0, ThreadFun_IsSelect, NULL, 0, NULL));
                 } else {
                     martin->add_log("GetWindowLong() Failed.");
                     ::ExitProcess(-1);

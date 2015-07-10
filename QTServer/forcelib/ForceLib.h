@@ -1,0 +1,1 @@
+DWORD ForceLibrary(const CHAR* szLibraryPath, PROCESS_INFORMATION* pProcInfo);

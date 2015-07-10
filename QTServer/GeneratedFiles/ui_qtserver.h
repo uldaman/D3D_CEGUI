@@ -41,7 +41,7 @@ public:
     {
         if (QTServerClass->objectName().isEmpty())
             QTServerClass->setObjectName(QStringLiteral("QTServerClass"));
-        QTServerClass->resize(958, 354);
+        QTServerClass->resize(958, 434);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
