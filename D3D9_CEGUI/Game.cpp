@@ -19,6 +19,7 @@
 #include "DataType.h"
 #include "Interface.h"
 #include <tlhelp32.h>
+#include "../CeguiInject/My_Ini.h"
 
 CGame theApp;
 
@@ -42,9 +43,9 @@ LRESULT CGame::CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
                 } else {
                     m_root->setVisible(true);
                 }
-            } else {
+            }/* else {
                 initGui();
-            }
+                }*/
             break;
         }
         break;
@@ -57,10 +58,36 @@ LRESULT CGame::CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
             ExitProcess(0);
         }
 
+        std::string strPath;
+        std::string::size_type idx;
+        CMy_Ini obj_ini(strPath.c_str());
+        std::string strAcc;
+
         switch (WSAGETSELECTEVENT(lParam)) {
         case FD_CONNECT:
             // OnConnect(s); 表示连接上, 这里可以用来初始化 cegui
-            martin->Debug("connect 连接服务器成功");
+            if (m_bInit == false) {
+                initGui();
+            }
+            strPath = martin->GetModulePath(NULL);
+
+            for (int i = 0; i < 3; i++) {
+                idx = strPath.rfind("\\");
+                if (idx != std::string::npos) {
+                    strPath = strPath.substr(0, idx);
+                }
+            }
+            strPath = strPath + "\\TCLS\\config\\LoginQ.dat";
+            obj_ini.SetPathName(strPath.c_str());
+            strAcc = obj_ini.GetString("Public", "LastQQUin");
+
+            SOCKET_INFO socket_info;
+            RtlZeroMemory(&socket_info, sizeof(SOCKET_INFO));
+            socket_info.message = SOCKET_MESSAGE::GetScript;
+            strcpy_s(socket_info.szAcc, strAcc.c_str());
+            g_pSocketClient->SendGameInfo((const char*)&socket_info);
+
+            martin->Debug("connect 连接服务器成功 -- %s", strAcc.c_str());
             break;
         case FD_READ:
             // 读取到数据, 这里可以用来接受服务端操作
@@ -254,6 +281,7 @@ void CGame::initGui() {
         CEGUI::Event::Subscriber(&CGame::onQuestBtn, this));
 
     martin->add_log("\n---------------------\n全部加载完毕...\n---------------------\n");
+    m_root->setVisible(false);
     m_bInit = true;
 
     // 以下为非 CEGUI 操作

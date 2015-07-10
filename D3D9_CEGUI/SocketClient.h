@@ -9,7 +9,7 @@ public:
     ~CSocketClient() {
     };
 
-    void SendGameInfo(int i);
+    void SendGameInfo(const char* szBuffer);
 
 public:
     SOCKET m_sListen;

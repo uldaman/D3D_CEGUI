@@ -10415,3 +10415,497 @@ Debug:connect 连接服务器成功
 全部加载完毕...
 ---------------------
 
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x53807e0 -> 0x7aaa2f0
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x53807e0 -> 0x157bb9e0
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13a06260 -> 0x7a20b30
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18af0060 -> 0x7a20ba8
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18b08b60 -> 0x7a20c20
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x47607e0 -> 0x762ccf8
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x47607e0 -> 0x84c9c50
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x15616260 -> 0x7629f90
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x189d0060 -> 0x762a008
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x189e8b60 -> 0x762a080
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x56e07e0 -> 0x78eb078
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x56e07e0 -> 0x793a578
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13d56260 -> 0x78e5358
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18d50060 -> 0x78e53d0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18d68b60 -> 0x78e5448
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x5ae07e0 -> 0x8d47770
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x5ae07e0 -> 0x7cd6f70
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13e76260 -> 0x8d54d98
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18c50060 -> 0x8d54e10
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18c68b60 -> 0x8d54e88
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x3f07e0 -> 0x7ba6f18
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x3f07e0 -> 0x157c9ba0
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13b86260 -> 0x7ba21f8
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18b50060 -> 0x7ba2270
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18b68b60 -> 0x7ba22e8
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- f:\怪物猎人online\bin\client\bin32
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x54507e0 -> 0x7ac4d50
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x54507e0 -> 0x8b8a658
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13c56260 -> 0x7a94e88
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18b30060 -> 0x7a94f00
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18b48b60 -> 0x8c7c890
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- 怪物猎人online\bin\client\bin32
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x54d07e0 -> 0x7b27620
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x54d07e0 -> 0x8c7c878
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13ce6260 -> 0x7b79ff0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18bb0060 -> 0x7b7a068
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18bc8b60 -> 0x7b7a0e0
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- bin32
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x57c07e0 -> 0x7aafb50
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x57c07e0 -> 0x7b14238
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x158d6260 -> 0x7aa2db0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18b90060 -> 0x7aa2e28
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18ba8b60 -> 0x7aa2ea0
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- f:\怪物猎人online\bin\client
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4f507e0 -> 0x774a988
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4f507e0 -> 0x7721e88
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13ad6260 -> 0x7783760
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18aa0060 -> 0x77837d8
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18ab8b60 -> 0x7783850
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- f:\怪物猎人online
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x3e07e0 -> 0x8b17398
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x3e07e0 -> 0x8b17408
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x15746260 -> 0x73f5528
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18a20060 -> 0x73f55a0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18a38b60 -> 0x73f5618
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- 2631608094
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x55007e0 -> 0x78d7d30
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x55007e0 -> 0x78d7f60
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13db6260 -> 0x78d6710
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18c30060 -> 0x78d6788
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18c48b60 -> 0x78d6800
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- 2631608094
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x54907e0 -> 0x7a73b58
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x54907e0 -> 0x7afc468
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13a06260 -> 0x7b06e18
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18bd0060 -> 0x7b06e90
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18be8b60 -> 0x7b06f08
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- 2631608094
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x50407e0 -> 0x77f5590
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x50407e0 -> 0x77f5600
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13b66260 -> 0x784e6a0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18af0060 -> 0x784e718
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18b08b60 -> 0x16cc4c58
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- 2631608094

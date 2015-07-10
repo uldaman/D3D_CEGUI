@@ -1,6 +1,7 @@
 #include "SocketClient.h"
 #include "DefMessage.h"
 #include "Martin.h"
+#include "DataType.h"
 
 
 CSocketClient::CSocketClient(HWND hGame, BYTE minorVer /*= 2*/, BYTE majorVer /*= 2*/)
@@ -32,8 +33,7 @@ CSocketClient::CSocketClient(HWND hGame, BYTE minorVer /*= 2*/, BYTE majorVer /*
     ::connect(m_sListen, (struct sockaddr*)&sin, sizeof(sin));
 }
 
-void CSocketClient::SendGameInfo(int i) {
-    char str[10];
-    sprintf_s(str, "%d", i);
-    send(m_sListen, (const char*)str, 4, 0);
+void CSocketClient::SendGameInfo(const char* szBuffer) {
+    int nSize = sizeof(SOCKET_INFO);
+    send(m_sListen, szBuffer, nSize, 0);
 }

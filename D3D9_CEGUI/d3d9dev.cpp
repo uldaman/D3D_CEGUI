@@ -379,7 +379,7 @@ HRESULT APIENTRY hkIDirect3DDevice9::Present(CONST RECT *pSourceRect, CONST RECT
     nStepper++;
 
     if (g_pSocketClient && (nStepper % 520) == 0) {
-        g_pSocketClient->SendGameInfo(nStepper);
+        //g_pSocketClient->SendGameInfo(nStepper);
         nStepper = 0;
     }
 

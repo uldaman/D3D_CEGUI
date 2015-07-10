@@ -75,24 +75,48 @@ QTServer::~QTServer() {
 }
 
 void QTServer::SlotNewConnect() {
-    QTcpSocket* pTcpSocket = m_tcpServer->nextPendingConnection();                     //得到每个连进来的socket
+    QTcpSocket* pTcpSocket = m_tcpServer->nextPendingConnection(); // 得到每个连进来的socket
     m_tcpSocketList.append(pTcpSocket);
     connect(pTcpSocket, SIGNAL(disconnected()), this, SLOT(SlotClientClosed()));
     connect(pTcpSocket, SIGNAL(disconnected()), pTcpSocket, SLOT(deleteLater()));
     connect(pTcpSocket, SIGNAL(readyRead()), this, SLOT(SlotMessageRead()));
 }
 
+enum class SOCKET_MESSAGE { // socket 消息类型
+    GetScript,
+};
+
+typedef struct SOCKET_INFO {
+    SOCKET_MESSAGE message;
+    char szAcc[25];
+    char szName[25];
+    int nLevel;
+    char szMap[25];
+    int nMoney;
+}*PSOCKET_INFO;
+
 void QTServer::SlotMessageRead() {
     USES_CONVERSION;
     for (int i = 0; i < m_tcpSocketList.length(); i++) {
         if (m_tcpSocketList[i]->bytesAvailable() > 0) {
-            QByteArray qba = m_tcpSocketList[i]->readAll();                    //收取m_tcpSocket中的所有数据
-            char* data = qba.data();
-            QTableWidgetItem* item = new QTableWidgetItem(QString::fromWCharArray(A2W(data)));
-            //item->setText(QString::fromWCharArray(A2W(data)));
-            item->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-            item->setData(Qt::UserRole, 6); //关联数据, 类似 MFC 中的 SetItemData
-            ui.tableWidget->setItem(0, 0, item);
+            QByteArray qba = m_tcpSocketList[i]->readAll(); // 收取m_tcpSocket中的所有数据
+            PSOCKET_INFO data = (PSOCKET_INFO)qba.data();
+            int nCount = ui.tableWidget->rowCount();
+            if (nCount) {
+                for (int nCurrentRow = 0; nCurrentRow < nCount; nCurrentRow++) {
+                    QTableWidgetItem* pItem = ui.tableWidget->item(nCurrentRow, 0);
+                    QString qstrAcc = pItem->data(Qt::DisplayRole).toString(); //账号
+                    std::string strAcc = std::string((const char*)qstrAcc.toLocal8Bit());
+
+                    if (strAcc == std::string(data->szAcc)) {
+                        switch (data->message) {
+                        case SOCKET_MESSAGE::GetScript:
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
         }
     }
 }

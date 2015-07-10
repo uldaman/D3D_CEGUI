@@ -486,7 +486,7 @@ function Instance.FindBoss(mapName)	--返回途径总地图(包括起始地图和目标地图)列表
 	MH_调试("目标房间是 "..tagRoom)
 	--MH_调试(Instance.MapList[mapName][tonumber(nowRoom)][tonumber(tagRoom)].key)
 
-	local count_map = 1	--房间节点总数量
+	local count_map = 0	--房间节点总数量
 	for i,v in pairs(Instance.MapList[mapName]) do
 		count_map = count_map+1
 	end

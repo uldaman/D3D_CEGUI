@@ -46,9 +46,18 @@ LRESULT CALLBACK FilterWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
 }
 
 unsigned __stdcall ThreadFun_IsSelect(void * pParam) {
-    int nRet = 0;
-    ::SendMessage(theApp.m_hGWnd, WM_IS_SELECT, (WPARAM)&nRet, NULL);
-    g_pClua->PushInt(nRet);
+    while (true) {
+        int nRet = 0;
+        ::SendMessage(theApp.m_hGWnd, WM_IS_SELECT, (WPARAM)&nRet, NULL);
+
+        if (nRet) {
+            g_pSocketClient = new CSocketClient(theApp.m_hGWnd);
+            martin->Debug("进入角色选择界面, 开始链接控制台...");
+            return 0;
+        }
+
+        Sleep(1000);
+    }
 
     return 0;
 }
