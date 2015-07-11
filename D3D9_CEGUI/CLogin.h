@@ -29,9 +29,10 @@ public:
     void RoleTraverse();
     void NewRole();
     int GetCountsOfRoles();
-    void LoginGame();
+    BOOL LoginGame();
     void EnterChannel();
     BOOL IsOnline();
+    void ReturnSelectRole();
 
 private:
     static std::list<ROLE_STRUCT> m_role_list;

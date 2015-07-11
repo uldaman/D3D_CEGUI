@@ -62,6 +62,9 @@ LRESULT CGame::CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
         std::string::size_type idx;
         CMy_Ini obj_ini(strPath.c_str());
         std::string strAcc;
+        int nSize = sizeof(SOCKET_INFO);
+        std::auto_ptr<char> NewPathFrm(new char[nSize * 2]);
+        char* szAccOrScript = new char[25];
 
         switch (WSAGETSELECTEVENT(lParam)) {
         case FD_CONNECT:
@@ -84,14 +87,30 @@ LRESULT CGame::CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
             SOCKET_INFO socket_info;
             RtlZeroMemory(&socket_info, sizeof(SOCKET_INFO));
             socket_info.message = SOCKET_MESSAGE::GetScript;
-            strcpy_s(socket_info.szAcc, strAcc.c_str());
+            strcpy_s(socket_info.szAccOrScript, strAcc.c_str());
             g_pSocketClient->SendGameInfo((const char*)&socket_info);
-
             martin->Debug("connect 连接服务器成功 -- %s", strAcc.c_str());
             break;
+
         case FD_READ:
             // 读取到数据, 这里可以用来接受服务端操作
+            RtlZeroMemory(NewPathFrm.get(), nSize);
+            ::recv(wParam, (char *)NewPathFrm.get(), nSize, 0);
+
+            switch (((PSOCKET_INFO)NewPathFrm.get())->message) {
+            case SOCKET_MESSAGE::GetScript:
+                // 执行 Login.lub 脚本
+                if (g_hLuaThread == NULL) {
+                    g_isWork = TRUE;
+                    RtlZeroMemory(szAccOrScript, 25);
+                    strcpy_s(szAccOrScript, 25, ((PSOCKET_INFO)NewPathFrm.get())->szAccOrScript);
+                    g_hLuaThread = (HANDLE)_beginthreadex(NULL, 0, ThreadAutoMatic, PVOID(szAccOrScript), 0, NULL);
+                }
+                break;
+            }
+
             break;
+
         case FD_CLOSE:
             ::closesocket(s);
             ExitProcess(0);

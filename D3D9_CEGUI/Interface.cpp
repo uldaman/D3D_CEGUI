@@ -117,6 +117,7 @@ void MesageMapping(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
         COMMAND_MSG(hDlg, WM_领取成长武器兑换券, wParam, lParam, On_领取成长武器兑换券); // 领取成长武器兑换券
         COMMAND_MSG(hDlg, WM_兑换初心之剑, wParam, lParam, On_兑换初心之剑); // 兑换初心之剑
         COMMAND_MSG(hDlg, WM_兑换进阶之剑, wParam, lParam, On_兑换进阶之剑); // 兑换进阶之剑
+        COMMAND_MSG(hDlg, WM_RETURN_SELECT_ROLE, wParam, lParam, On_ReturnSelectRole); // 兑换进阶之剑
     }
 }
 
@@ -1659,7 +1660,9 @@ void On_FirstAttackTrun(HWND hDlg, WPARAM wParam, LPARAM lParam) {
 
 void On_Login(HWND hDlg, WPARAM wParam, LPARAM lParam) {
     CLogin oLogin;
-    oLogin.LoginGame();
+    if (oLogin.LoginGame()) {
+        *(PINT)wParam = 1;
+    }
 }
 
 void On_NewRole(HWND hDlg, WPARAM wParam, LPARAM lParam) {
@@ -1757,6 +1760,11 @@ void On_兑换进阶之剑(HWND hDlg, WPARAM wParam, LPARAM lParam) {
     dwPackage[7] = 0xFFFFFFFF;
     dwPackage[8] = 0xFFFFFFFF;
     CRole::SendPackage((DWORD)&dwPackage);
+}
+
+void On_ReturnSelectRole(HWND hDlg, WPARAM wParam, LPARAM lParam) {
+    CLogin oLogin;
+    oLogin.ReturnSelectRole();
 }
 
 //void On_InitRoleList(HWND hDlg, WPARAM wParam, LPARAM lParam) {

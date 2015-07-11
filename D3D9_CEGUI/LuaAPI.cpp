@@ -953,8 +953,10 @@ LuaGlue Lua_FirstAttackTrun(lua_State *L) {
 
 // MH_登录游戏
 LuaGlue Lua_Login(lua_State *L) {
-    ::SendMessage(theApp.m_hGWnd, WM_LOGIN, NULL, NULL);
-    return 0;
+    int nRet = 0;
+    ::SendMessage(theApp.m_hGWnd, WM_LOGIN, (WPARAM)&nRet, NULL);
+    g_pClua->PushInt(nRet);
+    return 1;
 }
 
 // MH_新建角色
@@ -1022,6 +1024,12 @@ LuaGlue Lua_兑换初心之剑(lua_State *L) {
 // MH_兑换进阶之剑
 LuaGlue Lua_兑换进阶之剑(lua_State *L) {
     ::SendMessage(theApp.m_hGWnd, WM_兑换进阶之剑, NULL, NULL);
+    return 0;
+}
+
+// MH_返回角色选择
+LuaGlue Lua_ReturnSelectRole(lua_State *L) {
+    ::SendMessage(theApp.m_hGWnd, WM_RETURN_SELECT_ROLE, NULL, NULL);
     return 0;
 }
 
@@ -1115,6 +1123,7 @@ luaL_reg ConsoleGlue[] = {
         { "MH_领取成长武器兑换券", Lua_领取成长武器兑换券 },
         { "MH_兑换初心之剑", Lua_兑换初心之剑 },
         { "MH_兑换进阶之剑", Lua_兑换进阶之剑 },
+        { "MH_返回角色选择", Lua_ReturnSelectRole },
         //{ "MH_初始化角色列表", Lua_InitRoleList },
         { nullptr, NULL },
 };
@@ -1150,13 +1159,16 @@ void LuaError_Output(const char* szBuffer) {
 // Lua 自动挂机 Thread
 unsigned int __stdcall ThreadAutoMatic(PVOID pM) {
     try {
+        char* szScript = (char*)pM;
         g_pClua->SetErrorHandler(LuaError_Output);
         //std::string strPath = martin->GetModulePath(NULL);
         //strPath += "\\S\\script";
-        std::string strScript = g_strServerExePath + "\\Script\\script.lua";
+        std::string strScript = g_strServerExePath + "\\Script\\" + szScript;
         theApp.m_mainWnd->setText(theApp.AToUtf8("执行脚本中 ... "));
         theApp.m_questBtn->setText(theApp.AToUtf8("停止主线"));
+        martin->Debug("开始执行脚本: %s", strScript.c_str());
         g_pClua->RunScript(strScript.c_str());
+        delete[] szScript;
     } catch (...) {
         //Interface_Output(TEXT("cLua::RunScript 异常!!"));
     }

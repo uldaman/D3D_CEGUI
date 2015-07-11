@@ -23,7 +23,7 @@ CSocketClient::CSocketClient(HWND hGame, BYTE minorVer /*= 2*/, BYTE majorVer /*
     sin.sin_addr.S_un.S_addr = inet_addr("127.0.0.1"); // 向本地连接, 注意, 不是 INADDR_ANY, 这是服务器用的.
 
     // 将套接字设为窗口通知消息类型
-    if (::WSAAsyncSelect(m_sListen, hGame, WM_SOCKET, FD_CONNECT | FD_CLOSE | FD_READ) == SOCKET_ERROR) {
+    if (::WSAAsyncSelect(m_sListen, hGame, WM_SOCKET, FD_READ | FD_CONNECT | FD_CLOSE) == SOCKET_ERROR) {
         martin->Debug("WSAAsyncSelect 绑定窗口失败");
         ExitProcess(0);
     }

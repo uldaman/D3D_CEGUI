@@ -99,3 +99,4 @@ void On_IsSelect(HWND hDlg, WPARAM wParam, LPARAM lParam); // 是否在选择角色
 void On_领取成长武器兑换券(HWND hDlg, WPARAM wParam, LPARAM lParam); // 领取成长武器兑换券
 void On_兑换初心之剑(HWND hDlg, WPARAM wParam, LPARAM lParam); // 兑换初心之剑
 void On_兑换进阶之剑(HWND hDlg, WPARAM wParam, LPARAM lParam); // 兑换进阶之剑
+void On_ReturnSelectRole(HWND hDlg, WPARAM wParam, LPARAM lParam); // 返回角色选择

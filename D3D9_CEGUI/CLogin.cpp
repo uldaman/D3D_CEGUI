@@ -13,10 +13,10 @@ void CLogin::RoleTraverse() {
     m_role_list.swap(std::list<ROLE_STRUCT>());
     DWORD dwRoleListAddr;
     try {
-    	_asm {
-    		pushad;
-    		pushfd;
-    		
+        _asm {
+            pushad;
+            pushfd;
+
             mov eax, CALL_GET_ROLE_LIST_INFO;
             call eax;
             mov ecx, [eax + 0x4];
@@ -25,11 +25,11 @@ void CLogin::RoleTraverse() {
             call edx;
             mov dwRoleListAddr, eax;
 
-    		popfd;
-    		popad;
-    	}
+            popfd;
+            popad;
+        }
     } catch (...) {
-    	martin->Debug("RoleTraverse --> “Ï≥£");
+        martin->Debug("RoleTraverse --> “Ï≥£");
         return;
     }
 
@@ -148,7 +148,7 @@ int CLogin::GetCountsOfRoles() {
     return m_role_list.size();
 }
 
-void CLogin::LoginGame() {
+BOOL CLogin::LoginGame() {
     for (auto& v : m_role_list) {
         BOOL bIsSuccess = FALSE;
         for (auto& w : m_roleName_list) {
@@ -164,9 +164,10 @@ void CLogin::LoginGame() {
             dwPackage[0] = 0x00000007;
             dwPackage[4] = v.role_list.dwRoleSvrIndex;
             SendPackage((DWORD)&dwPackage);
-            return;
+            return TRUE;
         }
     }
+    return FALSE;
 }
 
 void CLogin::EnterChannel() {
@@ -204,4 +205,21 @@ BOOL CLogin::IsOnline() {
     }
 
     return FALSE;
+}
+
+void CLogin::ReturnSelectRole() {
+    for (auto& v : m_role_list) {
+        std::string strSelectName = StrConvert::UFTtoAsii((char*)v.role_list.dwName);
+        int nRoleAddr = CRole::GetRoleAddr();
+        std::string strRoleName = CNearObject::GetObjectName(nRoleAddr);
+
+        if (strRoleName == strSelectName) {
+            DWORD dwPackage[100];
+            RtlZeroMemory(&dwPackage, sizeof(dwPackage));
+            dwPackage[0] = 0x00000011;
+            dwPackage[4] = v.role_list.dwRoleSvrIndex;
+            SendPackage((DWORD)&dwPackage);
+            return;
+        }
+    }
 }

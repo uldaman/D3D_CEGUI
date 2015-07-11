@@ -90,3 +90,4 @@
 #define WM_领取成长武器兑换券           WM_USER + 2387  // 领取成长武器兑换券
 #define WM_兑换初心之剑                 WM_USER + 2388  // 兑换初心之剑
 #define WM_兑换进阶之剑                 WM_USER + 2389  // 兑换进阶之剑
+#define WM_RETURN_SELECT_ROLE           WM_USER + 2390  // 返回角色选择

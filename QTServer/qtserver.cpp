@@ -76,6 +76,8 @@ QTServer::~QTServer() {
 
 void QTServer::SlotNewConnect() {
     QTcpSocket* pTcpSocket = m_tcpServer->nextPendingConnection(); // 得到每个连进来的socket
+    //pTcpSocket->waitForConnected();
+    //martin->Debug("State:%d ", pTcpSocket->state());
     m_tcpSocketList.append(pTcpSocket);
     connect(pTcpSocket, SIGNAL(disconnected()), this, SLOT(SlotClientClosed()));
     connect(pTcpSocket, SIGNAL(disconnected()), pTcpSocket, SLOT(deleteLater()));
@@ -86,17 +88,18 @@ enum class SOCKET_MESSAGE { // socket 消息类型
     GetScript,
 };
 
+#pragma pack (push,1)
 typedef struct SOCKET_INFO {
     SOCKET_MESSAGE message;
-    char szAcc[25];
+    char szAccOrScript[25];
     char szName[25];
     int nLevel;
     char szMap[25];
     int nMoney;
 }*PSOCKET_INFO;
+#pragma pack(pop)
 
 void QTServer::SlotMessageRead() {
-    USES_CONVERSION;
     for (int i = 0; i < m_tcpSocketList.length(); i++) {
         if (m_tcpSocketList[i]->bytesAvailable() > 0) {
             QByteArray qba = m_tcpSocketList[i]->readAll(); // 收取m_tcpSocket中的所有数据
@@ -104,17 +107,30 @@ void QTServer::SlotMessageRead() {
             int nCount = ui.tableWidget->rowCount();
             if (nCount) {
                 for (int nCurrentRow = 0; nCurrentRow < nCount; nCurrentRow++) {
-                    QTableWidgetItem* pItem = ui.tableWidget->item(nCurrentRow, 0);
-                    QString qstrAcc = pItem->data(Qt::DisplayRole).toString(); //账号
+                    QTableWidgetItem* pItemAcc = ui.tableWidget->item(nCurrentRow, 0);
+                    QString qstrAcc = pItemAcc->data(Qt::DisplayRole).toString(); //账号
                     std::string strAcc = std::string((const char*)qstrAcc.toLocal8Bit());
 
-                    if (strAcc == std::string(data->szAcc)) {
+                    if (strAcc == std::string(data->szAccOrScript)) {
                         switch (data->message) {
                         case SOCKET_MESSAGE::GetScript:
+                            SOCKET_INFO socket_info;
+                            RtlZeroMemory(&socket_info, sizeof(SOCKET_INFO));
+                            socket_info.message = SOCKET_MESSAGE::GetScript;
+                            QTableWidgetItem* pItemScript = ui.tableWidget->item(nCurrentRow, 3);
+                            QString qstrScript = pItemScript->data(Qt::DisplayRole).toString(); // 脚本
+                            std::string strScript = std::string((const char*)qstrScript.toLocal8Bit());
+                            strcpy_s(socket_info.szAccOrScript, strScript.c_str());
+                            QByteArray datasend;
+                            datasend.append((const char*)&socket_info);
+                            m_tcpSocketList[i]->write((const char*)&socket_info, sizeof(SOCKET_INFO));
+                            //m_tcpSocketList[i]->waitForBytesWritten();
+                            //martin->Debug("State:%d ", m_tcpSocketList[i]->state());
+                            m_tcpSocketList[i]->flush();
                             break;
                         }
+                        break;
                     }
-                    break;
                 }
             }
         }
