@@ -150,9 +150,10 @@ int CLogin::GetCountsOfRoles() {
 
 BOOL CLogin::LoginGame() {
     for (auto& v : m_role_list) {
+        std::string strSelectName = StrConvert::UFTtoAsii((char*)v.role_list.dwName);
         BOOL bIsSuccess = FALSE;
         for (auto& w : m_roleName_list) {
-            if (w == (char*)v.role_list.dwName) { // 如果找到了, 说明此角色已经刷过了
+            if (w == strSelectName) { // 如果找到了, 说明此角色已经刷过了
                 bIsSuccess = TRUE;
                 break;
             }

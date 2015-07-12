@@ -8,8 +8,9 @@
 #include "Xml.h"
 #include "QFileDialog"
 #include <process.h>
-#include <tlhelp32.h>
-#include "forcelib\ForceLib.h"
+#include "DataType.h"
+#include "cthreadinjectdll.h"
+
 
 QTServer::QTServer(QWidget *parent)
     : QMainWindow(parent) {
@@ -68,6 +69,8 @@ QTServer::QTServer(QWidget *parent)
 
     // 列表框關聯
     QObject::connect(ui.tableWidget, &CMyTableWidget::SignalStartNewGame, this, &QTServer::SlotStartNewGame);
+    QObject::connect(ui.tableWidget, &CMyTableWidget::SignalStopScript, this, &QTServer::SlotStopScript);
+    QObject::connect(ui.tableWidget, &CMyTableWidget::SignalStartScript, this, &QTServer::SlotStartScript);
 }
 
 QTServer::~QTServer() {
@@ -84,21 +87,6 @@ void QTServer::SlotNewConnect() {
     connect(pTcpSocket, SIGNAL(readyRead()), this, SLOT(SlotMessageRead()));
 }
 
-enum class SOCKET_MESSAGE { // socket 消息类型
-    GetScript,
-};
-
-#pragma pack (push,1)
-typedef struct SOCKET_INFO {
-    SOCKET_MESSAGE message;
-    char szAccOrScript[25];
-    char szName[25];
-    int nLevel;
-    char szMap[25];
-    int nMoney;
-}*PSOCKET_INFO;
-#pragma pack(pop)
-
 void QTServer::SlotMessageRead() {
     for (int i = 0; i < m_tcpSocketList.length(); i++) {
         if (m_tcpSocketList[i]->bytesAvailable() > 0) {
@@ -112,6 +100,8 @@ void QTServer::SlotMessageRead() {
                     std::string strAcc = std::string((const char*)qstrAcc.toLocal8Bit());
 
                     if (strAcc == std::string(data->szAccOrScript)) {
+                        pItemAcc->setData(Qt::UserRole + 0x200, (int)m_tcpSocketList[i]);
+
                         switch (data->message) {
                         case SOCKET_MESSAGE::GetScript:
                             SOCKET_INFO socket_info;
@@ -127,6 +117,9 @@ void QTServer::SlotMessageRead() {
                             //m_tcpSocketList[i]->waitForBytesWritten();
                             //martin->Debug("State:%d ", m_tcpSocketList[i]->state());
                             m_tcpSocketList[i]->flush();
+
+                            QTableWidgetItem* pItemStatus = ui.tableWidget->item(nCurrentRow, 7);
+                            pItemStatus->setData(Qt::DisplayRole, QStringLiteral("挂机中")); // 脚本
                             break;
                         }
                         break;
@@ -198,106 +191,6 @@ void QTServer::SlotInitGamePath() {
     m_gamePath = QString::fromLocal8Bit(martin->GetString("Path", "Game").c_str());
 }
 
-#pragma pack(push, 1)
-typedef struct {
-    DWORD dwRet;
-    DWORD Key;
-    WCHAR DatiAcc[25];
-    WCHAR DatiPwd[25];
-    DWORD DatiErrorCode;
-    DWORD DatiType;
-    DWORD cmdtype;
-    WCHAR acc[25];
-    WCHAR psw[25];
-    WCHAR area[25];
-    WCHAR server[25];
-}ShareLoginInfo, *PShareLoginInfo;
-#pragma pack(pop,1)
-
-enum SHARELGOININFOSTATE { //自动登录dll(新)
-    SHARELGOININFOSTATE_INFO = 1, //告诉登陆器开始登陆账号
-    SHARELGOININFOSTATE_SUCCEED, //成功登陆
-    SHARELGOININFOSTATE_CLOSE, //告诉登陆器关闭
-    SHARELGOINRET_ERROR_ACCDONGJIE, //被冻结
-    SHARELGOINRET_ERROR_PSWWRONG
-};
-
-static BOOL g_bInjectDll = FALSE;
-
-bool GetProcessOf(const char exename[], PROCESSENTRY32 *process) {
-    HANDLE handle;
-    process->dwSize = sizeof(PROCESSENTRY32);
-    handle = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-
-    if (Process32First(handle, process)) {
-        do {
-            if (lstrcmp(process->szExeFile, exename) == 0) {
-                CloseHandle(handle);
-                return true;
-            }
-        } while (Process32Next(handle, process));
-    }
-
-    CloseHandle(handle);
-    return false;
-}
-
-bool GetThreadOf(DWORD ProcessID, THREADENTRY32* thread) {
-    HANDLE handle;
-    thread->dwSize = sizeof(THREADENTRY32);
-    handle = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
-
-    if (Thread32First(handle, thread)) {
-        do {
-            if (thread->th32OwnerProcessID == ProcessID) {
-                CloseHandle(handle);
-                return true;
-            }
-        } while (Thread32Next(handle, thread));
-    }
-
-    CloseHandle(handle);
-    return false;
-}
-
-unsigned __stdcall ThreadFun_InsertDLL(void * pParam) {
-    PROCESSENTRY32 pe32;
-    while (!GetProcessOf("MHOClient.exe", &pe32)) {
-        //if (GetAsyncKeyState(VK_ESCAPE)) {
-        //    return;
-        //}
-        if (g_bInjectDll == FALSE) {
-            return 0;
-        }
-        Sleep(10);
-    }
-
-    THREADENTRY32 te32;
-    while (!GetThreadOf(pe32.th32ProcessID, &te32)) {
-        if (g_bInjectDll == FALSE) {
-            return 0;
-        }
-        Sleep(2);
-    }
-
-    PROCESS_INFORMATION PI;
-    PI.dwProcessId = pe32.th32ProcessID;
-    PI.dwThreadId = te32.th32ThreadID;
-    PI.hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pe32.th32ProcessID);
-
-    std::string strDll = martin->GetModulePath(NULL);
-    strDll += "\\D3D9_CEGUI.dll";
-
-    if (!ForceLibrary(strDll.c_str(), &PI)) {
-        TerminateProcess(PI.hProcess, 0);
-        ::MessageBox(NULL, "无法开启插件...", "Tatnium Error", MB_ICONERROR);
-    }
-
-    CloseHandle(PI.hProcess);
-
-    return 0;
-}
-
 void QTServer::SlotStartNewGame(const int &nRow) {
     QString gamePath = m_gamePath;
     std::string QxDllpath = (const char*)(gamePath.replace("/", "\\").toLocal8Bit());
@@ -344,8 +237,19 @@ void QTServer::SlotStartNewGame(const int &nRow) {
     //wcscpy_s(pLogMsg->DatiAcc, wcslen(cwDatiAcc) + 1, cwDatiAcc);
     //wcscpy_s(pLogMsg->DatiPwd, wcslen(cwDatiPwd) + 1, cwDatiPwd);
 
+    std::vector<DWORD> processVec = martin->GetProcessIdVec("CryENGINE");
+    g_processVec.swap(QVector<DWORD>());
+    for (auto v : processVec) {
+        g_processVec.append(v);
+    }
+
     g_bInjectDll = TRUE;
-    ::CloseHandle((HANDLE)_beginthreadex(NULL, 0, ThreadFun_InsertDLL, NULL, 0, NULL));
+    //::CloseHandle((HANDLE)_beginthreadex(NULL, 0, ThreadFun_InsertDLL, NULL, 0, NULL));
+    CThreadInjectDll* thread = new CThreadInjectDll(this);
+    thread->pItem = _strAcc;
+    connect(thread, &CThreadInjectDll::SignalDone, this, &QTServer::SlotGuardDog);
+    connect(thread, &CThreadInjectDll::finished, thread, &CThreadInjectDll::deleteLater);
+    thread->start();
 
     QString loginPath = m_gamePath;
     std::string strLoginPath = (const char*)(loginPath.replace("/", "\\").toLocal8Bit());
@@ -367,7 +271,7 @@ void QTServer::SlotStartNewGame(const int &nRow) {
         &ProcessInformation);
     if (bRet == 0) {
         g_bInjectDll = FALSE;
-        QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("启动游戏失败! 请稍后再试!"));
+        QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("启动游戏失败! 请检查控制台属性设置!"));
         return;
     }
 
@@ -397,8 +301,9 @@ void QTServer::SlotStartNewGame(const int &nRow) {
 
     switch (pLogMsg->cmdtype) {
     case SHARELGOININFOSTATE_SUCCEED: // 成功登陆
-        _strStatus->setData(Qt::DisplayRole, QStringLiteral("成功登录"));
-        //QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("成功登录!"));
+        _strStatus->setData(Qt::DisplayRole, QStringLiteral("启动游戏"));
+        //QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("启动游戏!"));
+        // 开启软件看门狗
         return;
     case SHARELGOINRET_ERROR_ACCDONGJIE:
         g_bInjectDll = FALSE;
@@ -411,6 +316,8 @@ void QTServer::SlotStartNewGame(const int &nRow) {
         QMessageBox::about(this, QStringLiteral("提示"), QStringLiteral("密码错误!"));
         return;
     }
+
+    CloseHandle(hMapping);
 }
 
 //void QTServer::SlotStartNewGame(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer) {
@@ -536,7 +443,7 @@ void QTServer::SlotExportAcc() {
         if (nCount) {
             for (int nCurrentRow = 0; nCurrentRow < nCount; nCurrentRow++) {
                 std::vector<std::string> userVector;
-                QTableWidgetItem* pItem = ui.tableWidget->item(nCurrentRow, 0); 
+                QTableWidgetItem* pItem = ui.tableWidget->item(nCurrentRow, 0);
                 QString strAcc = pItem->data(Qt::DisplayRole).toString(); //账号
                 QString strPsw = pItem->data(Qt::UserRole).toString(); //密码
                 userVector.push_back((const char*)strPsw.toLocal8Bit());
@@ -556,7 +463,7 @@ void QTServer::SlotExportAcc() {
                 pItem = ui.tableWidget->item(nCurrentRow, 7);
                 QString strStatus = pItem->data(Qt::DisplayRole).toString(); // 状态
                 userVector.push_back((const char*)strStatus.toLocal8Bit());
-                
+
                 martin->WriteArray("user", (const char*)strAcc.toLocal8Bit(), &userVector);
             }
         }
@@ -589,6 +496,12 @@ void QTServer::SlotImportAcc() {
             QTableWidgetItem* _strScript = new QTableWidgetItem(QString::fromLocal8Bit(strContent[3].c_str()));
             _strScript->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
+            if (strContent[4] != "账号冻结") {
+                if (strContent[4] != "密码错误") {
+                    strContent[4] = "空闲";
+                }
+            }
+
             QTableWidgetItem* _strStatus = new QTableWidgetItem(QString::fromLocal8Bit(strContent[4].c_str()));
             _strStatus->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
             //首先rowCount()得到当前中的行数，然后在调用insertRow(row);即可
@@ -600,6 +513,58 @@ void QTServer::SlotImportAcc() {
             ui.tableWidget->setItem(nIndex, 3, _strScript);
             ui.tableWidget->setItem(nIndex, 7, _strStatus);
         }
+    }
+}
+
+void QTServer::SlotGuardDog(QTableWidgetItem* pItem) {
+    // 收到这条信息, 说明注入成功了, 开启开门狗
+    int nCount = ui.tableWidget->rowCount();
+    if (nCount) {
+        for (int nCurrentRow = 0; nCurrentRow < nCount; nCurrentRow++) {
+            QTableWidgetItem* pItemAcc = ui.tableWidget->item(nCurrentRow, 0);
+            if (pItemAcc == pItem) {
+                HWND hGameWnd = (HWND)(pItemAcc->data(Qt::UserRole + 0x100)).toInt();
+                QTableWidgetItem* _strStatus = ui.tableWidget->item(nCurrentRow, 7);
+                _strStatus->setData(Qt::DisplayRole, QStringLiteral("成功登陆"));
+                break;
+            }
+        }
+    }
+}
+
+void QTServer::SlotStopScript(const int &nRow) {
+    QTableWidgetItem* pItemAcc = ui.tableWidget->item(nRow, 0);
+    QTcpSocket* pTcpSocket = (QTcpSocket*)(pItemAcc->data(Qt::UserRole + 0x200)).toInt();
+    if (pTcpSocket) {
+        SOCKET_INFO socket_info;
+        RtlZeroMemory(&socket_info, sizeof(SOCKET_INFO));
+        socket_info.message = SOCKET_MESSAGE::StopScript;
+        QByteArray datasend;
+        datasend.append((const char*)&socket_info);
+        pTcpSocket->write((const char*)&socket_info, sizeof(SOCKET_INFO));
+        pTcpSocket->flush();
+        QTableWidgetItem* pItemStatus = ui.tableWidget->item(nRow, 7);
+        pItemStatus->setData(Qt::DisplayRole, QStringLiteral("成功登陆"));
+    }
+}
+
+void QTServer::SlotStartScript(const int &nRow) {
+    QTableWidgetItem* pItemAcc = ui.tableWidget->item(nRow, 0);
+    QTcpSocket* pTcpSocket = (QTcpSocket*)(pItemAcc->data(Qt::UserRole + 0x200)).toInt();
+    if (pTcpSocket) {
+        SOCKET_INFO socket_info;
+        RtlZeroMemory(&socket_info, sizeof(SOCKET_INFO));
+        socket_info.message = SOCKET_MESSAGE::StartScript;
+        QTableWidgetItem* pItemScript = ui.tableWidget->item(nRow, 3);
+        QString qstrScript = pItemScript->data(Qt::DisplayRole).toString(); // 脚本
+        std::string strScript = std::string((const char*)qstrScript.toLocal8Bit());
+        strcpy_s(socket_info.szAccOrScript, strScript.c_str());
+        QByteArray datasend;
+        datasend.append((const char*)&socket_info);
+        pTcpSocket->write((const char*)&socket_info, sizeof(SOCKET_INFO));
+        pTcpSocket->flush();
+        QTableWidgetItem* pItemStatus = ui.tableWidget->item(nRow, 7);
+        pItemStatus->setData(Qt::DisplayRole, QStringLiteral("挂机中"));
     }
 }
 

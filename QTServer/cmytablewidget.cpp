@@ -28,9 +28,24 @@ void CMyTableWidget::CreateActions() {
     m_actionSeparator = new QAction(this);
     m_actionSeparator->setSeparator(true);
 
+    m_menuScript = new QMenu(this);
+    m_menuScript->setTitle(QString(QStringLiteral("脚本控制")));
+
+    m_actionStartScript = new QAction(this);
+    m_actionStartScript->setText(QString(QStringLiteral("开始")));
+    m_menuScript->addAction(m_actionStartScript);
+    m_actionStartScript->setDisabled(true);
+
+    m_actionStopScript = new QAction(this);
+    m_actionStopScript->setText(QString(QStringLiteral("停止")));
+    m_menuScript->addAction(m_actionStopScript);
+    m_actionStopScript->setDisabled(true);
+
     connect(m_actionAdd, SIGNAL(triggered()), this, SLOT(SlotAddAccount()));
     connect(m_actionStart, SIGNAL(triggered()), this, SLOT(SlotStartGame()));
     connect(m_actionChange, SIGNAL(triggered()), this, SLOT(SlotChangeAccount()));
+    connect(m_actionStopScript, SIGNAL(triggered()), this, SLOT(SlotStopScript()));
+    connect(m_actionStartScript, SIGNAL(triggered()), this, SLOT(SlotStartScript()));
 }
 
 void CMyTableWidget::SlotAddAccount() {
@@ -66,6 +81,21 @@ void CMyTableWidget::contextMenuEvent(QContextMenuEvent* event) {
     if (m_nRow != 0xFFFFFFFF) {
         m_popMenu->addAction(m_actionChange);
         m_popMenu->addAction(m_actionStart);
+        m_popMenu->addMenu(m_menuScript);
+
+        QTableWidgetItem* pItem = this->item(m_nRow, 7);
+        QString strStatus = pItem->data(Qt::DisplayRole).toString();
+
+        if (strStatus == QStringLiteral("挂机中")) {
+            m_actionStopScript->setDisabled(false);
+            m_actionStartScript->setDisabled(true);
+        }
+
+        if (strStatus == QStringLiteral("成功登陆")) {
+            m_actionStopScript->setDisabled(true);
+            m_actionStartScript->setDisabled(false);
+        }
+
         m_itemAcc = this->item(m_nRow, 0);
         //m_acc = m_itemAcc->data(Qt::DisplayRole).toString();
         //m_psw = m_itemAcc->data(Qt::UserRole).toString();
@@ -98,4 +128,12 @@ void CMyTableWidget::SlotChangeAccount() {
     QObject::connect(a, &CAddAccount::SignalNewAcc, this, &CMyTableWidget::SlotChangeAcc);
     a->setAttribute(Qt::WA_DeleteOnClose);
     a->show();
+}
+
+void CMyTableWidget::SlotStopScript() {
+    emit SignalStopScript(m_nRow);
+}
+
+void CMyTableWidget::SlotStartScript() {
+    emit SignalStartScript(m_nRow);
 }

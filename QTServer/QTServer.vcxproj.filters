@@ -98,6 +98,18 @@
     <ClCompile Include="forcelib\TH32.cpp">
       <Filter>forcelib</Filter>
     </ClCompile>
+    <ClCompile Include="cthreadinjectdll.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cthreadinjectdll.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cthreadinjectdll.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="DataType.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qtserver.h">
@@ -123,6 +135,9 @@
     </CustomBuild>
     <CustomBuild Include="coption.ui">
       <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="cthreadinjectdll.h">
+      <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="forcelib\TH32.h">
       <Filter>forcelib</Filter>
+    </ClInclude>
+    <ClInclude Include="DataType.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

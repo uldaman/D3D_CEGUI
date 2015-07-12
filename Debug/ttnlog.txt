@@ -1474,3 +1474,668 @@ Debug:进入角色选择界面, 开始链接控制台...
 
 Debug:connect 连接服务器成功 -- 2486912230
 Debug:开始执行脚本: Q:\怪物猎人\D3D_CEGUI\Debug\Script\script.lua
+Debug:EXE入口地址: 69917B
+Debug:DLL入口地址: 1C0000
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x5b307e0 -> 0x8d4a178
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x5b307e0 -> 0x8d37f58
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13d26260 -> 0x8d3d420
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18b60060 -> 0x8d3d498
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18b78b60 -> 0x8d3d510
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- 2631608094
+Debug:开始执行脚本: Q:\怪物猎人\D3D_CEGUI\Debug\Script\script.lua
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x57b07e0 -> 0x8cce370
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x57b07e0 -> 0x7e02738
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13db6260 -> 0x8cd75d0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18c20060 -> 0x8cd7648
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18c38b60 -> 0x8cd76c0
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- 2486912230
+Debug:开始执行脚本: Q:\怪物猎人\D3D_CEGUI\Debug\Script\script.lua
+Debug:222222222222222
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+Debug:55555555555555555
+Debug:11111111111111111
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x55107e0 -> 0x7e3e180
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x55107e0 -> 0x7e3e1f0
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13c86260 -> 0x7e669b0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18b00060 -> 0x7e66a28
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18b18b60 -> 0x7e66aa0
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- 2631608094
+Debug:开始执行脚本: Q:\怪物猎人\D3D_CEGUI\Debug\Script\script.lua
+Debug:-----------
+Debug:0x712C6
+Debug:-----------
+Debug:0x712C6
+Debug:-----------
+Debug:0x712C6
+Debug:0x41458
+Debug:-----------
+Debug:0x712C6
+Debug:0x41458
+Debug:-----------
+Debug:0x56F0
+Debug:0x56F0
+Debug:0x5784
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x3e07e0 -> 0x7244788
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x3e07e0 -> 0x71912d0
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13886260 -> 0x7240758
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x186a0060 -> 0x72407d0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x186b8b60 -> 0x7240848
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- 2631608094
+Debug:开始执行脚本: Q:\怪物猎人\D3D_CEGUI\Debug\Script\script.lua
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x57007e0 -> 0x7198d20
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x57007e0 -> 0x723eea0
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13726260 -> 0x719ecb0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18660060 -> 0x719ed28
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18678b60 -> 0x82690b8
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x56807e0 -> 0x724ac08
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x56807e0 -> 0x71f3aa8
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13766260 -> 0x810b710
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x186a0060 -> 0x810b788
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x186b8b60 -> 0x82d6e90
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- 2486912230
+Debug:开始执行脚本: Q:\怪物猎人\D3D_CEGUI\Debug\Script\script.lua
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x52907e0 -> 0x78e46d0
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x52907e0 -> 0x789c078
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13b76260 -> 0x78f0a98
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x189e0060 -> 0x78f0b10
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x189f8b60 -> 0x185e00d8
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x56c07e0 -> 0x877cc70
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x56c07e0 -> 0x877ced8
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13906260 -> 0x8785ce0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18940060 -> 0x8785d58
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18958b60 -> 0x8785dd0
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- 2486912230
+Debug:开始执行脚本: Q:\怪物猎人\D3D_CEGUI\Debug\Script\script.lua
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x51b07e0 -> 0x77a4860
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x51b07e0 -> 0x885a330
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13c66260 -> 0x77aaf78
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18950060 -> 0x77aaff0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18968b60 -> 0x77ab068
+Debug:窗口句柄为: 0x320DE4
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x55a07e0 -> 0x79f4358
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x55a07e0 -> 0x7947038
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x15296260 -> 0x79ebe00
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18680060 -> 0x79ebe78
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18698b60 -> 0x79ebef0
+Debug:遍历到的句柄: 0x4411E8
+Debug:窗口句柄为: 0x0
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+Debug:connect 连接服务器失败: 10061
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x53307e0 -> 0x7988350
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x53307e0 -> 0x15419cd8
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x15156260 -> 0x7985578
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18730060 -> 0x79855f0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18748b60 -> 0x7985668
+Debug:遍历到的句柄: 0x2C08D6
+Debug:窗口句柄为: 0x2C08D6
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x57207e0 -> 0x7a2ceb0
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x57207e0 -> 0x7a27090
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x138a6260 -> 0x7a30948
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x186b0060 -> 0x7a309c0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x186c8b60 -> 0x7a30a38
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+Debug:connect 连接服务器失败: 10061
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x56207e0 -> 0x8982388
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x56207e0 -> 0x89823f8
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13ca6260 -> 0x77d3b88
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18ae0060 -> 0x77d3c00
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18af8b60 -> 0x77d3c78
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- 2486912230
+Debug:开始执行脚本: Q:\怪物猎人\D3D_CEGUI\Debug\Script\script.lua
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4c607e0 -> 0x75a9478
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x4c607e0 -> 0x7589d40
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13886260 -> 0x75b5440
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x187b0060 -> 0x75b54b8
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x187c8b60 -> 0x851b1b8
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x3b07e0 -> 0x89be780
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x3b07e0 -> 0x7a93588
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13886260 -> 0x89b8168
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x186a0060 -> 0x89b81e0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x186b8b60 -> 0x89b8258
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- 2486912230
+Debug:开始执行脚本: Q:\怪物猎人\D3D_CEGUI\Debug\Script\script.lua
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x50e07e0 -> 0x75f1f10
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x50e07e0 -> 0x7618c20
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x15336260 -> 0x760e430
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18690060 -> 0x760e4a8
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x186a8b60 -> 0x760e520
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+Debug:connect 连接服务器失败: 10061
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x52407e0 -> 0x7728cc8
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x52407e0 -> 0x7761e70
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13676260 -> 0x7724910
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18510060 -> 0x7724988
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18528b60 -> 0x7724a00
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x2bc07e0 -> 0x7068e30
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x2bc07e0 -> 0x706a048
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13476260 -> 0x70eb8e0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x185e0060 -> 0x70eb958
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x185f8b60 -> 0x70eb9d0
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- 2486912230
+Debug:开始执行脚本: Q:\怪物猎人\D3D_CEGUI\Debug\Script\script.lua
+Debug:接受到 StopScript : 停止脚本...
+
+---------------------
+TatniumD3D Started...
+---------------------
+
+---------------------
+Direct3DCreate9 --> 0x57900A62...
+---------------------
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x52607e0 -> 0x72192d8
+---------------------
+
+---------------------
+Start hkDirect3DCreate9
+Direct3DCreate9(32) succeeded...
+Hooked Direct3D9 interface: 0x52607e0 -> 0x71da7e8
+---------------------
+
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x13896260 -> 0x7227c48
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x186f0060 -> 0x7227cc0
+CreateDevice 返回值 0x0
+Hooked Direct3D9 device: 0x18708b60 -> 0x7227d38
+Debug:socket 创建监听套节字成功
+Debug:WSAAsyncSelect 绑定窗口成功
+Debug:进入角色选择界面, 开始链接控制台...
+设置默认资源路径
+设置使用的缺省资源
+加载方案
+
+---------------------
+全部加载完毕...
+---------------------
+
+Debug:connect 连接服务器成功 -- 2486912230
+Debug:开始执行脚本: Q:\怪物猎人\D3D_CEGUI\Debug\Script\script.lua
+Debug:接受到 StopScript : 停止脚本...
+Debug:开始执行脚本: Q:\怪物猎人\D3D_CEGUI\Debug\Script\script.lua
+Debug:接受到 StopScript : 停止脚本...
+Debug:开始执行脚本: Q:\怪物猎人\D3D_CEGUI\Debug\Script\City_.lua

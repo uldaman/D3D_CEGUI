@@ -107,6 +107,18 @@ LRESULT CGame::CEGUIWndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
                     g_hLuaThread = (HANDLE)_beginthreadex(NULL, 0, ThreadAutoMatic, PVOID(szAccOrScript), 0, NULL);
                 }
                 break;
+            case SOCKET_MESSAGE::StopScript:
+                g_isWork = FALSE;
+                martin->Debug("接受到 StopScript : 停止脚本...");
+                break;
+            case SOCKET_MESSAGE::StartScript:
+                if (g_hLuaThread == NULL) {
+                    g_isWork = TRUE;
+                    RtlZeroMemory(szAccOrScript, 25);
+                    strcpy_s(szAccOrScript, 25, ((PSOCKET_INFO)NewPathFrm.get())->szAccOrScript);
+                    g_hLuaThread = (HANDLE)_beginthreadex(NULL, 0, ThreadAutoMatic, PVOID(szAccOrScript), 0, NULL);
+                }
+                break;
             }
 
             break;

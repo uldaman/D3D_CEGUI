@@ -35,8 +35,11 @@ private:
     void SlotImportAcc();
     //void SlotStartNewGame(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
     void SlotStartNewGame(const int &nRow);
+    void SlotStopScript(const int &nRow);
+    void SlotStartScript(const int &nRow);
     void SlotInitGamePath();
     void SlotAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer, const QString &strScript);
+    void SlotGuardDog(QTableWidgetItem* pItem);
 };
 
 #endif // QTSERVER_H

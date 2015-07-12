@@ -26,6 +26,9 @@ protected:
     QAction* m_actionChange;
     QAction* m_actionStart;
     QAction* m_actionSeparator;
+    QMenu* m_menuScript;
+    QAction* m_actionStartScript;
+    QAction* m_actionStopScript;
     int m_nRow;
     
     virtual void contextMenuEvent(QContextMenuEvent *event);
@@ -34,12 +37,16 @@ private slots:
 void SlotAddAccount();
 void SlotStartGame();
 void SlotChangeAccount();
+void SlotStopScript();
+void SlotStartScript();
 void SlotChangeAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer, const QString &strScript);
 void SlotAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer, const QString &strScript);
 
 signals:
 //void SignalStartNewGame(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer);
 void SignalStartNewGame(const int &nRow);
+void SignalStopScript(const int &nRow);
+void SignalStartScript(const int &nRow);
 void SignalSendAddAcc(const QString &strAcc, const QString &strPsw, const QString &strArea, const QString &strServer, const QString &strScript);
 };
 

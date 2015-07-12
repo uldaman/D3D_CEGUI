@@ -47,6 +47,15 @@ public:
     // 说明: 创建进程, 并注入DLL
     BOOL CreatProcessInsertDLL(char* lpApplicationName, char* lpCommandLine, char* lpDLLName, char* lpCurrentDirectory);
 
+    // 根据窗口类名, 获取当前系统这个窗口名的窗口所属进程的进程ID集合
+    std::vector<DWORD> GetProcessIdVec(std::string strClassName);
+
+    // 获取自己的窗口句柄
+    HWND GetCurrentHwnd(std::string strClassName);
+
+    // 获取指定ID的进程的窗口句柄
+    HWND GetCurrentHwnd(int nProcessID, std::string strClassName);
+
     /////////////////////////////////////////////////////////////////////////
     //    以下是 ini 處理功能
     /////////////////////////////////////////////////////////////////////////
